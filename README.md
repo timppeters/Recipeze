@@ -16,3 +16,6 @@
 - Android Studio
 - Gradle (build tool for java applications)
 - GitKraken if you want
+- Neo4j
+- Github Actions (runs tests and builds project to check for errors)
+- Node.js
