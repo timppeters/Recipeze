@@ -25,7 +25,8 @@
 
 ## Developer Environment Setup
 1. Install Android Studio
-2. Git clone the repo
+2. Git clone the repo  
+  2.1. Checkout the dev branch with git
 3. Install Checkstyle plugin in Android Studio  
   3.1. File > Settings > Plugins > Marketplace > search Checkstyle-IDEA
 4. Point checkstyle to our custom checkstyle config  
@@ -33,6 +34,9 @@
   4.2. '+' in configuration file area  
   4.3. Local file - choose the checkstyle.xml file in frontend/app/checkstyle/
 5. 👍 Now you can use the checkstyle tab at the bottom of the IDE to run checks
+6. You have to install the Android 8.1 JDK before you can build the project  
+  6.1. In Android Studio, go to File > Settings > Search for sdk  
+  6.2. Click on the pane somewhere, check the box next to Android 8.1, and click done
 
 
 
