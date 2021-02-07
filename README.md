@@ -33,3 +33,19 @@
   4.2. '+' in configuration file area  
   4.3. Local file - choose the checkstyle.xml file in frontend/app/checkstyle/
 5. 👍 Now you can use the checkstyle tab at the bottom of the IDE to run checks
+
+
+
+## More Info
+
+- Javadoc is a structed way of commenting code so that we can automatically generate documentation from the comments. It also improves the readability of our code  
+  - To make a Javadoc comment, type /** on a new line and press enter.
+  - It will generate a template for you, based on what is on the next line
+  ![](https://i.ibb.co/kSVLwGr/image.png)  
+
+    Press enter:
+
+    ![](https://i.ibb.co/mRZHdw9/image.png)
+
+      Then write a description, explain what the parameters are, and what the function returns
+  
