@@ -24,7 +24,7 @@ jobs:
     - name: Go into frontend directory
       run: cd frontend
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x ./gradlew
     - name: Build with Gradle
       run: ./gradlew build
   
@@ -41,6 +41,6 @@ jobs:
     - name: Go into frontend directory
       run: cd frontend
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x ./gradlew
     - name: Checkstyle with Gradle
       run: ./gradlew checkstyle
