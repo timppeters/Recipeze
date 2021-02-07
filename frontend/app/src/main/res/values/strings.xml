@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Recipeze</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_explore">Explore</string>
+    <string name="title_addRecipe">Add Recipe</string>
+    <string name="title_recipeBook">Recipe Book</string>
+    <string name="title_profile">Profile</string>
+</resources>
