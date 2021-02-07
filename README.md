@@ -31,7 +31,7 @@
 4. Install Checkstyle plugin in Android Studio  
   4.1. File > Settings > Plugins > Marketplace > search Checkstyle-IDEA
 5. Point checkstyle to our custom checkstyle config  
-  5.1. File > Settings > Other Settings > Checkstyle  
+  5.1. File > Settings > Tools > Checkstyle  
   5.2. '+' in configuration file area  
   5.3. Local file - choose the checkstyle.xml file in frontend/app/checkstyle/
 6. 👍 Now you can use the checkstyle tab at the bottom of the IDE to run checks
