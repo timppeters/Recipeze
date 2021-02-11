@@ -1,10 +1,14 @@
 package com.group2.recipeze.ui.recipeBook;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -32,13 +36,35 @@ public class RecipeBookFragment extends Fragment {
         recipeBookViewModel =
                 new ViewModelProvider(this).get(RecipeBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
+
         final TextView textView = root.findViewById(R.id.text_recipeBook);
-        recipeBookViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final Button button = root.findViewById(R.id.button_recipeX);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = getContext();
+                CharSequence text = "Hello toast!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+
+        recipeBookViewModel.getMeText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
+
+        recipeBookViewModel.getButtonText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {  button.setText(s); }
+        });
+
         return root;
     }
+
 }
