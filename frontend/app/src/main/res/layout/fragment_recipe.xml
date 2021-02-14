@@ -11,8 +11,9 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="415dp"
-            android:layout_height="503dp"
+            android:id="@+id/constraintLayout"
+            android:layout_width="411dp"
+            android:layout_height="525dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -30,6 +31,18 @@
                 app:layout_constraintHorizontal_bias="0.733"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_width="415dp"
+            android:layout_height="200dp"
+            android:background="@color/teal_200"
+            android:src="@drawable/spag"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
