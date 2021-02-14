@@ -1,0 +1,93 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_preview_24"
+        app:title="@string/view_pref_header">
+
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:summaryOff="You will receive all notifications"
+            app:summaryOn="You will no longer receive any notifications"
+            app:title="@string/Notification_title" />
+
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:key="colourMode"
+            app:title="@string/DarkLight_title" />
+
+        <ListPreference
+            app:defaultValue="English"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="language"
+            app:title="@string/language_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_track_changes_24"
+        app:title="@string/tracking_header">
+
+        <SwitchPreferenceCompat
+            app:key="nut_track"
+            app:title="@string/Nut_tracking"
+            app:summaryOff="The nutrients in your diet are not being tracked"
+            app:summaryOn="The nutrients in your diet are being tracked" />
+
+        <SwitchPreferenceCompat
+            app:key="cal_track"
+            app:title="@string/Cal_tracking"
+            app:summaryOff="The calories in your diet are not being tracked"
+            app:summaryOn="The calories in your diet are being tracked"
+             />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_settings_24"
+        app:title="@string/account_header">
+
+    <ListPreference
+        app:defaultValue="None"
+        app:entries="@array/recipe_entries"
+        app:entryValues="@array/recipe_values"
+        app:key="recipeDel"
+        app:title="@string/del_posts"
+        app:useSimpleSummaryProvider="true" />
+
+
+        <EditTextPreference
+            app:key="change_name"
+            app:title="@string/change_username"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="change_pass"
+            app:title="@string/change_password"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            android:textAlignment="center"
+            app:key="logOut"
+            app:title="@string/log_out" />
+
+        <Preference
+            android:textAlignment="center"
+            app:key="delAcc"
+            app:title="@string/delete_account" />
+
+
+       <!-- for some reason the bottem value doesnt show in settings so this is here as a margin basically-->
+        <EditTextPreference
+            app:title="@string/change_password"
+            app:useSimpleSummaryProvider="true" />
+
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>
