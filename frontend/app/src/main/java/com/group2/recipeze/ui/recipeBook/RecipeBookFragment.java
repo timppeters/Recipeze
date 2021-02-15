@@ -14,7 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.group2.recipeze.R;
 
@@ -40,12 +42,13 @@ public class RecipeBookFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
 
         final TextView textView = root.findViewById(R.id.text_recipeBook);
-        final Button button = root.findViewById(R.id.button_recipeX);
+        Button button = root.findViewById(R.id.button_recipeX);
+        Fragment here = this;
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(root).navigate(R.id.action_navigation_recipeBook_to_recipe);
+                NavHostFragment.findNavController(here).navigate(R.id.action_navigation_recipeBook_to_recipe);
             }
         });
 
