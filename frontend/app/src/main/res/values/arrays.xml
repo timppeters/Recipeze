@@ -1,0 +1,29 @@
+<resources>
+    <!-- Language Preference options -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Spanish</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Spanish</item>
+    </string-array>
+
+    <!-- delete recipe options all recipes should appear on list -->
+    <string-array name="recipe_entries">
+        <item>None</item>
+        <item>Option</item>
+        <item>Opt</item>
+    </string-array>
+
+    <string-array name="recipe_values">
+        <item>None</item>
+        <item>Option</item>
+        <item>Opt</item>
+    </string-array>
+</resources>

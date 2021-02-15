@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.explore.ExploreFragment">
+
+    <SearchView
+        android:id="@+id/Search"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/background_border"
+        android:backgroundTint="#EEEEEE"
+        android:clickable="true"
+        android:gravity="top"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search for recipes, ingredients..."
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.004"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/text_trendingtags"
+        android:layout_width="178dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="@string/trending_tags"
+        android:textColor="#494949"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Search" />
+
+    <TextView
+        android:id="@+id/viewalltagsTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:fontFamily="@font/poppinsregular"
+        android:text="@string/view_all"
+        android:textColor="@color/teal_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_trendingtags"
+        app:layout_constraintTop_toTopOf="@+id/text_trendingtags" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/veganBtn"
+        style="@style/buttons"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/vegan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_trendingtags" />
+
+    <TextView
+        android:id="@+id/veganRecipeNoTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="600+ recipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/veganBtn" />
+
+    <TextView
+        android:id="@+id/glutenfreeRecipeNoTxt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="800+ recipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glutenfreeBtn" />
+
+    <TextView
+        android:id="@+id/vegetarianRecipeNoTxt3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="1k+ recipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vegetarianBTN" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/vegetarianBTN"
+        style="@style/buttons"
+        android:layout_width="125dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Vegetarian"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/veganBtn" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/glutenfreeBtn"
+        style="@style/buttons"
+        android:layout_width="128dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Gluten Free"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vegetarianBTN" />
+
+    <TextView
+        android:id="@+id/trendingRecipesTxt"
+        android:layout_width="220dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="250dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="@string/trending_recipes"
+        android:textColor="#494949"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Search" />
+
+    <TextView
+        android:id="@+id/viewallRecipesTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:fontFamily="@font/poppinsregular"
+        android:text="@string/view_all"
+        android:textColor="@color/teal_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_trendingtags"
+        app:layout_constraintTop_toTopOf="@+id/trendingRecipesTxt" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipes"
+        android:layout_width="356dp"
+        android:layout_height="352dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trendingRecipesTxt" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
