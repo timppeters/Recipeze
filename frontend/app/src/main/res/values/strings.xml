@@ -5,6 +5,13 @@
     <string name="title_addRecipe">Add Recipe</string>
     <string name="title_recipeBook">Recipe Book</string>
     <string name="title_profile">Profile</string>
+
+    <string name="trending_tags">Trending Tags</string>
+    <string name="view_all">View All</string>
+    <string name="vegan">Vegan</string>
+    <string name="trending_recipes">Trending Recipes</string>
+
+
     <string name="title_activity_settings">Hi</string>
 
     <!-- Settings -->
@@ -28,4 +35,5 @@
     <string name="del_posts">Delete Post</string>
     <string name="log_out">Logout</string>
     <string name="delete_account">Delete Account</string>
+
 </resources>
