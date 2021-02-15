@@ -9,7 +9,9 @@
         android:id="@+id/navigation_feed"
         android:name="com.group2.recipeze.ui.feed.FeedFragment"
         android:label="@string/title_feed"
-        tools:layout="@layout/fragment_feed" />
+        tools:layout="@layout/fragment_feed" >
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_explore"
@@ -33,5 +35,19 @@
         android:id="@+id/navigation_profile"
         android:name="com.group2.recipeze.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_settingsFragment2"
+            app:destination="@id/settingsFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment2"
+        android:name="com.group2.recipeze.ui.Settings.SettingsFragment"
+        android:label="SettingsFragment"
+        android:parentActivityName=".MainActivity" >
+        <action
+            android:id="@+id/action_settingsFragment2_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 </navigation>
