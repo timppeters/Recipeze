@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        app:icon="@drawable/ic_baseline_preview_24"
+        android:textColor="@color/dark_text"
+        app:icon="@drawable/gear"
         app:title="@string/view_pref_header">
 
         <SwitchPreferenceCompat
@@ -28,7 +29,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:icon="@drawable/ic_baseline_track_changes_24"
+        app:icon="@drawable/clock"
         app:title="@string/tracking_header">
 
         <SwitchPreferenceCompat
@@ -47,7 +48,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:icon="@drawable/ic_baseline_settings_24"
+        app:icon="@drawable/gear"
         app:title="@string/account_header">
 
     <ListPreference
