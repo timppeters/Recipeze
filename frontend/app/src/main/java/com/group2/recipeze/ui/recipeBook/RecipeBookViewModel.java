@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
  * RecipeBookViewModel.
  */
 public class RecipeBookViewModel extends ViewModel {
-
     private MutableLiveData<String> meText;
     private MutableLiveData<String> buttonText;
 
@@ -24,5 +23,7 @@ public class RecipeBookViewModel extends ViewModel {
         return meText;
     }
 
-    public LiveData<String> getButtonText() { return buttonText; }
+    public LiveData<String> getButtonText() {
+        return buttonText;
+    }
 }

@@ -27,11 +27,20 @@
         android:id="@+id/navigation_recipeBook"
         android:name="com.group2.recipeze.ui.recipeBook.RecipeBookFragment"
         android:label="@string/title_recipeBook"
-        tools:layout="@layout/fragment_recipebook" />
+        tools:layout="@layout/fragment_recipebook" >
+        <action
+            android:id="@+id/action_navigation_recipeBook_to_recipe"
+            app:destination="@id/recipe" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.group2.recipeze.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/recipe"
+        android:name="com.group2.recipeze.ui.recipe.recipe"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" />
 </navigation>
