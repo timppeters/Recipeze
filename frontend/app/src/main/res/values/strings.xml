@@ -6,6 +6,32 @@
     <string name="title_recipeBook">Recipe Book</string>
     <string name="title_profile">Profile</string>
 
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="com_auth0_client_id">dQEdbzg7x1VJRhHtoJ2FemmD3XGuhORO</string>
+    <string name="com_auth0_domain">bath-recipeze.eu.auth0.com</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="login_instructions">Login or create a free account</string>
+    <string name="continue_with_email">Continue with email</string>
+    <string name="slogan">Recipes for restricted diets</string>
+    <string name="continue_with_google">Continue with google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="noodles">Noodles</string>
+    <string name="chef">Chef</string>
+
+
     <string name="trending_tags">Trending Tags</string>
     <string name="view_all">View All</string>
     <string name="vegan">Vegan</string>
@@ -35,5 +61,6 @@
     <string name="del_posts">Delete Post</string>
     <string name="log_out">Logout</string>
     <string name="delete_account">Delete Account</string>
+
 
 </resources>
