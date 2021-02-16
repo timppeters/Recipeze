@@ -29,7 +29,11 @@
         android:id="@+id/navigation_recipeBook"
         android:name="com.group2.recipeze.ui.recipeBook.RecipeBookFragment"
         android:label="@string/title_recipeBook"
-        tools:layout="@layout/fragment_recipebook" />
+        tools:layout="@layout/fragment_recipebook" >
+        <action
+            android:id="@+id/action_navigation_recipeBook_to_recipe"
+            app:destination="@id/recipe" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -50,4 +54,11 @@
             android:id="@+id/action_settingsFragment2_to_navigation_profile"
             app:destination="@id/navigation_profile" />
     </fragment>
+
+    <fragment
+        android:id="@+id/recipe"
+        android:name="com.group2.recipeze.ui.recipe.recipe"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" />
+
 </navigation>
