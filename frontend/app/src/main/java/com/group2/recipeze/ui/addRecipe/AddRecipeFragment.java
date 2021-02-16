@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.group2.recipeze.R;
+import com.group2.recipeze.ui.BottomSheet;
 
 /**
  *  AddRecipeFragment.
@@ -39,6 +40,9 @@ public class AddRecipeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        BottomSheet bottomSheet = new BottomSheet();
+        bottomSheet.show(getParentFragmentManager(),bottomSheet.getTag());
         return root;
     }
 }

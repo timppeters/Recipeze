@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,7 +44,7 @@ public class ProfileFragment extends Fragment{
                 textView.setText(s);
             }
         });
-        Button settingBut = root.findViewById(R.id.SetBut);
+        ImageButton settingBut = root.findViewById(R.id.SetBut);
         Fragment here = this;
 
         settingBut.setOnClickListener(new View.OnClickListener() {

@@ -57,7 +57,7 @@
 
     <fragment
         android:id="@+id/recipe"
-        android:name="com.group2.recipeze.ui.recipe.recipe"
+        android:name="com.group2.recipeze.ui.recipe.RecipeFragment"
         android:label="fragment_recipe"
         tools:layout="@layout/fragment_recipe" />
 

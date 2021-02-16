@@ -62,6 +62,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.auth0.android:lock:2.24.0'
     implementation 'com.auth0.android:auth0:1.30.0'
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
     implementation 'androidx.preference:preference:1.1.1'
     def nav_version = "2.3.3"

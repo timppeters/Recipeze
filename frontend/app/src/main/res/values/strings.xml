@@ -61,6 +61,8 @@
     <string name="del_posts">Delete Post</string>
     <string name="log_out">Logout</string>
     <string name="delete_account">Delete Account</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="edit_food_preferences">Edit Food Preferences</string>
 
 
 </resources>
