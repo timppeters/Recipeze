@@ -310,7 +310,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:translationZ="2dp"
+        android:translationZ="1dp"
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
         app:layout_constraintEnd_toEndOf="@+id/recipe_card"
@@ -324,7 +324,7 @@
             android:layout_width="87dp"
             android:layout_height="130dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/spaghetti" />
+            android:src="@drawable/spag" />
     </androidx.cardview.widget.CardView>
 
 
