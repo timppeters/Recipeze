@@ -23,7 +23,7 @@ public class endlessScroll {
     public void populateData() {
         int i = 0;
         while (i < 10) {
-            rowsArrayList.add("Item " + i);
+            rowsArrayList.add("Recipe " + i);
             i++;
         }
     }
