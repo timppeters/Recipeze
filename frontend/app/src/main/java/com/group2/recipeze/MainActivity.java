@@ -1,15 +1,22 @@
 package com.group2.recipeze;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.group2.recipeze.ui.login.LoginActivity;
@@ -18,10 +25,21 @@ import com.group2.recipeze.ui.login.LoginActivity;
  * MainActivity.
  */
 public class MainActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    endlessScroll endlessScrollManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.fragment_explore);
+        recyclerView = findViewById(R.id.exploreRecipes);
+        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        endlessScrollManager = new endlessScroll(recyclerView);
+        endlessScrollManager.populateData();
+        endlessScrollManager.initAdapter();
+        endlessScrollManager.initScrollListener();
+
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

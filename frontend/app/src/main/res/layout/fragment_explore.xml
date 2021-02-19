@@ -156,7 +156,7 @@
         app:layout_constraintTop_toTopOf="@+id/trendingRecipesTxt" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipes"
+        android:id="@+id/exploreRecipes"
         android:layout_width="356dp"
         android:layout_height="352dp"
         android:layout_marginTop="16dp"
