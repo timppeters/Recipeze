@@ -25,20 +25,10 @@ import com.group2.recipeze.ui.login.LoginActivity;
  * MainActivity.
  */
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    endlessScroll endlessScrollManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.fragment_explore);
-        recyclerView = findViewById(R.id.exploreRecipes);
-        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
-        endlessScrollManager = new endlessScroll(recyclerView);
-        endlessScrollManager.populateData();
-        endlessScrollManager.initAdapter();
-        endlessScrollManager.initScrollListener();
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
