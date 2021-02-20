@@ -6,14 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".ui.feed.FeedFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="50dp"
+        android:minHeight="?attr/actionBarSize"
+        android:outlineProvider="background"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/logo2"
+        android:layout_width="167dp"
+        android:layout_height="60dp"
+        android:elevation="50dp"
+        android:fontFamily="@font/comfortaamedium"
+        android:paddingVertical="0dp"
+        android:text="@string/app_name"
+        android:textColor="@color/logo_green"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="@+id/toolbar2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        style="@style/buttons"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/bg_search_rounded"
+        android:backgroundTint="#F1F1F1"
+        android:elevation="0dp"
+        android:paddingVertical="3dp"
+        android:text="Filters"
+        android:textAlignment="viewStart"
+        android:textColor="@color/dark_text"
+        app:layout_constraintBottom_toTopOf="@+id/feedRecipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        app:layout_constraintVertical_bias="0.8" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feedRecipes"
         android:layout_width="0dp"
         android:layout_height="480dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.52" />
