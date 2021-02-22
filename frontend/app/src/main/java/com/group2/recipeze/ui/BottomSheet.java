@@ -22,7 +22,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
         BottomSheetDialog bottomSheet = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
 
         //inflating layout
-        View view = View.inflate(getContext(), R.layout.fragment_recipe, null);
+        View view = View.inflate(getContext(), R.layout.fragment_addrecipe, null);
 
         //setting layout with bottom sheet
         bottomSheet.setContentView(view);
@@ -36,6 +36,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
 
         //setting max height of bottom sheet
         //view.findViewById(R.id.extraSpace).setMinimumHeight((Resources.getSystem().getDisplayMetrics().heightPixels));
+
 
 
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {

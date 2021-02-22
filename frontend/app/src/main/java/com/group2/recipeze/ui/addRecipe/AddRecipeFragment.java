@@ -33,16 +33,7 @@ public class AddRecipeFragment extends Fragment {
         addRecipeViewModel =
                 new ViewModelProvider(this).get(AddRecipeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_addrecipe, container, false);
-        final TextView textView = root.findViewById(R.id.text_addRecipe);
-        addRecipeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
-        BottomSheet bottomSheet = new BottomSheet();
-        bottomSheet.show(getParentFragmentManager(),bottomSheet.getTag());
         return root;
     }
 }
