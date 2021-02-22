@@ -31,7 +31,7 @@ public class FoodPreferencesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         foodPreferenceViewModel =
                 new ViewModelProvider(this).get(ProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        View root = inflater.inflate(R.layout.food_preferences, container, false);
 
         foodPreferenceViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
