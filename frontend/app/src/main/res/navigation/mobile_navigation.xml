@@ -19,9 +19,9 @@
         android:label="@string/title_explore"
         tools:layout="@layout/fragment_explore" />
 
-    <fragment
+    <dialog
         android:id="@+id/navigation_addRecipe"
-        android:name="com.group2.recipeze.ui.addRecipe.AddRecipeFragment"
+        android:name="com.group2.recipeze.ui.BottomSheet"
         android:label="@string/title_addRecipe"
         tools:layout="@layout/fragment_addrecipe" />
 
