@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,14 +15,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.group2.recipeze.R;
+import com.group2.recipeze.R;
 
-/**
- * ProfileFragment.
- */
-public class ProfileFragment extends Fragment{
-
-    private ProfileViewModel profileViewModel;
-
+public class FoodPreferencesFragment extends Fragment {
+    private ProfileViewModel foodPreferenceViewModel;
     /**
      * Called when view is created.
      *
@@ -34,17 +29,16 @@ public class ProfileFragment extends Fragment{
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
+        foodPreferenceViewModel =
                 new ViewModelProvider(this).get(ProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_profile);
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        View root = inflater.inflate(R.layout.food_preferences, container, false);
+
+        foodPreferenceViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
             }
         });
-        ImageButton settingBut = root.findViewById(R.id.SetBut);
+        Button settingBut = root.findViewById(R.id.button_food);
         Fragment here = this;
 
         settingBut.setOnClickListener(new View.OnClickListener() {
@@ -54,17 +48,7 @@ public class ProfileFragment extends Fragment{
             }
         });
 
-        Button button = root.findViewById(R.id.editFoodPreferences);
-        Fragment here2 = this;
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(here2).navigate(R.id.action_navigation_profile_to_foodPreferences2);
-            }
-        });
-
         return root;
     }
-
 }
+
