@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_settingsFragment2"
             app:destination="@id/settingsFragment2" />
+        <action
+            android:id="@+id/action_navigation_profile_to_foodPreferences2"
+            app:destination="@id/foodPreferences2" />
     </fragment>
 
     <fragment
@@ -60,5 +63,15 @@
         android:name="com.group2.recipeze.ui.recipe.RecipeFragment"
         android:label="fragment_recipe"
         tools:layout="@layout/fragment_recipe" />
+
+    <fragment
+        android:id="@+id/foodPreferences2"
+        android:name="com.group2.recipeze.ui.profile.FoodPreferencesFragment"
+        android:label="foodPreferences"
+        android:parentActivityName=".MainActivity">
+        <action
+            android:id="@+id/action_foodPreferences2_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
 </navigation>

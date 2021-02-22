@@ -326,8 +326,4 @@
             android:scaleType="centerCrop"
             android:src="@drawable/spag" />
     </androidx.cardview.widget.CardView>
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
