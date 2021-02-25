@@ -50,6 +50,8 @@ public class FeedFragment extends Fragment {
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
 
+
+
         return root;
     }
 }

@@ -40,6 +40,10 @@
 
     <string name="title_activity_settings">Hi</string>
 
+
+    <!--searching recipe page-->
+    <string name="forum_button">Talk to others about this</string>
+
     <!-- Settings -->
     <!-- Preference Titles -->
     <string name="view_pref_header">View Preferences</string>

@@ -8,7 +8,7 @@
     tools:context=".ui.explore.ExploreFragment">
 
     <SearchView
-        android:id="@+id/search"
+        android:id="@+id/searchExplorePage"
         android:layout_width="367dp"
         android:layout_height="35dp"
         android:layout_marginTop="26dp"
@@ -41,7 +41,7 @@
         android:textColor="@color/dark_text"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        app:layout_constraintTop_toBottomOf="@+id/searchExplorePage" />
 
     <TextView
         android:id="@+id/viewalltagsTxt"
@@ -137,7 +137,7 @@
         android:textColor="#494949"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        app:layout_constraintTop_toBottomOf="@+id/searchExplorePage" />
 
     <TextView
         android:id="@+id/viewallRecipesTxt"

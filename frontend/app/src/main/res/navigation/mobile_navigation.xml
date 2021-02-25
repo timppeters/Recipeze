@@ -11,13 +11,20 @@
         android:label="@string/title_feed"
         tools:layout="@layout/fragment_feed" >
 
+        <action
+            android:id="@+id/action_navigation_feed_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_explore"
         android:name="com.group2.recipeze.ui.explore.ExploreFragment"
         android:label="@string/title_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_navigation_explore_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 
     <dialog
         android:id="@+id/navigation_addRecipe"
@@ -73,5 +80,17 @@
             android:id="@+id/action_foodPreferences2_to_navigation_profile"
             app:destination="@id/navigation_profile" />
     </fragment>
-
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.group2.recipeze.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodForumFragment"
+        android:name="com.group2.recipeze.ui.forum.FoodForumFragment"
+        android:label="FoodForumFragment" />
 </navigation>
