@@ -53,13 +53,22 @@ public class SearchFragment extends Fragment {
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
 
-        Button button = root.findViewById(R.id.forumButton);
-        Fragment here2 = this;
+        Button forButton = root.findViewById(R.id.forumButton);
+        Fragment here = this;
 
-        button.setOnClickListener(new View.OnClickListener() {
+        forButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(here2).navigate(R.id.action_searchFragment_to_foodForumFragment);
+                NavHostFragment.findNavController(here).navigate(R.id.action_searchFragment_to_foodForumFragment);
+            }
+        });
+
+        Button filButton = root.findViewById(R.id.filterButton);
+
+        filButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(here).navigate(R.id.action_searchFragment_to_filterFragment);
             }
         });
 

@@ -88,9 +88,17 @@
         <action
             android:id="@+id/action_searchFragment_to_foodForumFragment"
             app:destination="@id/foodForumFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
     <fragment
         android:id="@+id/foodForumFragment"
         android:name="com.group2.recipeze.ui.forum.FoodForumFragment"
         android:label="FoodForumFragment" />
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.group2.recipeze.ui.search.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" />
 </navigation>
