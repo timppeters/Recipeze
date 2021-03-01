@@ -25,10 +25,17 @@ router.route('/user')
       res.send(result)
     })
 
+router.route('/publicUser')
+    // Read
+    .get(async (req, res) => {
+      result = await db.readUserPublic(req.body.username)
+      res.send(result)
+    })
+
 router.route('/recipe')
     // Create
     .post(async (req, res) => {
-      result = await db.createRecipe(req.body.username, req.body.title, req.body.description, req.body.ingredients, req.body.instructions, req.body.images)
+      result = await db.createRecipe(req.body.username, req.body.title, req.body.description, req.body.ingredients, req.body.instructions, req.body.images, req.body.tags)
       res.send(result)
     })
     // Read
@@ -72,25 +79,35 @@ router.route('/forum')
 router.route('/like')
     // Create
     .post(async (req, res) => {
-        res.send('Add like to recipe/comment')
+      if (req.recipeId) { // like a recipe
+        result = await db.likeRecipe(req.body.username, req.body.recipeId)
+        res.send(result)
+      } else { // like a forum post
+        result = await db.likePost(req.body.username, req.body.postId)
+        res.send(result)
+      }
       })
     // Delete
     .delete(async (req, res) => {
-        res.send('Remove like from recipe/comment')
+      if (req.recipeId) { // unlike a recipe
+        result = await db.unlikeRecipe(req.body.username, req.body.recipeId)
+        res.send(result)
+      } else { // unlike a forum post
+        result = await db.unlikePost(req.body.username, req.body.postId)
+        res.send(result)
+      }
       })
 
 router.route('/comment')
     // Create
     .post(async (req, res) => {
-        res.send('Add comment to a post')
-      })
-    // Read
-    .get(async (req, res) => {
-        res.send('Read comments of a post')
+      result = await db.createComment(req.body.username, req.body.postId, req.body.body)
+      res.send(result)
       })
     // Delete
     .delete(async (req, res) => {
-        res.send('Delete comment')
+      result = await db.deleteComment(req.body.commentId)
+      res.send(result)
       })
 
 router.route('/recipes')
@@ -102,36 +119,44 @@ router.route('/recipes')
 router.route('/follow')
     // follow someone
     .post(async (req, res) => {
-        res.send('Follow a user')
+      result = await db.follow(req.body.username, req.body.followUser)
+      res.send(result)
       })
 
     // unfollow someone
     .delete(async (req, res) => {
-      res.send('Unfollow a user')
+      result = await db.unfollow(req.body.username, req.body.unfollowUser)
+      res.send(result)
       })
 
 router.route('/tag')
     // Create a tag
     .post(async (req, res) => {
-        res.send('Create a tag')
+      result = await db.createTag(req.body.tagName)
+      res.send(result)
       })
 
     // Delete a tag
     .delete(async (req, res) => {
-      res.send('Delete a tag')
+      result = await db.deleteTag(req.body.tagName)
+      res.send(result)
       })
 
 router.route('/rate')
     // Create
     .post(async (req, res) => {
-      res.send('Add comment to a post')
+      result = await db.rate(req.body.username, req.body.recipeId, req.body.rating, req.body.review)
+      res.send(result)
     })
+    // Get recipe reviews
     .get(async (req, res) => {
-      res.send('Get recipe reviews')
+      result = await db.getRatings(req.body.recipeId)
+      res.send(result)
     })
     // Delete
     .delete(async (req, res) => {
-      res.send('Delete comment')
+      result = await db.deleteRating(req.body.username, req.body.recipeId)
+      res.send(result)
     })
 
 
