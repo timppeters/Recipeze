@@ -10,7 +10,8 @@ const fs = require('fs')
 //const strategies = require('./passport');
 
 const app = express()
-const port = process.env.PORT | 8080
+const port = process.env.PORT || 8080
+const host = '0.0.0.0'
 
 // request logging. dev: console | production: file
 app.use(morgan('dev'));
@@ -35,7 +36,7 @@ marked.options({
 })
 
 app.get('/', (req, res) => {
-  let path = __dirname + '/readme.md';
+  let path = __dirname + '/README.md';
   let file = fs.readFileSync(path, 'utf8');
   res.send("<style>body { font-family: Arial;} pre { background: #f8f8f8;padding: 6px; overflow-wrap: break-word;}</style>\n" +
    marked(file.toString()));
@@ -43,6 +44,6 @@ app.get('/', (req, res) => {
 
 neo4j.startSession();
 
-app.listen(port, () => {
-  console.info(`Example app listening at http://localhost:${port}`)
+app.listen(port, host, () => {
+  console.info(`API listening at http://localhost:${port}`)
 })
