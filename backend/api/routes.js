@@ -35,7 +35,7 @@ router.route('/publicUser')
 router.route('/recipe')
     // Create
     .post(async (req, res) => {
-      result = await db.createRecipe(req.body.username, req.body.title, req.body.description, req.body.ingredients, req.body.instructions, req.body.images, req.body.tags)
+      result = await db.createRecipe(req.body.username, req.body.title, req.body.description, req.body.ingredients, req.body.ingredientsAmounts, req.body.instructions, req.body.images, req.body.tags, req.body.prepTime, req.body.cookTime)
       res.send(result)
     })
     // Read
@@ -112,8 +112,41 @@ router.route('/comment')
 
 router.route('/recipes')
     // Read
-    .get(async (req, res) => {
-        res.send('Get recipes for feed, explore, recipe book, profile')
+    .get(async (req, res) => { 
+        switch (req.body.for) {
+          case "feedUser":
+            result = await db.getRecipesForFeedByUsers(req.body.username, req.body.filters, req.body.sortBy, req.body.skip)
+            res.send(result)
+            break;
+          
+          case "feedTag":
+            result = await db.getRecipesForFeedByTags(req.body.username, req.body.filters, req.body.sortBy, req.body.skip)
+            res.send(result)
+            break;
+
+          case "explore":
+            result = await db.getRecipesForExplore(req.body.skip)
+            res.send(result)
+            break;
+
+          case "recipe book":
+            result = await db.getRecipesForRecipeBook(req.body.username, req.body.filters, req.body.sortBy, req.body.skip)
+            res.send(result)
+            break;
+
+          case "profile":
+            result = await db.getRecipesForProfile(req.body.username, req.body.skip)
+            res.send(result)
+            break;
+
+          case "tag":
+            result = await db.getRecipesForTag(req.body.tagName, req.body.skip)
+            res.send(result)
+            break;
+
+          default:
+            res.send("Must specify FOR parameter in body!")
+        }
       })
 
 router.route('/follow')
@@ -135,6 +168,17 @@ router.route('/tag')
       result = await db.createTag(req.body.tagName)
       res.send(result)
       })
+
+    // Get tags for explore page
+    .get(async (req, res) => {
+        if (req.body.type == "all") {
+          result = await db.getAllTags()
+          res.send(result)
+        } else {
+          result = await db.getTop5Tags()
+          res.send(result)
+        }
+    })
 
     // Delete a tag
     .delete(async (req, res) => {
@@ -159,5 +203,9 @@ router.route('/rate')
       res.send(result)
     })
 
-
+router.route('/search')
+    .get(async (req, res) => {
+      result = await db.search(req.body.query)
+      res.send(result)
+    });
 module.exports = router;

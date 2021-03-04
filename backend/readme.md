@@ -2,6 +2,7 @@
 
 ## Endpoints
 #### All parameters should be included in the request body as JSON
+#### In the future, username will come from the logged in user so you won't have to send it as a parameter
 
 - ### Create a user 
     - POST /api/user 
@@ -87,7 +88,8 @@
         "username": "test1",
         "title": "Tomato Soup",
         "description": "This is my lovely tomato soup...",
-        "ingredients": ["200g tomatoes", "500ml water"],
+        "ingredients": ["tomatoes", "water"], // All ingredients should be plural
+        "ingredientsAmounts": ["200g", "500ml"] // Corresponds with index of ingredients
         "instructions": "{
             "1": "First step",
             "2": "Second step"
@@ -96,7 +98,9 @@
             // instructionNumber : base64EncodedImage
             "1": "base64://jsdfur8924y8fhhjhasdasduhfJKHASDFJK"
         }",
-        "tags": ["Gluten Free"]
+        "tags": ["Gluten Free"],
+        "prepTime": 30 // in minutes
+        "cookTime": 90 // in minutes
 
       }
       ```
@@ -117,11 +121,13 @@
     - Returns  
     ```
       {
-        "rating": 4.25
-        "author": "test1"
+        "rating": 4.25,
+        "likes": 342,
+        "author": "test1",
         "title": "Tomato Soup",
         "description": "This is my lovely tomato soup...",
-        "ingredients": ["200g tomatoes", "500ml water"],
+        "ingredients": ["tomatoes", "water"],
+        "ingredientsAmounts": ["200g", "500ml"] // Corresponds with index of ingredients
         "instructions": "{
             "1": "First step",
             "2": "Second step"
@@ -130,7 +136,35 @@
             // instructionNumber : base64EncodedImage
             "1": "base64://jsdfur8924y8fhhjhasdasduhfJKHASDFJK"
         }",
-        "tags": ["Gluten Free"]
+        "tags": ["Gluten Free"],
+        "prepTime": 30 // in minutes
+        "cookTime": 90 // in minutes
+      }
+    ```
+
+
+- ### Read multiple recipes (for feed, explore, recipe book, profile, tag) 
+    - GET /api/recipe 
+    - ```
+      {
+        "for": "feedUser" / "feedTag" / "explore" / "recipe book"/ "profile" / "tag",
+        "username": "test1",
+        "skip": "20" // Number of recipes already in the infiniteScoll on clientSide
+        "tagName": "Gluten Free" // ONLY FOR tag
+        // For feed and recipe book, include the filters & sortBy (as stringified json). If not using any filters, set maxTime and maxNumberOfIngredients to 1000 and set ingredients and tags as an empty list []
+        "filters": "{
+          "maxTime": "40",
+          "ingredients": ["potato", "beef"],
+          "maxNumberOfIngredients": 6,
+          "tags": ["Gluten Free"]
+        }",
+        "sortBy": "likes" / "newest"
+      }
+      ```
+    - Returns  
+    ```
+      {
+        "recipes": [recipeObject * 10]
       }
     ```
 
@@ -142,7 +176,8 @@
         "updates": { // Each entry is optional
             "title": "Tomato Soup",
             "description": "This is my lovely tomato soup...",
-            "ingredients": ["200g tomatoes", "500ml water"],
+            "ingredients": ["tomatoes", "water"], // All ingredients should be plural
+            "ingredientsAmounts": ["200g", "500ml"] // Corresponds with index of ingredients
             "instructions": "{
                 "1": "First step",
                 "2": "Second step"
@@ -151,7 +186,9 @@
                 // instructionNumber : base64EncodedImage
                 "1": "base64://jsdfur8924y8fhhjhasdasduhfJKHASDFJK"
             }",
-            "tags": ["Gluten Free", "Dairy Free"]
+            "tags": ["Gluten Free", "Dairy Free"],
+            "prepTime": 30 // in minutes
+            "cookTime": 90 // in minutes
         }
       }
       ```
@@ -361,6 +398,24 @@
       {}
     ```
 
+- ### Get tags (all or most popular 5)  
+    - POST /api/tag 
+    - ```
+      {
+        "type": "all" / "popular5"
+      }
+      ```
+    - Returns  
+    ```
+      {
+        {
+          "Gluten Free": 421,
+          "Dairy Free": 376,
+          ...
+        }
+      }
+    ```
+
 - ### Delete a tag 
     - DELETE /api/tag 
     - ```
@@ -411,4 +466,20 @@
     - Returns  
     ```
       {}
+    ```
+
+- ### Search tags, recipes, users
+    - GET /api/search 
+    - ```
+      {
+        "query": "test"
+      }
+      ```
+    - Returns  
+    ```
+      {
+        "recipes": [recipeObject, ...],
+        "users": ["test1", "test2"],
+        "tags": ["Test Tag"]
+      }
     ```
