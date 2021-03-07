@@ -11,7 +11,7 @@ router.route('/user')
     })
     // Read
     .get(async (req, res) => {
-      result = await db.readUser(req.body.username)
+      result = await db.readUser(req.query.username)
       res.send(result)
     })
     // Update
@@ -28,7 +28,7 @@ router.route('/user')
 router.route('/publicUser')
     // Read
     .get(async (req, res) => {
-      result = await db.readUserPublic(req.body.username)
+      result = await db.readUserPublic(req.query.username)
       res.send(result)
     })
 
@@ -40,7 +40,7 @@ router.route('/recipe')
     })
     // Read
     .get(async (req, res) => {
-      result = await db.readRecipe(req.body.recipeId)
+      result = await db.readRecipe(req.query.recipeId)
       res.send(result)
     })
     // Update
@@ -62,7 +62,7 @@ router.route('/forum')
       })
     // Read
     .get(async (req, res) => {
-      result = await db.readForumPost(req.body.postId)
+      result = await db.readForumPost(req.query.postId)
       res.send(result)
       })
     // Update
@@ -113,39 +113,39 @@ router.route('/comment')
 router.route('/recipes')
     // Read
     .get(async (req, res) => { 
-        switch (req.body.for) {
+        switch (req.query.for) {
           case "feedUser":
-            result = await db.getRecipesForFeedByUsers(req.body.username, req.body.filters, req.body.sortBy, req.body.skip)
+            result = await db.getRecipesForFeedByUsers(req.query.username, req.query.filters, req.query.sortBy, req.query.skip)
             res.send(result)
             break;
           
           case "feedTag":
-            result = await db.getRecipesForFeedByTags(req.body.username, req.body.filters, req.body.sortBy, req.body.skip)
+            result = await db.getRecipesForFeedByTags(req.query.username, req.query.filters, req.query.sortBy, req.query.skip)
             res.send(result)
             break;
 
           case "explore":
-            result = await db.getRecipesForExplore(req.body.skip)
+            result = await db.getRecipesForExplore(req.query.skip)
             res.send(result)
             break;
 
           case "recipe book":
-            result = await db.getRecipesForRecipeBook(req.body.username, req.body.filters, req.body.sortBy, req.body.skip)
+            result = await db.getRecipesForRecipeBook(req.query.username, req.query.filters, req.query.sortBy, req.query.skip)
             res.send(result)
             break;
 
           case "profile":
-            result = await db.getRecipesForProfile(req.body.username, req.body.skip)
+            result = await db.getRecipesForProfile(req.query.username, req.query.skip)
             res.send(result)
             break;
 
           case "tag":
-            result = await db.getRecipesForTag(req.body.tagName, req.body.skip)
+            result = await db.getRecipesForTag(req.query.tagName, req.query.skip)
             res.send(result)
             break;
 
           default:
-            res.send("Must specify FOR parameter in body!")
+            res.send("Must specify FOR query parameter!")
         }
       })
 
@@ -171,7 +171,7 @@ router.route('/tag')
 
     // Get tags for explore page
     .get(async (req, res) => {
-        if (req.body.type == "all") {
+        if (req.query.type == "all") {
           result = await db.getAllTags()
           res.send(result)
         } else {
@@ -194,7 +194,7 @@ router.route('/rate')
     })
     // Get recipe reviews
     .get(async (req, res) => {
-      result = await db.getRatings(req.body.recipeId)
+      result = await db.getRatings(req.query.recipeId)
       res.send(result)
     })
     // Delete
@@ -205,7 +205,7 @@ router.route('/rate')
 
 router.route('/search')
     .get(async (req, res) => {
-      result = await db.search(req.body.query)
+      result = await db.search(req.query.query)
       res.send(result)
     });
 module.exports = router;

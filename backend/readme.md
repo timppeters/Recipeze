@@ -2,6 +2,7 @@
 
 ## Endpoints
 #### All parameters should be included in the request body as JSON
+#### For GET requests, put the paramters as query parameters in the URL
 #### In the future, username will come from the logged in user so you won't have to send it as a parameter
 
 - ### Create a user 
@@ -128,14 +129,14 @@
         "description": "This is my lovely tomato soup...",
         "ingredients": ["tomatoes", "water"],
         "ingredientsAmounts": ["200g", "500ml"] // Corresponds with index of ingredients
-        "instructions": "{
+        "instructions": {
             "1": "First step",
             "2": "Second step"
-        }",
-        "images": "{
+        },
+        "images": {
             // instructionNumber : base64EncodedImage
             "1": "base64://jsdfur8924y8fhhjhasdasduhfJKHASDFJK"
-        }",
+        },
         "tags": ["Gluten Free"],
         "prepTime": 30 // in minutes
         "cookTime": 90 // in minutes
@@ -144,7 +145,7 @@
 
 
 - ### Read multiple recipes (for feed, explore, recipe book, profile, tag) 
-    - GET /api/recipe 
+    - GET /api/recipes  
     - ```
       {
         "for": "feedUser" / "feedTag" / "explore" / "recipe book"/ "profile" / "tag",
@@ -166,6 +167,7 @@
       {
         "recipes": [recipeObject * 10]
       }
+      
     ```
 
 - ### Update a recipe
@@ -399,7 +401,7 @@
     ```
 
 - ### Get tags (all or most popular 5)  
-    - POST /api/tag 
+    - GET /api/tag 
     - ```
       {
         "type": "all" / "popular5"
@@ -408,11 +410,9 @@
     - Returns  
     ```
       {
-        {
-          "Gluten Free": 421,
-          "Dairy Free": 376,
-          ...
-        }
+        "Gluten Free": 421,
+        "Dairy Free": 376,
+        ...
       }
     ```
 

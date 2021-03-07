@@ -2,6 +2,8 @@ package com.group2.recipeze.data;
 
 import com.group2.recipeze.data.model.LoggedInUser;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 /**
@@ -9,14 +11,12 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public Result<LoggedInUser> login(String username) {
 
         try {
             // TODO: handle loggedInUser authentication
             LoggedInUser fakeUser =
-                    new LoggedInUser(
-                            java.util.UUID.randomUUID().toString(),
-                            "Jane Doe");
+                    new LoggedInUser(username, "example@example.com", "This is my bio", new JSONObject());
             return new Result.Success<>(fakeUser);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));

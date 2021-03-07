@@ -2,6 +2,7 @@ package com.group2.recipeze;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

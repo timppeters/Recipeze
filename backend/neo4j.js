@@ -127,6 +127,11 @@ async function readRecipe(recipeId) {
     if (records) {
         records.forEach(record => {
             result = record.get('properties')
+            result['likes'] = result['likes']['low']
+            result['cookTime'] = result['cookTime']['low']
+            result['prepTime'] = result['prepTime']['low']
+            result['instructions'] = JSON.parse(result['instructions'])
+            result['images'] = JSON.parse(result['images'])
           })
     }
     return result
@@ -390,18 +395,24 @@ async function getRecipesForFeedByUsers(username, filters, sortBy, skip) {
     {
         username,
         maxTime: parseInt(filters.maxTime),
-        ingredients: filters.ingredients,
+        ingredients: JSON.parse(filters.ingredients),
         maxNumberOfIngredients: parseInt(filters.maxNumberOfIngredients),
-        tags: filters.tags,
+        tags: JSON.parse(filters.tags),
         sortBy,
         skip: neo4j.int(skip)
     });
     if (records) {
         records.forEach(record => {
-            result.push(record.get('properties'))
+            recipe = record.get('properties');
+            recipe['likes'] = recipe['likes']['low']
+            recipe['cookTime'] = recipe['cookTime']['low']
+            recipe['prepTime'] = recipe['prepTime']['low']
+            recipe['instructions'] = JSON.parse(recipe['instructions'])
+            recipe['images'] = JSON.parse(recipe['images'])
+            result.push(recipe);
           })
     }
-    return result
+    return {"recipes": result}
     
 }
 
@@ -415,18 +426,24 @@ async function getRecipesForFeedByTags(username, filters, sortBy, skip) {
     {
         username,
         maxTime: parseInt(filters.maxTime),
-        ingredients: filters.ingredients,
+        ingredients: JSON.parse(filters.ingredients),
         maxNumberOfIngredients: parseInt(filters.maxNumberOfIngredients),
-        tags: filters.tags,
+        tags: JSON.parse(filters.tags),
         sortBy,
         skip: neo4j.int(skip)
     });
     if (records) {
         records.forEach(record => {
-            result.push(record.get('properties'))
+            recipe = record.get('properties');
+            recipe['likes'] = recipe['likes']['low']
+            recipe['cookTime'] = recipe['cookTime']['low']
+            recipe['prepTime'] = recipe['prepTime']['low']
+            recipe['instructions'] = JSON.parse(recipe['instructions'])
+            recipe['images'] = JSON.parse(recipe['images'])
+            result.push(recipe);
           })
     }
-    return result
+    return {"recipes": result}
     
 }
 
@@ -438,10 +455,16 @@ async function getRecipesForExplore(skip) {
     });
     if (records) {
         records.forEach(record => {
-            result.push(record.get('properties'))
+            recipe = record.get('properties');
+            recipe['likes'] = recipe['likes']['low']
+            recipe['cookTime'] = recipe['cookTime']['low']
+            recipe['prepTime'] = recipe['prepTime']['low']
+            recipe['instructions'] = JSON.parse(recipe['instructions'])
+            recipe['images'] = JSON.parse(recipe['images'])
+            result.push(recipe);
           })
     }
-    return result
+    return {"recipes": result}
 }
 
 async function getRecipesForRecipeBook(username, filters, sortBy, skip) {
@@ -454,18 +477,24 @@ async function getRecipesForRecipeBook(username, filters, sortBy, skip) {
     {
         username,
         maxTime: parseInt(filters.maxTime),
-        ingredients: filters.ingredients,
+        ingredients: JSON.parse(filters.ingredients),
         maxNumberOfIngredients: parseInt(filters.maxNumberOfIngredients),
-        tags: filters.tags,
+        tags: JSON.parse(filters.tags),
         sortBy,
         skip: neo4j.int(skip)
     });
     if (records) {
         records.forEach(record => {
-            result.push(record.get('properties'))
+            recipe = record.get('properties');
+            recipe['likes'] = recipe['likes']['low']
+            recipe['cookTime'] = recipe['cookTime']['low']
+            recipe['prepTime'] = recipe['prepTime']['low']
+            recipe['instructions'] = JSON.parse(recipe['instructions'])
+            recipe['images'] = JSON.parse(recipe['images'])
+            result.push(recipe);
           })
     }
-    return result
+    return {"recipes": result}
     
 }
 
@@ -478,10 +507,16 @@ async function getRecipesForProfile(username, skip) {
     });
     if (records) {
         records.forEach(record => {
-            result.push(record.get('properties'))
+            recipe = record.get('properties');
+            recipe['likes'] = recipe['likes']['low']
+            recipe['cookTime'] = recipe['cookTime']['low']
+            recipe['prepTime'] = recipe['prepTime']['low']
+            recipe['instructions'] = JSON.parse(recipe['instructions'])
+            recipe['images'] = JSON.parse(recipe['images'])
+            result.push(recipe);
           })
     }
-    return result
+    return {"recipes": result}
     
 }
 
@@ -494,10 +529,16 @@ async function getRecipesForTag(tagName, skip) {
     });
     if (records) {
         records.forEach(record => {
-            result.push(record.get('properties'))
+            recipe = record.get('properties');
+            recipe['likes'] = recipe['likes']['low']
+            recipe['cookTime'] = recipe['cookTime']['low']
+            recipe['prepTime'] = recipe['prepTime']['low']
+            recipe['instructions'] = JSON.parse(recipe['instructions'])
+            recipe['images'] = JSON.parse(recipe['images'])
+            result.push(recipe);
           })
     }
-    return result
+    return {"recipes": result}
     
 }
 
@@ -515,6 +556,13 @@ async function search(query) {
     if (records) {
         records.forEach(record => {
             result = record.get('results')
+            result['recipes'].forEach(recipe => {
+                recipe['likes'] = recipe['likes']['low']
+                recipe['cookTime'] = recipe['cookTime']['low']
+                recipe['prepTime'] = recipe['prepTime']['low']
+                recipe['instructions'] = JSON.parse(recipe['instructions'])
+                recipe['images'] = JSON.parse(recipe['images'])
+            })
           })
     }
     return result
