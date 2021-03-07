@@ -239,20 +239,45 @@
     ```
       {
         "author": "test1",
+        "title": "Gluten Free test",
+        "body": "this is a forum for the gluten free tag",
+        "likes": 20,
         "comments": [
           {
             "author": "test2",
-            "id": 9,
-            "body": "Test comment"
+            "commentId": "9",
+            "body": "Test comment",
           },
           {
             "author": "test1",
-            "id": 8,
-            "body": "Great place to have discussions!"
+            "commentId": "8",
+            "body": "Great place to have discussions!",
           }
         ],
-        "title": "Gluten Free test",
-        "body": "this is a forum for the gluten free tag"
+      }
+    ```
+
+
+- ### Get Forum posts by Tag  
+    - GET /api/posts 
+    - ```
+      {
+        "tag": "Gluten Free",
+      }
+      ```
+    - Returns  
+    ```
+      {
+        "posts": [
+          {
+            "author": "test1",
+            "title": "Gluten Free test",
+            "body": "this is a forum for the gluten free tag",
+            "likes": 20
+            "postId": "1234"
+          },
+          ...
+        ]
       }
     ```
 
@@ -452,7 +477,16 @@
       ```
     - Returns  
     ```
-      {}
+      {
+        "ratings": [
+            {
+              "review": "good soup!",
+              "rating": 4,
+              "user": "test1"
+            },
+            ...
+        ]
+      }
     ```
 
 - ### Delete a rating

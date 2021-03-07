@@ -7,6 +7,7 @@ public class Tag {
     private String name;
     // private Forum forum;
     private ArrayList<Recipe> recipes;
+    private int numberOfRecipes;
 
     /**
      * Tag
@@ -17,12 +18,24 @@ public class Tag {
     }
 
     /**
-     * Tag with list of recipes
+     * Tag with numberOfRecipes
      * @param name
+     * @param numberOfRecipes
+     */
+    public Tag(String name, int numberOfRecipes) {
+        this.name = name;
+        this.numberOfRecipes = numberOfRecipes;
+    }
+
+    /**
+     * Tag with numberOfRecipes + list of recipes
+     * @param name
+     * @param numberOfRecipes
      * @param recipes
      */
-    public Tag(String name, ArrayList<Recipe> recipes) {
+    public Tag(String name, int numberOfRecipes, ArrayList<Recipe> recipes) {
         this.name = name;
+        this.numberOfRecipes = numberOfRecipes;
         this.recipes = recipes;
     }
 
@@ -36,5 +49,13 @@ public class Tag {
 
     public void setRecipes(ArrayList<Recipe> recipes) {
         this.recipes = recipes;
+    }
+
+    public int getNumberOfRecipes() {
+        return numberOfRecipes;
+    }
+
+    public void setNumberOfRecipes(int numberOfRecipes) {
+        this.numberOfRecipes = numberOfRecipes;
     }
 }

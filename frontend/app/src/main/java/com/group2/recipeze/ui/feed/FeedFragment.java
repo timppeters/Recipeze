@@ -50,9 +50,7 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
-                TextView textView = root.findViewById(R.id.recipesTest);
-                textView.setText("SUCCESS!!!");
-                System.out.println(recipes.toArray().toString());
+                // Populate endlessScroll with recipes
             }
         });
         return root;

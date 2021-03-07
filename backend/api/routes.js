@@ -76,6 +76,13 @@ router.route('/forum')
       res.send(result)
       })
 
+router.route('/posts')
+      // Get
+      .get(async (req, res) => {
+        result = await db.getForumPostsByTag(req.query.tag)
+        res.send(result)
+      })
+
 router.route('/like')
     // Create
     .post(async (req, res) => {

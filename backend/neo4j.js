@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const neo4j = require('neo4j-driver')
 
 const driver = neo4j.driver(
@@ -85,9 +84,9 @@ async function deleteUser(username) {
     return result  
 }
 
-async function createRecipe(username, title, description, ingredients, ingredientsAmounts, instructions, rating, images, tags, prepTime, cookTime) {
+async function createRecipe(username, title, description, ingredients, ingredientsAmounts, instructions, images, tags, prepTime, cookTime) {
     let result = {}
-    let records = await cypher(`MATCH (u:User {username: $username}) CREATE (n:Recipe {title: $title, description: $description, ingredients: $ingredients, ingredientsAmounts: $ingredientsAmounts, instructions: $instructions, rating: $rating, images: $images, prepTime: $prepTime, cookTime: $cookTime, creationTime: datetime()})<-[:AUTHOR_OF]-(u) RETURN ID(n)`,
+    let records = await cypher(`MATCH (u:User {username: $username}) CREATE (n:Recipe {title: $title, description: $description, ingredients: $ingredients, ingredientsAmounts: $ingredientsAmounts, instructions: $instructions, images: $images, prepTime: $prepTime, cookTime: $cookTime, creationTime: datetime()})<-[:AUTHOR_OF]-(u) RETURN ID(n)`,
     {
         username,
         title,
@@ -95,14 +94,13 @@ async function createRecipe(username, title, description, ingredients, ingredien
         ingredients,
         ingredientsAmounts,
         instructions,
-        rating,
         images,
         prepTime,
         cookTime
     });
     if (records) {
         records.forEach(record => {
-            result['recipeId'] = record.get('ID(n)')
+            result['recipeId'] = record.get('ID(n)')['low']
           })
     }
 
@@ -178,7 +176,7 @@ async function createForumPost(username, title, body, tag) {
     });
     if (records) {
         records.forEach(record => {
-            result['postId'] = record.get('ID(f)')
+            result['postId'] = record.get('ID(f)')['low']
           })
     }
     return result
@@ -187,13 +185,35 @@ async function createForumPost(username, title, body, tag) {
 
 async function readForumPost(postId) {
     let result = {}
-    let records = await cypher(`MATCH (n:Forum_Post)<-[:AUTHOR_OF]-(a:User), (n)<-[:IN]-(c:Comment), (c)<-[:AUTHOR_OF]-(u:User) WHERE ID(n)=$postId WITH properties(n) as properties, collect({body: c.body, author: u.username, id: ID(c)}) as comments, a.username as author RETURN properties{.*, comments: comments, author: author}`,
+    let records = await cypher(`MATCH (n:Forum_Post)<-[:AUTHOR_OF]-(a:User), (n)<-[:IN]-(c:Comment), (c)<-[:AUTHOR_OF]-(u:User) WHERE ID(n)=$postId WITH properties(n) as properties, collect({body: c.body, author: u.username, commentId: ID(c)}) as comments, a.username as author, size((n)<-[:LIKED]-(:User)) as likes RETURN properties{.*, comments: comments, author: author, likes: likes}`,
     {
         postId: parseInt(postId)
     });
     if (records) {
         records.forEach(record => {
             result = JSON.parse(JSON.stringify(record.get('properties')))
+            result['likes'] = result['likes']['low']
+          })
+    }
+    return result
+    
+}
+
+async function getForumPostsByTag(tagName) {
+    let result = {}
+    let records = await cypher(`MATCH (t:Tag {name: "Gluten Free"})<-[:IN]-(n:Forum_Post)<-[:AUTHOR_OF]-(a:User) WITH properties(n) as properties, a.username as author, size((n)<-[:LIKED]-(:User)) as likes, ID(n) as postId RETURN collect(properties{.*, author: author, likes: likes, postId: postId}) as posts`,
+    {
+        tagName: tagName
+    });
+    if (records) {
+        records.forEach(record => {
+            result['posts'] = JSON.parse(JSON.stringify(record.get('posts')))
+            console.log(result)
+            result['posts'].forEach( post => {
+                post['likes'] = post['likes']['low']
+                post['postId'] = post['postId']['low']
+            })
+            
           })
     }
     return result
@@ -360,7 +380,7 @@ async function getRatings(recipeId) {
     {
         recipeId
     });
-    return result
+    return {"ratings": result}
 }
 
 async function deleteRating(username, recipeId) {
@@ -622,3 +642,4 @@ exports.getRecipesForRecipeBook = getRecipesForRecipeBook;
 exports.getRecipesForProfile = getRecipesForProfile;
 exports.getRecipesForTag = getRecipesForTag;
 exports.search = search;
+exports.getForumPostsByTag = getForumPostsByTag;
