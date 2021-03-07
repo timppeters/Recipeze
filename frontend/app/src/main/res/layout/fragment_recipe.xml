@@ -93,6 +93,27 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/ingredientsList"
+                        android:layout_width="349dp"
+                        android:layout_height="131dp"
+                        app:layout_constraintBottom_toTopOf="@+id/steps"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.645"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recipeDescription"
+                        app:layout_constraintVertical_bias="0.52" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/stepList"
+                        android:layout_width="336dp"
+                        android:layout_height="53dp"
+                        android:layout_marginTop="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.533"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/steps" />
+
                     <ImageView
                         android:id="@+id/timer"
                         android:layout_width="59dp"
@@ -198,19 +219,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/recipeName" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/ingredients"
-                        android:layout_width="265dp"
-                        android:layout_height="121dp"
-                        app:layout_constraintBottom_toTopOf="@+id/steps"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.273"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recipeDescription"
-                        app:layout_constraintVertical_bias="0.539">
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
                     <TextView
                         android:id="@+id/steps"
                         android:layout_width="wrap_content"
@@ -224,6 +232,18 @@
                         app:layout_constraintHorizontal_bias="0.122"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/recipeDescription" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Watch Video"
+                        app:layout_constraintBottom_toTopOf="@+id/stepList"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.795"
+                        app:layout_constraintStart_toEndOf="@+id/steps"
+                        app:layout_constraintTop_toBottomOf="@+id/ingredientsList"
+                        app:layout_constraintVertical_bias="0.4" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
