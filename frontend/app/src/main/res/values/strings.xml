@@ -40,6 +40,14 @@
 
     <string name="title_activity_settings">Hi</string>
 
+
+    <!--searching recipe page-->
+    <string name="forum_button">Forum</string>
+    <string name= "filter_button">Filter</string>
+
+    <!--filter page-->
+    <string name="filterSpin">Filters</string>
+
     <!-- Settings -->
     <!-- Preference Titles -->
     <string name="view_pref_header">View Preferences</string>
@@ -63,6 +71,8 @@
     <string name="delete_account">Delete Account</string>
     <string name="my_recipes">My Recipes</string>
     <string name="edit_food_preferences">Edit Food Preferences</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
