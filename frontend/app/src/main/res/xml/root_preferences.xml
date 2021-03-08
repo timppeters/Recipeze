@@ -6,6 +6,7 @@
         app:icon="@drawable/gear"
         app:title="@string/view_pref_header">
 
+
         <SwitchPreferenceCompat
             app:key="notifications"
             app:summaryOff="You will receive all notifications"

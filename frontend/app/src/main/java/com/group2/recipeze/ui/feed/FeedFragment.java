@@ -71,6 +71,5 @@ public class FeedFragment extends Fragment {
         //ingredients.add("tomatoes");
         ArrayList<String> tags = new ArrayList<String>();
         recipeRepository.getRecipesForFeedByUsers(130, ingredients, 6, tags, "likes", 0, recipes);
-
     }
 }

@@ -26,4 +26,15 @@
         <item>Option</item>
         <item>Opt</item>
     </string-array>
+
+    <!-- filter recipe options for search spinner -->
+    <string-array name="filterOptions">
+        <item>None</item>
+        <item>vegan</item>
+        <item>vegatarian</item>
+        <item>time</item>
+    </string-array>
+
+
+
 </resources>
