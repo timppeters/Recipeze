@@ -4,20 +4,17 @@ public class Comment {
 
     private int commentId;
     private String author;
-    private ForumPost post;
     private String body;
 
     /**
      * Forum post comment
      * @param commentId
      * @param author
-     * @param post
      * @param body
      */
-    public Comment(int commentId, String author, ForumPost post, String body) {
+    public Comment(int commentId, String author, String body) {
         this.commentId = commentId;
         this.author = author;
-        this.post = post;
         this.body = body;
     }
 
@@ -27,14 +24,6 @@ public class Comment {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public ForumPost getPost() {
-        return post;
-    }
-
-    public void setPost(ForumPost post) {
-        this.post = post;
     }
 
     public int getCommentId() {

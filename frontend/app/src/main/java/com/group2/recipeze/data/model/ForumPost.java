@@ -6,7 +6,7 @@ public class ForumPost {
     private String username;
     private String title;
     private String body;
-    private Tag tag;
+    private Comment[] comments;
 
     /**
      * Forum post
@@ -14,14 +14,14 @@ public class ForumPost {
      * @param username
      * @param title
      * @param body
-     * @param tag
+     * @param comments
      */
-    public ForumPost(int postId, String username, String title, String body, Tag tag) {
+    public ForumPost(int postId, String username, String title, String body, Comment[] comments) {
         this.postId = postId;
         this.username = username;
         this.title = title;
         this.body = body;
-        this.tag = tag;
+        this.comments = comments;
     }
 
     public int getPostId() {
@@ -56,11 +56,11 @@ public class ForumPost {
         this.body = body;
     }
 
-    public Tag getTag() {
-        return tag;
+    public Comment[] getComments() {
+        return comments;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setComments(Comment[] comments) {
+        this.comments = comments;
     }
 }

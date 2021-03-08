@@ -2,6 +2,8 @@ package com.group2.recipeze.data.model;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
@@ -10,9 +12,10 @@ public class LoggedInUser {
     private String username;
     private String email;
     private String bio;
-    private JSONObject settings;
+    private HashMap<String, ?> settings;
+    private String token;
 
-    public LoggedInUser(String username, String email, String bio, JSONObject settings) {
+    public LoggedInUser(String username, String email, String bio, HashMap<String, ?> settings) {
         this.username = username;
         this.email = email;
         this.bio = bio;
@@ -43,11 +46,19 @@ public class LoggedInUser {
         this.bio = bio;
     }
 
-    public JSONObject getSettings() {
+    public HashMap<String, ?> getSettings() {
         return settings;
     }
 
-    public void setSettings(JSONObject settings) {
+    public void setSettings(HashMap<String, ?> settings) {
         this.settings = settings;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

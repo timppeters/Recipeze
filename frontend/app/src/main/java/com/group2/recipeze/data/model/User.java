@@ -6,7 +6,6 @@ public class User {
 
     private String username;
     private String bio;
-    private ArrayList<Recipe> recipes;
 
     /**
      * External user (not logged in) with username
@@ -17,15 +16,13 @@ public class User {
     }
 
     /**
-     * External user (not logged in) with username, bio, and recipes they have authored
+     * External user (not logged in) with username, bio
      * @param username
      * @param bio
-     * @param recipes
      */
-    public User(String username, String bio, ArrayList<Recipe> recipes) {
+    public User(String username, String bio) {
         this.username = username;
         this.bio = bio;
-        this.recipes = recipes;
     }
 
     public String getUsername() {
@@ -36,11 +33,4 @@ public class User {
         return bio;
     }
 
-    public ArrayList<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(ArrayList<Recipe> recipes) {
-        this.recipes = recipes;
-    }
 }
