@@ -138,9 +138,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="252dp"
-        android:layout_marginBottom="584dp"
         android:contentDescription="@string/noodles"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_noodles_nonstop" />
 </androidx.constraintlayout.widget.ConstraintLayout>
