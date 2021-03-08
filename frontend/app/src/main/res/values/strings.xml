@@ -71,6 +71,8 @@
     <string name="delete_account">Delete Account</string>
     <string name="my_recipes">My Recipes</string>
     <string name="edit_food_preferences">Edit Food Preferences</string>
+    <string name="invalid_email">Invalid email</string>
+  
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

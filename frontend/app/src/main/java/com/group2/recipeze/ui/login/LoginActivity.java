@@ -16,12 +16,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
-import com.auth0.android.Auth0;
-import com.auth0.android.lock.AuthenticationCallback;
-import com.auth0.android.lock.Lock;
-import com.auth0.android.lock.LockCallback;
-import com.auth0.android.lock.utils.LockException;
-import com.auth0.android.result.Credentials;
 import com.group2.recipeze.MainActivity;
 import com.group2.recipeze.R;
 import com.group2.recipeze.ui.SplashActivity;
@@ -31,14 +25,11 @@ import com.group2.recipeze.ui.login.LoginViewModelFactory;
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
-    private Lock lock;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Auth0 auth0 = new Auth0(this);
-        //Configure the account in OIDC conformant mode
-        auth0.setOIDCConformant(true);
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
@@ -51,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         emailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginViewModel.login("test2");
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -59,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginViewModel.login("test2");
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -67,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         facebookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginViewModel.login("test2");
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -79,11 +73,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         // Your own Activity code
-        //lock.onDestroy(this);
-        lock = null;
     }
 
-    private LockCallback callback = new AuthenticationCallback() {
+    /*private  callback = new AuthenticationCallback() {
         @Override
         public void onAuthentication(Credentials credentials) {
             LoggedInUserView model = new LoggedInUserView("Test");
@@ -103,10 +95,10 @@ public class LoginActivity extends AppCompatActivity {
         public void onError(LockException error){
             showLoginFailed(android.R.string.httpErrorBadUrl);
         }
-    };
+    };*/
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome = getString(R.string.welcome) + model.getUsername();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }

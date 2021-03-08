@@ -1,23 +1,64 @@
 package com.group2.recipeze.data.model;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    private String username;
+    private String email;
+    private String bio;
+    private HashMap<String, ?> settings;
+    private String token;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
+    public LoggedInUser(String username, String email, String bio, HashMap<String, ?> settings) {
+        this.username = username;
+        this.email = email;
+        this.bio = bio;
+        this.settings = settings;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public HashMap<String, ?> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(HashMap<String, ?> settings) {
+        this.settings = settings;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
