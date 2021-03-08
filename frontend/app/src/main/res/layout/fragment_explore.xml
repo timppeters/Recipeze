@@ -158,8 +158,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exploreRecipes"
         android:layout_width="0dp"
-        android:layout_height="246dp"
-        android:layout_marginBottom="32dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="56dp"
         android:fadingEdgeLength="16dp"
         android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
