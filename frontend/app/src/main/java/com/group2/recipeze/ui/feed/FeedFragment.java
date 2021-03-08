@@ -66,6 +66,7 @@ public class FeedFragment extends Fragment {
         endlessScrollManager.initScrollListener();
 
 
+        // Just an example request
         ArrayList<String> ingredients = new ArrayList<String>();
         //ingredients.add("tomatoes");
         ArrayList<String> tags = new ArrayList<String>();

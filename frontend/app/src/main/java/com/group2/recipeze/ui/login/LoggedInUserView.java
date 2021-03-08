@@ -2,6 +2,8 @@ package com.group2.recipeze.ui.login;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 /**
  * Class exposing authenticated user details to the UI.
  */
@@ -9,9 +11,9 @@ class LoggedInUserView {
     private String username;
     private String email;
     private String bio;
-    private JSONObject settings;
+    private HashMap<String, ?> settings;
 
-    LoggedInUserView(String username, String email, String bio, JSONObject settings) {
+    LoggedInUserView(String username, String email, String bio, HashMap<String, ?> settings) {
 
         this.username = username;
         this.email = email;
@@ -43,11 +45,11 @@ class LoggedInUserView {
         this.bio = bio;
     }
 
-    public JSONObject getSettings() {
+    public HashMap<String, ?> getSettings() {
         return settings;
     }
 
-    public void setSettings(JSONObject settings) {
+    public void setSettings(HashMap<String, ?> settings) {
         this.settings = settings;
     }
 }
