@@ -1,12 +1,16 @@
 package com.group2.recipeze.ui.feed;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -31,6 +35,10 @@ public class FeedFragment extends Fragment {
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
 
+    Button tagsBtn;
+    Button usersBtn;
+    Drawable selectedTab;
+
     private FeedViewModel feedViewModel;
 
     /**
@@ -53,6 +61,28 @@ public class FeedFragment extends Fragment {
                 // Populate endlessScroll with recipes
             }
         });
+
+        tagsBtn = root.findViewById(R.id.tagsTab);
+        usersBtn = root.findViewById(R.id.usersTab);
+
+        selectedTab = ContextCompat.getDrawable(getContext(), R.drawable.tab_background);
+
+        tagsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tagsBtn.setBackground(selectedTab);
+                usersBtn.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
+        usersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usersBtn.setBackground(selectedTab);
+                tagsBtn.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
         return root;
     }
 
@@ -72,4 +102,6 @@ public class FeedFragment extends Fragment {
         ArrayList<String> tags = new ArrayList<String>();
         recipeRepository.getRecipesForFeedByUsers(130, ingredients, 6, tags, "likes", 0, recipes);
     }
+
+
 }
