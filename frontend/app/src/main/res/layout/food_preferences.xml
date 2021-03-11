@@ -31,8 +31,8 @@
         android:textOn="Gluten Free"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.417"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toEndOf="@+id/tag3"
         app:layout_constraintTop_toBottomOf="@+id/tag2"
         app:layout_constraintVertical_bias="0.051" />
 
@@ -122,8 +122,8 @@
         android:textOn="Keto Diet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.417"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toEndOf="@+id/tag8"
         app:layout_constraintTop_toBottomOf="@+id/tag6"
         app:layout_constraintVertical_bias="0.151" />
 
@@ -135,6 +135,7 @@
         android:textColor="@color/green"
         android:textOff="Low-carb Diet"
         android:textOn="Low-carb Diet"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.089"
@@ -219,8 +220,8 @@
         android:textOn="Peanut Free"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.743"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toEndOf="@+id/tag1"
         app:layout_constraintTop_toBottomOf="@+id/tag10"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -264,8 +265,8 @@
         android:textOn="Detox Diet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.743"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toEndOf="@+id/tag7"
         app:layout_constraintTop_toBottomOf="@+id/tag11"
         app:layout_constraintVertical_bias="0.151" />
 </androidx.constraintlayout.widget.ConstraintLayout>
