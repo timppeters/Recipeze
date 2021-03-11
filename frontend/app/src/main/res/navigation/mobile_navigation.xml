@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_foodPreferences2_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_foodPreferences2_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
     </fragment>
 
 </navigation>

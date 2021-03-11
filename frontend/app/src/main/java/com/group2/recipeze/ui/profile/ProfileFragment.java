@@ -14,8 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.recipeze.R;
+import com.group2.recipeze.RecyclerViewAdapter;
+import com.group2.recipeze.endlessScroll;
+
+import java.util.ArrayList;
 
 /**
  * ProfileFragment.
@@ -23,6 +29,8 @@ import com.group2.recipeze.R;
 public class ProfileFragment extends Fragment{
 
     private ProfileViewModel profileViewModel;
+    RecyclerView recyclerView;
+    endlessScroll endlessScrollManager;
 
     /**
      * Called when view is created.
@@ -63,6 +71,15 @@ public class ProfileFragment extends Fragment{
                 NavHostFragment.findNavController(here2).navigate(R.id.action_navigation_profile_to_foodPreferences2);
             }
         });
+
+        recyclerView = root.findViewById(R.id.profileRecipes);
+        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        endlessScrollManager = new endlessScroll(recyclerView);
+        endlessScrollManager.populateData();
+        endlessScrollManager.initAdapter();
+        endlessScrollManager.initScrollListener();
+
 
         return root;
     }
