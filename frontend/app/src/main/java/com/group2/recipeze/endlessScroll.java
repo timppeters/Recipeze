@@ -29,8 +29,7 @@ public class endlessScroll {
     }
 
     public void initAdapter() {
-
-        recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList);
+        recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList, null);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 

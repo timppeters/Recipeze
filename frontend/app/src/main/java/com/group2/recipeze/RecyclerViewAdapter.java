@@ -17,10 +17,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public List<String> mItemList;
 
+    public RecyclerViewClickListener listener;
 
-    public RecyclerViewAdapter(List<String> itemList) {
 
+    public RecyclerViewAdapter(List<String> itemList, RecyclerViewClickListener listener) {
         mItemList = itemList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -64,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder {
+    private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvItem;
 
@@ -72,6 +74,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(itemView);
 
             tvItem = itemView.findViewById(R.id.recipe_title3);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onClick(v, getAdapterPosition());
         }
     }
 
@@ -97,5 +105,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    public interface RecyclerViewClickListener {
+        void onClick(View v, int position);
+    }
 
 }

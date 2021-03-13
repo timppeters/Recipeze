@@ -1,6 +1,7 @@
 package com.group2.recipeze.ui.recipeBook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +18,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.recipeze.R;
+import com.group2.recipeze.RecyclerViewAdapter;
+import com.group2.recipeze.endlessScroll;
+import com.group2.recipeze.ui.recipe.RecipeFragment;
+
+import java.util.ArrayList;
 
 /**
  * RecipeBookFragment.
  */
 public class RecipeBookFragment extends Fragment {
+
+    RecyclerView recipeBookRecyclerView;
+    RecyclerViewAdapter.RecyclerViewClickListener listener;
+    endlessScroll endlessScrollManager;
 
     private RecipeBookViewModel recipeBookViewModel;
 
@@ -35,36 +47,29 @@ public class RecipeBookFragment extends Fragment {
      * @param savedInstanceState
      * @return
      */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        recipeBookViewModel =
-                new ViewModelProvider(this).get(RecipeBookViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        recipeBookViewModel = new ViewModelProvider(this).get(RecipeBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
 
-        final TextView textView = root.findViewById(R.id.text_recipeBook);
-        Button button = root.findViewById(R.id.button_recipeX);
-        Fragment here = this;
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(here).navigate(R.id.action_navigation_recipeBook_to_recipe);
-            }
-        });
-
-        recipeBookViewModel.getMeText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
-        recipeBookViewModel.getButtonText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {  button.setText(s); }
-        });
+        recipeBookRecyclerView = root.findViewById(R.id.recipes);
+        setOnClickListener(this);
+        recipeBookRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), listener));
+        recipeBookRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        endlessScrollManager = new endlessScroll(recipeBookRecyclerView);
+        endlessScrollManager.populateData();
+        endlessScrollManager.initAdapter();
+        endlessScrollManager.initScrollListener();
 
         return root;
+    }
+
+    private void setOnClickListener(Fragment here) {
+        listener = new RecyclerViewAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                NavHostFragment.findNavController(here).navigate(R.id.action_navigation_recipeBook_to_recipe);
+            }
+        };
     }
 
 }

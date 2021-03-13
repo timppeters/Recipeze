@@ -47,7 +47,7 @@ public class ExploreFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_explore, container, false);
 
         recyclerView = root.findViewById(R.id.exploreRecipes);
-        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(recyclerView);
         endlessScrollManager.populateData();

@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -57,8 +56,8 @@ public class FeedFragment extends Fragment {
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        feedRecyclerView = view.findViewById(R.id.feedRecipes);
-        feedRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        feedRecyclerView = view.findViewById(R.id.recipes);
+        feedRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
         feedRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(feedRecyclerView);
         endlessScrollManager.populateData();

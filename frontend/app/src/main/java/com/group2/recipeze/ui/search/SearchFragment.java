@@ -46,7 +46,7 @@ public class SearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.search_fragment, container, false);
 
         searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(searchRecyclerView);
         endlessScrollManager.populateData();

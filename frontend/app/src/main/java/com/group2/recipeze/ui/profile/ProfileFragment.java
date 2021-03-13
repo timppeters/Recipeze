@@ -40,10 +40,8 @@ public class ProfileFragment extends Fragment{
      * @param savedInstanceState
      * @return
      */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         final TextView textView = root.findViewById(R.id.text_profile);
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -73,7 +71,7 @@ public class ProfileFragment extends Fragment{
         });
 
         recyclerView = root.findViewById(R.id.profileRecipes);
-        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(recyclerView);
         endlessScrollManager.populateData();
