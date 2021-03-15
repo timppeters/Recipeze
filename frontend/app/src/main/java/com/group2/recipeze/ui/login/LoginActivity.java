@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.auth0.android.Auth0;
 import com.auth0.android.lock.AuthenticationCallback;
@@ -14,6 +18,9 @@ import com.auth0.android.lock.Lock;
 import com.auth0.android.lock.LockCallback;
 import com.auth0.android.lock.utils.LockException;
 import com.auth0.android.result.Credentials;
+
+import com.group2.recipeze.MainActivity;
+
 import com.group2.recipeze.R;
 import com.group2.recipeze.ui.login.LoginViewModel;
 import com.group2.recipeze.ui.login.LoginViewModelFactory;
@@ -32,6 +39,39 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+
+        Button emailBtn = this.findViewById(R.id.emailBtn);
+        Button googleBtn = this.findViewById(R.id.googleBtn);
+        Button facebookBtn = this.findViewById(R.id.facebookBtn);
+
+        emailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginViewModel.login("nada_maghazy");
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        googleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginViewModel.login("nada_maghazy");
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        facebookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginViewModel.login("nada_maghazy");
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     @Override
