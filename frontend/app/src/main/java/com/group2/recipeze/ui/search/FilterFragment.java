@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.group2.recipeze.R;
 import com.group2.recipeze.ui.addRecipe.AddRecipeViewModel;
 
+import java.util.ArrayList;
+
 public class FilterFragment extends Fragment {
 
     private FilterViewModel mViewModel;
@@ -153,18 +155,24 @@ public class FilterFragment extends Fragment {
         filtersChosenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<String> tags = new ArrayList<>();
                 for(CheckBox each: cuisineArray){
                     if(each.isChecked()){
+                        tags.add(String.valueOf(each.getText()));
                         System.out.println(each.getText());
                     }
                 }
+                tags.add(String.valueOf(diet.getSelectedItem()));
+                SearchFragment.setIngNum(ingNum.getProgress());
+                SearchFragment.setMaxTime(maxTime.getProgress());
+                SearchFragment.setTags(tags);
                 System.out.println("MIN TIME: " + minTimeText.getText());
                 System.out.println("MAX TIME: " + maxTimeText.getText());
                 System.out.println("Difficulty: " + difficultyText.getText());
                 System.out.println("Ingerdient number : " + ingNumText.getText());
                 System.out.println("DIET CHOICE: " + diet.getSelectedItem());
                 Toast.makeText(getActivity(), "CLICKED", Toast.LENGTH_SHORT).show();
-                //NavHostFragment.findNavController(here).navigate(R.id.action_filterFragment_to_searchFragment);
+                NavHostFragment.findNavController(here).navigate(R.id.action_filterFragment_to_searchFragment);
             }
         });
 
