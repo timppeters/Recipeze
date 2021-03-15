@@ -10,6 +10,7 @@ public class Repository {
 
     protected Retrofit retrofit;
     protected String username;
+    protected LoggedInUser loggedInUser;
     protected Gson gson;
 
     public Repository() {
@@ -17,8 +18,9 @@ public class Repository {
                 .baseUrl("https://recipeze-backend.herokuapp.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        LoginRepository loginRepository = LoginRepository.getInstance();
         username = loginRepository.getUser().getUsername();
+        loggedInUser = loginRepository.getUser();
         gson = new Gson();
     }
 }

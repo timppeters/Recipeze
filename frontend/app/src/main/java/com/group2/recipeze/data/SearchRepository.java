@@ -41,7 +41,7 @@ public class SearchRepository extends Repository {
     }
 
     public void search(String query, MutableLiveData<Map<String, ArrayList<?>>> results) {
-        Call<JsonElement> response = service.search(query);
+        Call<JsonElement> response = service.search(query, loggedInUser.getToken());
         response.enqueue(new Callback<JsonElement>() {
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
