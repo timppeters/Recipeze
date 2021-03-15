@@ -28,7 +28,6 @@ import com.group2.recipeze.data.LoginRepository;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.UserRepository;
 import com.group2.recipeze.data.model.Recipe;
-import com.group2.recipeze.data.services.UserRepository;
 import com.group2.recipeze.endlessScroll;
 
 import java.util.ArrayList;
@@ -40,9 +39,6 @@ import java.util.HashMap;
 public class ProfileFragment extends Fragment {
     public HashMap<String, ?> settings = new HashMap<>();
     private ProfileViewModel profileViewModel;
-    RecyclerView recyclerView;
-    endlessScroll endlessScrollManager;
-
     RecyclerView recyclerView;
     endlessScroll endlessScrollManager;
     UserRepository userRepository;
@@ -63,7 +59,7 @@ public class ProfileFragment extends Fragment {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         recipeRepository = RecipeRepository.getInstance();
-        loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        loginRepository = LoginRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
             @Override
@@ -100,28 +96,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Button button = root.findViewById(R.id.editFoodPreferences);
-        Fragment here2 = this;
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(here2).navigate(R.id.action_navigation_profile_to_foodPreferences2);
-            }
-        });
-
-        recyclerView = root.findViewById(R.id.profileRecipes);
-        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        endlessScrollManager = new endlessScroll(recyclerView);
-        endlessScrollManager.populateData();
-        endlessScrollManager.initAdapter();
-        endlessScrollManager.initScrollListener();
-
-
-        return root;
-    }
-
 
 
         Button button = root.findViewById(R.id.editFoodPreferences);
@@ -136,15 +110,15 @@ public class ProfileFragment extends Fragment {
 
         recipeRepository.getRecipesForProfile("user", 0, recipes);
         recyclerView = root.findViewById(R.id.profileRecipes);
-        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(recyclerView);
-        endlessScrollManager.populateData();
+        endlessScrollManager.populateData(new ArrayList<>());
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
-        userRepository.updateProfile("nada_maghazy", "nadamaghazy@gmail.com", "I am vegan", settings);
+        userRepository.updateProfile(loginRepository.getUser().getUsername(), loginRepository.getUser().getEmail(), "I am vegan", settings);
         userRepository.getPrivateProfile(profile_updated);
-        userRepository.followUser("leokou");
+        //userRepository.followUser("leokou");
         //userRepository.unfollowUser("leokou");
         return root;
     }

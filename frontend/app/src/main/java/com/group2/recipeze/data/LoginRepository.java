@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -81,22 +82,17 @@ public class LoginRepository {
 
     // get profile based on token and go to next screen
     public void getProfileFromServer(LoginActivity loginActivity) {
-        Call<JsonElement> result = service.getPrivateProfile(user.getToken());
-        result.enqueue(new Callback<JsonElement>() {
+        UserRepository userRepository = UserRepository.getInstance();
+        MutableLiveData<Boolean> got_profile = new MutableLiveData<>();
+        got_profile.observe(loginActivity, new Observer<Boolean>() {
             @Override
-            public void onResponse(@NotNull Call<JsonElement> call, @NotNull retrofit2.Response<JsonElement> response) {
+            public void onChanged(Boolean aBoolean) {
                 Intent intent = new Intent(loginActivity, MainActivity.class);
                 loginActivity.startActivity(intent);
                 loginActivity.finish();
             }
-
-            @Override
-            public void onFailure(@NotNull Call<JsonElement> call, @NotNull Throwable t) {
-                System.out.println("error LoginRepository getProfileFromServer");
-                System.out.println(t.getMessage());
-            }
         });
-
+        userRepository.getPrivateProfile(got_profile);
 
     }
 

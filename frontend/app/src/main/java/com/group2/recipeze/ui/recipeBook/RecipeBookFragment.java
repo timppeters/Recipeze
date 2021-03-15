@@ -56,7 +56,7 @@ public class RecipeBookFragment extends Fragment {
         recipeBookRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), listener));
         recipeBookRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(recipeBookRecyclerView);
-        endlessScrollManager.populateData();
+        endlessScrollManager.populateData(new ArrayList<>());
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
 

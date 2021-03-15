@@ -1,10 +1,14 @@
 package com.group2.recipeze.data;
 
-import android.widget.Toast;
+
+import android.content.Context;
+import android.content.ContextWrapper;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.group2.recipeze.data.model.LoggedInUser;
 import com.group2.recipeze.data.model.User;
 import com.group2.recipeze.data.services.UserService;
@@ -38,15 +42,22 @@ public class UserRepository extends Repository {
     /**
      * Get the profile of the currently logged in user.
      * Sets LoggedInUser data (accessible via LoginRepository.getUser())
+     * @param profile_updated
      */
-    public void getPrivateProfile() {
+    public void getPrivateProfile(MutableLiveData<Boolean> profile_updated) {
         Call<JsonElement> result = service.getPrivateProfile(loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
 
                 if (response.code() == 200 && response.body() != null) {
-                    LoggedInUser loggedInUser = gson.fromJson(response.body().getAsJsonObject(), LoggedInUser.class);
+                    JsonObject body = response.body().getAsJsonObject();
+                    JsonObject settings = new JsonObject();
+                    if (body.get("settings").getAsString().length() > 0) {
+                        settings = new JsonParser().parse(body.get("settings").getAsString()).getAsJsonObject();
+                    }
+                    body.add("settings", settings);
+                    LoggedInUser loggedInUser = gson.fromJson(body, LoggedInUser.class);
                     LoginRepository loginRepository = LoginRepository.getInstance();
                     LoggedInUser currentLoggedInUser = loginRepository.getUser();
 
@@ -54,6 +65,7 @@ public class UserRepository extends Repository {
                     currentLoggedInUser.setBio(loggedInUser.getBio());
                     currentLoggedInUser.setEmail(loggedInUser.getEmail());
                     currentLoggedInUser.setSettings(loggedInUser.getSettings());
+                    profile_updated.postValue(Boolean.TRUE);
 
                 }
 
@@ -137,7 +149,7 @@ public class UserRepository extends Repository {
      * Deletes the user's account and logs out
      *
      */
-    public void deleteAccount() {
+    public void deleteAccount(Context context) {
         Call<JsonElement> result = service.deleteAccount(loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
@@ -146,7 +158,7 @@ public class UserRepository extends Repository {
                 if (response.code() == 200 && response.body() != null) {
                     System.out.println("Deleted user successfully!");
                     LoginRepository loginRepository = LoginRepository.getInstance();
-                    loginRepository.logout();
+                    loginRepository.logout(context);
 
                 }
 

@@ -24,6 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
 
     public ArrayList<Recipe> recipeList;
+    List<String> mItemList;
 
     public RecyclerViewClickListener listener;
 
@@ -87,7 +88,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvItem = itemView.findViewById(R.id.recipe_title3);
+            //tvItem = itemView.findViewById(R.id.recipe_title3);
             itemView.setOnClickListener(this);
         }
 

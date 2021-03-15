@@ -60,7 +60,7 @@ public class ExploreFragment extends Fragment {
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 recyclerView = root.findViewById(R.id.exploreRecipes);
-                recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
+                recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<String>(), null));
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(recyclerView);
                 endlessScrollManager.populateData(recipes);
