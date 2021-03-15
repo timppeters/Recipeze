@@ -25,10 +25,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public ArrayList<Recipe> recipeList;
 
+    public RecyclerViewClickListener listener;
 
-    public RecyclerViewAdapter(ArrayList<Recipe> itemList) {
-
-        recipeList = itemList;
+    public RecyclerViewAdapter(List<String> itemList, RecyclerViewClickListener listener) {
+        mItemList = itemList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -72,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder {
+    private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView titleTxt;
         TextView descriptionTxt;
@@ -86,7 +87,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvItem = itemView.findViewById(R.id.recipe_title3);
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            listener.onClick(v, getAdapterPosition());
             titleTxt = itemView.findViewById(R.id.recipe_title3);
             descriptionTxt = itemView.findViewById(R.id.description3);
             likesTxt = itemView.findViewById(R.id.likes3);
@@ -141,5 +148,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    public interface RecyclerViewClickListener {
+        void onClick(View v, int position);
+    }
 
 }

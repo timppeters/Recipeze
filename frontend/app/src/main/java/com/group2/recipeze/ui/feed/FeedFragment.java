@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -95,6 +96,15 @@ public class FeedFragment extends Fragment {
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        feedRecyclerView = view.findViewById(R.id.recipes);
+        feedRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
+        feedRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        endlessScrollManager = new endlessScroll(feedRecyclerView);
+        endlessScrollManager.populateData();
+        endlessScrollManager.initAdapter();
+        endlessScrollManager.initScrollListener();
+
+
         // Just an example request
         ArrayList<String> ingredients = new ArrayList<String>();
         ArrayList<String> tags = new ArrayList<String>();

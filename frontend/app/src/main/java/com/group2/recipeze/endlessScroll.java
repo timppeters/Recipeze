@@ -64,7 +64,7 @@ public class endlessScroll {
     }
 
     public void initAdapter() {
-        recyclerViewAdapter = new RecyclerViewAdapter(recipes.getValue());
+        recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList, null);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         recipeRepository = RecipeRepository.getInstance();
