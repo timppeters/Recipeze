@@ -9,14 +9,4 @@ import androidx.lifecycle.ViewModel;
  */
 public class RecipeBookViewModel extends ViewModel {
 
-    private MutableLiveData<String> meText;
-
-    public RecipeBookViewModel() {
-        meText = new MutableLiveData<>();
-        meText.setValue("This is recipeBook fragment");
-    }
-
-    public LiveData<String> getText() {
-        return meText;
-    }
 }

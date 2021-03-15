@@ -4,19 +4,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.feed.FeedFragment">
+    tools:context=".ui.feed.FeedFragment"
+    android:background="@color/background">
+
+    <Button
+        android:id="@+id/tagsTab"
+        android:layout_width="198dp"
+        android:layout_height="59dp"
+        android:background="@drawable/tab_background"
+        android:fontFamily="@font/poppinsbold"
+        android:outlineProvider="background"
+        android:stateListAnimator="@null"
+        android:text="Tags"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_text"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:translationZ="7dp"
+        app:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+    <Button
+        android:id="@+id/usersTab"
+        android:layout_width="198dp"
+        android:layout_height="59dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/poppinsregular"
+        android:text="Users"
+        android:outlineProvider="background"
+        android:stateListAnimator="@null"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_text"
+        android:textSize="21sp"
+        android:translationZ="7dp"
+        app:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:outlineProvider="background"
+        android:theme="?attr/actionBarTheme"
+        android:translationZ="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_feed"
+        android:id="@+id/logo2"
+        android:layout_width="167dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="10dp"
+        android:elevation="50dp"
+        android:fontFamily="@font/comfortaamedium"
+        android:paddingVertical="0dp"
+        android:text="@string/app_name"
+        android:textColor="@color/logo_green"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintStart_toStartOf="@+id/toolbar2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/filter"
+        style="@style/buttons"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_search_rounded"
+        android:backgroundTint="@color/darker_background"
+        android:elevation="0dp"
+        android:paddingVertical="3dp"
+        android:text="Filters"
+        android:textAlignment="viewStart"
+        android:textColor="@color/dark_text"
+        app:layout_constraintBottom_toTopOf="@+id/recipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tagsTab" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/filter" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

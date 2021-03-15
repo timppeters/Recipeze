@@ -15,8 +15,6 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="com_auth0_client_id">dQEdbzg7x1VJRhHtoJ2FemmD3XGuhORO</string>
-    <string name="com_auth0_domain">bath-recipeze.eu.auth0.com</string>
     <string name="title_activity_splash">SplashActivity</string>
     <!--
     This string is used for square devices and overridden by hello_world in
@@ -40,6 +38,14 @@
 
     <string name="title_activity_settings">Hi</string>
 
+
+    <!--searching recipe page-->
+    <string name="forum_button">Forum</string>
+    <string name= "filter_button">Filter</string>
+
+    <!--filter page-->
+    <string name="filterSpin">Filters</string>
+
     <!-- Settings -->
     <!-- Preference Titles -->
     <string name="view_pref_header">View Preferences</string>
@@ -61,6 +67,23 @@
     <string name="del_posts">Delete Post</string>
     <string name="log_out">Logout</string>
     <string name="delete_account">Delete Account</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="edit_food_preferences">Edit Food Preferences</string>
+    <string name="invalid_email">Invalid email</string>
+  
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="google_server_client_id">542066750478-ed9ha3ahegt1ggqh88oube3kc71c8it5.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">340378020725020</string>
+    <string name="fb_login_protocol_scheme">fb340378020725020</string>
+    <string name="username">Username</string>
+    <string name="done">Done</string>
+    <string name="i_agree_to_the_terms_of_service_amp_privacy_policy"><![CDATA[I Agree to the Terms of Service & Privacy Policy]]></string>
+    <string name="email">Email</string>
+    <string name="emailLoginIntent">Login with email</string>
+    <string name="send">Send</string>
+    <string name="email_instructions_login">We will send you an email with a link that will log you in.</string>
+    <string name="email_instructions_login_2">Open the email from us on this device and click on the link to finish logging in.</string>
 
 
 </resources>

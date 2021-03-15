@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
+    android:backgroundTint="@android:color/transparent">
+
+    <Button
+        android:id="@+id/recipe_card3"
+        android:layout_width="360dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:translationZ="4dp"
+        android:background="@drawable/floating_card_background"
+        android:fontFamily="@font/comfortaaregular"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/recipe_title3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="35dp"
+            android:elevation="100dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="Spaghetti with Meatballs"
+            android:textColor="@color/green"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+            app:layout_constraintHorizontal_bias="0.09"
+            app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+            app:layout_constraintTop_toTopOf="@+id/recipe_card3"
+            app:layout_constraintVertical_bias="0.051" />
+
+    <TextView
+        android:id="@+id/tag4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tag"
+        android:elevation="100dp"
+        android:fontFamily="@font/poppinsregular"
+        android:gravity="center"
+        android:paddingHorizontal="5dp"
+        android:text="Gluten Free"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/green"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+        app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+        app:layout_constraintTop_toTopOf="@+id/recipe_card3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tag5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/tag"
+        android:elevation="100dp"
+        android:fontFamily="@font/poppinsregular"
+        android:gravity="center"
+        android:paddingHorizontal="5dp"
+        android:text="Vegan"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/green"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+        app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toEndOf="@+id/tag4"
+        app:layout_constraintTop_toTopOf="@+id/tag4"
+        app:layout_constraintVertical_bias="0.0" />
+
+        <RatingBar
+            android:id="@+id/ratingBar3"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="3dp"
+            android:progressTint="@color/green"
+            android:rating="4"
+            android:secondaryProgressTint="#FFFFFF"
+            android:elevation="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+            app:layout_constraintHorizontal_bias="0.060"
+            app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_title3"
+            app:layout_constraintVertical_bias="0.01999998" />
+
+        <TextView
+            android:id="@+id/description3"
+            android:layout_width="230dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="Easy vegan gluten-free spaghetti and meatball recipe!"
+            android:textSize="10sp"
+            android:elevation="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+            app:layout_constraintHorizontal_bias="0.13"
+            app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar3" />
+
+        <ImageView
+            android:id="@+id/likeImg3"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_like"
+            android:elevation="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+            app:layout_constraintHorizontal_bias="0.040"
+            app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+            app:layout_constraintTop_toBottomOf="@+id/description3"
+            app:layout_constraintVertical_bias="0.950"
+            app:tint="@color/dark_text" />
+
+        <TextView
+            android:id="@+id/likes3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="583"
+            android:textColor="@color/dark_text"
+            android:textSize="11dp"
+            android:elevation="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintStart_toEndOf="@+id/likeImg3"
+            app:layout_constraintTop_toBottomOf="@+id/description3"
+            app:layout_constraintVertical_bias="0.49" />
+
+        <ImageView
+            android:id="@+id/commentImg3"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_chat_comment_oval_speech_bubble_with_text_lines"
+            android:elevation="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintStart_toEndOf="@+id/likes3"
+            app:layout_constraintTop_toBottomOf="@+id/description3"
+            app:layout_constraintVertical_bias="0.950"
+            app:tint="@color/dark_text" />
+
+        <TextView
+            android:id="@+id/comments3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="52"
+            android:textColor="@color/dark_text"
+            android:textSize="11dp"
+            android:elevation="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintStart_toEndOf="@+id/commentImg3"
+            app:layout_constraintTop_toBottomOf="@+id/description3"
+            app:layout_constraintVertical_bias="0.970" />
+
+        <ImageView
+            android:id="@+id/timeImg3"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:elevation="100dp"
+            android:src="@drawable/ic_clock"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintStart_toEndOf="@+id/comments3"
+            app:layout_constraintTop_toBottomOf="@+id/description3"
+            app:layout_constraintVertical_bias="0.950"
+            app:tint="@color/dark_text" />
+
+        <TextView
+            android:id="@+id/time3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="25 mins"
+            android:textColor="@color/dark_text"
+            android:textSize="11dp"
+            android:elevation="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+            app:layout_constraintStart_toEndOf="@+id/timeImg3"
+            app:layout_constraintTop_toBottomOf="@+id/description3"
+            app:layout_constraintVertical_bias="0.970" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageContainer"
+        android:layout_width="87dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:translationZ="10dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_card3"
+        app:layout_constraintEnd_toEndOf="@+id/recipe_card3"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+        app:layout_constraintTop_toTopOf="@+id/recipe_card3"
+        app:layout_constraintVertical_bias="0">
+
+        <ImageView
+            android:id="@+id/recipeIamge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/spag" />
+    </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

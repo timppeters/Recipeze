@@ -4,29 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.explore.ExploreFragment">
 
     <SearchView
-        android:id="@+id/Search"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/background_border"
-        android:backgroundTint="#EEEEEE"
+        android:id="@+id/searchExplorePage"
+        android:layout_width="367dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/bg_search_rounded"
         android:clickable="true"
         android:gravity="top"
         android:iconifiedByDefault="false"
+        android:paddingStart="0dp"
+        android:queryBackground="@android:color/transparent"
         android:queryHint="Search for recipes, ingredients..."
+        android:searchHintIcon="@drawable/ic_surface1"
+        android:searchIcon="@drawable/ic_surface1"
+        android:theme="@style/AppSearchView"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.004"
+        app:layout_constraintVertical_bias="0.0"
         tools:visibility="visible" />
 
     <TextView
@@ -37,32 +38,36 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/poppinsregular"
         android:text="@string/trending_tags"
-        android:textColor="#494949"
-        android:textSize="24sp"
+        android:textColor="@color/dark_text"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
+        app:layout_constraintTop_toBottomOf="@+id/searchExplorePage" />
 
     <TextView
         android:id="@+id/viewalltagsTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:fontFamily="@font/poppinsregular"
         android:text="@string/view_all"
-        android:textColor="@color/teal_200"
+        android:textColor="@color/green"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.698"
         app:layout_constraintStart_toEndOf="@+id/text_trendingtags"
         app:layout_constraintTop_toTopOf="@+id/text_trendingtags" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/veganBtn"
         style="@style/buttons"
-        android:layout_width="80dp"
-        android:layout_height="35dp"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
         android:layout_marginStart="32dp"
+        android:backgroundTint="@color/green"
         android:text="@string/vegan"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_trendingtags" />
 
@@ -70,10 +75,10 @@
         android:id="@+id/veganRecipeNoTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/poppinsregular"
         android:text="600+ recipes"
+        android:textColor="@color/light_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/veganBtn" />
 
@@ -81,10 +86,10 @@
         android:id="@+id/glutenfreeRecipeNoTxt2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/poppinsregular"
         android:text="800+ recipes"
+        android:textColor="@color/light_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/glutenfreeBtn" />
 
@@ -92,20 +97,20 @@
         android:id="@+id/vegetarianRecipeNoTxt3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/poppinsregular"
         android:text="1k+ recipes"
+        android:textColor="@color/light_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/vegetarianBTN" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/vegetarianBTN"
         style="@style/buttons"
-        android:layout_width="125dp"
-        android:layout_height="35dp"
+        android:layout_width="105dp"
+        android:layout_height="25dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="Vegetarian"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/veganBtn" />
@@ -113,10 +118,10 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/glutenfreeBtn"
         style="@style/buttons"
-        android:layout_width="128dp"
-        android:layout_height="35dp"
+        android:layout_width="105dp"
+        android:layout_height="25dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="Gluten Free"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vegetarianBTN" />
@@ -130,32 +135,37 @@
         android:fontFamily="@font/poppinsregular"
         android:text="@string/trending_recipes"
         android:textColor="#494949"
-        android:textSize="24sp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
+        app:layout_constraintTop_toBottomOf="@+id/searchExplorePage" />
 
     <TextView
         android:id="@+id/viewallRecipesTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:fontFamily="@font/poppinsregular"
         android:text="@string/view_all"
-        android:textColor="@color/teal_200"
+        android:textColor="@color/green"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.698"
         app:layout_constraintStart_toEndOf="@+id/text_trendingtags"
         app:layout_constraintTop_toTopOf="@+id/trendingRecipesTxt" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipes"
-        android:layout_width="356dp"
-        android:layout_height="352dp"
-        android:layout_marginTop="16dp"
+        android:id="@+id/exploreRecipes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="56dp"
+        android:fadingEdgeLength="16dp"
+        android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trendingRecipesTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/trendingRecipesTxt"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
