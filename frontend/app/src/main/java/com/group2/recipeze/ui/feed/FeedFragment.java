@@ -88,9 +88,6 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 usersBtn.setBackground(selectedTab);
                 tagsBtn.setBackgroundColor(Color.TRANSPARENT);
-
-                //endlessScrollManager.loadMore(); //remove when there are >10 recipes in DB
-                endlessScrollManager.addFakeRecipe("test", 10);
             }
         });
 
