@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.RecipeRepository;
-import com.group2.recipeze.data.Repository;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.feed.FeedViewModel;
@@ -61,10 +60,10 @@ public class SearchFragment extends Fragment {
 
 
         searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(searchRecyclerView);
-        endlessScrollManager.populateData();
+        endlessScrollManager.populateData(new ArrayList<Recipe>());
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
 
