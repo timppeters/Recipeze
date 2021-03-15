@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
+import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.feed.FeedViewModel;
 
@@ -46,10 +48,10 @@ public class SearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.search_fragment, container, false);
 
         searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(searchRecyclerView);
-        endlessScrollManager.populateData();
+        endlessScrollManager.populateData(new ArrayList<Recipe>());
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
 

@@ -3,6 +3,7 @@ package com.group2.recipeze.ui.feed;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,13 @@ public class FeedFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                feedRecyclerView = root.findViewById(R.id.feedRecipes);
+                feedRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
+                feedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                endlessScrollManager = new endlessScroll(feedRecyclerView);
+                endlessScrollManager.populateData(recipes);
+                endlessScrollManager.initAdapter();
+                endlessScrollManager.initScrollListener();
             }
         });
 
@@ -80,6 +88,9 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 usersBtn.setBackground(selectedTab);
                 tagsBtn.setBackgroundColor(Color.TRANSPARENT);
+
+                //endlessScrollManager.loadMore(); //remove when there are >10 recipes in DB
+                endlessScrollManager.addFakeRecipe("test", 10);
             }
         });
 
@@ -87,20 +98,10 @@ public class FeedFragment extends Fragment {
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        feedRecyclerView = view.findViewById(R.id.feedRecipes);
-        feedRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
-        feedRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        endlessScrollManager = new endlessScroll(feedRecyclerView);
-        endlessScrollManager.populateData();
-        endlessScrollManager.initAdapter();
-        endlessScrollManager.initScrollListener();
-
-
         // Just an example request
         ArrayList<String> ingredients = new ArrayList<String>();
-        //ingredients.add("tomatoes");
         ArrayList<String> tags = new ArrayList<String>();
-        recipeRepository.getRecipesForFeedByUsers(130, ingredients, 6, tags, "likes", 0, recipes);
+        recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
 
 
