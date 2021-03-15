@@ -15,6 +15,9 @@ public class LoggedInUser {
     private HashMap<String, ?> settings;
     private String token;
 
+
+    public LoggedInUser() {}
+
     public LoggedInUser(String username, String email, String bio, HashMap<String, ?> settings) {
         this.username = username;
         this.email = email;

@@ -13,6 +13,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
@@ -24,12 +25,12 @@ public interface RecipeService {
                                  @Query("tagName") String tagName,
                                  @Query("filters") JSONObject filters,
                                  @Query("sortBy") String sortBy,
-                                 @Query("skip") int skip);
+                                 @Query("skip") int skip,
+                                 @Header("x-access-token") String token);
 
     @POST("recipe")
     @FormUrlEncoded
-    Call<JsonElement> createRecipe(@Field("username") String username,
-                                   @Field("title") String title,
+    Call<JsonElement> createRecipe(@Field("title") String title,
                                    @Field("description") String description,
                                    @Field("ingredients") JSONArray ingredients,
                                    @Field("ingredientsAmounts") JSONArray ingredientsAmounts,
@@ -37,43 +38,48 @@ public interface RecipeService {
                                    @Field("images") JSONObject images,
                                    @Field("tags") JSONArray tags,
                                    @Field("prepTime") int prepTime,
-                                   @Field("cookTime") int cookTime);
+                                   @Field("cookTime") int cookTime,
+                                   @Header("x-access-token") String token);
 
 
     @GET("recipe")
-    Call<JsonElement> getRecipe(@Query("recipeId") int recipeId);
+    Call<JsonElement> getRecipe(@Query("recipeId") int recipeId,
+                                @Header("x-access-token") String token);
 
     @PUT("recipe")
     @FormUrlEncoded
     Call<JsonElement> updateRecipe(@Field("recipeId") int recipeId,
-                                   @Field("updates") JSONObject updates);
+                                   @Field("updates") JSONObject updates,
+                                   @Header("x-access-token") String token);
 
     @DELETE("recipe")
     @FormUrlEncoded
-    Call<JsonElement> deleteRecipe(@Field("recipeId") int recipeId);
+    Call<JsonElement> deleteRecipe(@Field("recipeId") int recipeId,
+                                   @Header("x-access-token") String token);
 
     @POST("like")
     @FormUrlEncoded
-    Call<JsonElement> likeRecipe(@Field("username") String username,
-                                 @Field("recipeId") int recipeId);
+    Call<JsonElement> likeRecipe(@Field("recipeId") int recipeId,
+                                 @Header("x-access-token") String token);
 
     @DELETE("like")
     @FormUrlEncoded
-    Call<JsonElement> unlikeRecipe(@Field("username") String username,
-                                   @Field("recipeId") int recipeId);
+    Call<JsonElement> unlikeRecipe(@Field("recipeId") int recipeId,
+                                   @Header("x-access-token") String token);
 
     @POST("rate")
     @FormUrlEncoded
-    Call<JsonElement> rateRecipe(@Field("username") String username,
-                                 @Field("recipeId") int recipeId,
+    Call<JsonElement> rateRecipe(@Field("recipeId") int recipeId,
                                  @Field("rating") int rating,
-                                 @Field("review") String review);
+                                 @Field("review") String review,
+                                 @Header("x-access-token") String token);
 
     @GET("rate")
-    Call<JsonElement> getRatingsOfRecipe(@Field("recipeId") int recipeId);
+    Call<JsonElement> getRatingsOfRecipe(@Field("recipeId") int recipeId,
+                                         @Header("x-access-token") String token);
 
     @DELETE("rate")
     @FormUrlEncoded
-    Call<JsonElement> deleteRatingOfRecipe(@Field("username") String username,
-                                           @Field("recipeId") int recipeId);
+    Call<JsonElement> deleteRatingOfRecipe(@Field("recipeId") int recipeId,
+                                           @Header("x-access-token") String token);
 }

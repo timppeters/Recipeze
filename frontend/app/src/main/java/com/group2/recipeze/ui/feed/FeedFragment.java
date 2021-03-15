@@ -51,6 +51,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+
             }
         });
         return root;

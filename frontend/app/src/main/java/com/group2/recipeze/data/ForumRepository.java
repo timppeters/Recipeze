@@ -47,7 +47,7 @@ public class ForumRepository extends Repository {
      * @param resultingPostId The resulting postId will be stored here
      */
     public void createForumPost(String title, String body, String tagName, MutableLiveData<Integer> resultingPostId) {
-        Call<JsonElement> postId = service.createForumPost(this.username, title, body, tagName);
+        Call<JsonElement> postId = service.createForumPost(title, body, tagName, loggedInUser.getToken());
         postId.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -73,7 +73,7 @@ public class ForumRepository extends Repository {
      * @param resultingPost THe resulting post will be stored here
      */
     public void readForumPost(int postId, MutableLiveData<ForumPost> resultingPost) {
-        Call<JsonElement> postJson = service.readForumPost(postId);
+        Call<JsonElement> postJson = service.readForumPost(postId, loggedInUser.getToken());
         postJson.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -100,7 +100,7 @@ public class ForumRepository extends Repository {
      * @param resultingPosts The resulting posts will be stored here
      */
     public void getForumPostsInTag(String tagName, MutableLiveData<ArrayList<ForumPost>> resultingPosts) {
-        Call<JsonElement> postJson = service.getForumPosts(tagName);
+        Call<JsonElement> postJson = service.getForumPosts(tagName, loggedInUser.getToken());
         postJson.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -139,7 +139,7 @@ public class ForumRepository extends Repository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Call<JsonElement> result = service.updateForumPost(postId, updates);
+        Call<JsonElement> result = service.updateForumPost(postId, updates, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -163,7 +163,7 @@ public class ForumRepository extends Repository {
      * @param postId post ID
      */
     public void deletePost(int postId) {
-        Call<JsonElement> result = service.deleteForumPost(postId);
+        Call<JsonElement> result = service.deleteForumPost(postId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -187,7 +187,7 @@ public class ForumRepository extends Repository {
      * @param postId post ID
      */
     public void likePost(int postId) {
-        Call<JsonElement> result = service.likePost(this.username, postId);
+        Call<JsonElement> result = service.likePost(postId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -211,7 +211,7 @@ public class ForumRepository extends Repository {
      * @param postId post ID
      */
     public void unlikePost(int postId) {
-        Call<JsonElement> result = service.unlikePost(this.username, postId);
+        Call<JsonElement> result = service.unlikePost(postId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -236,7 +236,7 @@ public class ForumRepository extends Repository {
      * @param body Comment text
      */
     public void addCommentToPost(int postId, String body) {
-        Call<JsonElement> result = service.addCommentToPost(this.username, postId, body);
+        Call<JsonElement> result = service.addCommentToPost(postId, body, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -260,7 +260,7 @@ public class ForumRepository extends Repository {
      * @param commentId Comment ID
      */
     public void deleteCommentFromPost(int commentId) {
-        Call<JsonElement> result = service.deleteCommentFromPost(commentId);
+        Call<JsonElement> result = service.deleteCommentFromPost(commentId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
