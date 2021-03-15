@@ -1,5 +1,7 @@
 package com.group2.recipeze.data;
 
+import android.widget.Toast;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.JsonElement;
@@ -38,14 +40,14 @@ public class UserRepository extends Repository {
      * Sets LoggedInUser data (accessible via LoginRepository.getUser())
      */
     public void getPrivateProfile() {
-        Call<JsonElement> result = service.getPrivateProfile(this.username);
+        Call<JsonElement> result = service.getPrivateProfile(loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
 
                 if (response.code() == 200 && response.body() != null) {
                     LoggedInUser loggedInUser = gson.fromJson(response.body().getAsJsonObject(), LoggedInUser.class);
-                    LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+                    LoginRepository loginRepository = LoginRepository.getInstance();
                     LoggedInUser currentLoggedInUser = loginRepository.getUser();
 
                     currentLoggedInUser.setUsername(loggedInUser.getUsername());
@@ -71,7 +73,7 @@ public class UserRepository extends Repository {
      * @param resultingUser Resulting user object will be stored here.
      */
     public void getPublicProfile(String username, MutableLiveData<User> resultingUser) {
-        Call<JsonElement> result = service.getPublicProfile(username);
+        Call<JsonElement> result = service.getPublicProfile(username, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -111,7 +113,7 @@ public class UserRepository extends Repository {
             e.printStackTrace();
         }
 
-        Call<JsonElement> result = service.updateProfile(this.username, updates);
+        Call<JsonElement> result = service.updateProfile(updates, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -136,14 +138,14 @@ public class UserRepository extends Repository {
      *
      */
     public void deleteAccount() {
-        Call<JsonElement> result = service.deleteAccount(this.username);
+        Call<JsonElement> result = service.deleteAccount(loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
 
                 if (response.code() == 200 && response.body() != null) {
                     System.out.println("Deleted user successfully!");
-                    LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+                    LoginRepository loginRepository = LoginRepository.getInstance();
                     loginRepository.logout();
 
                 }
@@ -163,7 +165,7 @@ public class UserRepository extends Repository {
      * @param username User to follow
      */
     public void followUser(String username) {
-        Call<JsonElement> result = service.followUser(this.username, username);
+        Call<JsonElement> result = service.followUser(username, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -187,7 +189,7 @@ public class UserRepository extends Repository {
      * @param username user to unfollow
      */
     public void unfollowUser(String username) {
-        Call<JsonElement> result = service.unfollowUser(this.username, username);
+        Call<JsonElement> result = service.unfollowUser(username, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {

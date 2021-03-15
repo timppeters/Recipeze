@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
@@ -17,43 +18,48 @@ public interface ForumService {
 
     @POST("forum")
     @FormUrlEncoded
-    Call<JsonElement> createForumPost(@Field("username") String username,
-                                      @Field("title") String title,
+    Call<JsonElement> createForumPost(@Field("title") String title,
                                       @Field("body") String body,
-                                      @Field("tag") String tagName);
+                                      @Field("tag") String tagName,
+                                      @Header("x-access-token") String token);
 
     @GET("forum")
-    Call<JsonElement> readForumPost(@Query("postId") int postId);
+    Call<JsonElement> readForumPost(@Query("postId") int postId,
+                                    @Header("x-access-token") String token);
 
     @GET("posts")
-    Call<JsonElement> getForumPosts(@Query("tag") String tagName);
+    Call<JsonElement> getForumPosts(@Query("tag") String tagName,
+                                    @Header("x-access-token") String token);
 
     @PUT("user")
     @FormUrlEncoded
     Call<JsonElement> updateForumPost(@Field("postId") int postId,
-                                    @Field("updates") JSONObject updates);
+                                      @Field("updates") JSONObject updates,
+                                      @Header("x-access-token") String token);
 
     @DELETE("user")
     @FormUrlEncoded
-    Call<JsonElement> deleteForumPost(@Field("postId") int postId);
+    Call<JsonElement> deleteForumPost(@Field("postId") int postId,
+                                      @Header("x-access-token") String token);
 
     @POST("like")
     @FormUrlEncoded
-    Call<JsonElement> likePost(@Field("username") String username,
-                                 @Field("postId") int postId);
+    Call<JsonElement> likePost(@Field("postId") int postId,
+                               @Header("x-access-token") String token);
 
     @DELETE("like")
     @FormUrlEncoded
-    Call<JsonElement> unlikePost(@Field("username") String username,
-                                   @Field("postId") int postId);
+    Call<JsonElement> unlikePost(@Field("postId") int postId,
+                                 @Header("x-access-token") String token);
 
     @POST("comment")
     @FormUrlEncoded
-    Call<JsonElement> addCommentToPost(@Field("username") String username,
-                                       @Field("postId") int postId,
-                                       @Field("body") String body);
+    Call<JsonElement> addCommentToPost(@Field("postId") int postId,
+                                       @Field("body") String body,
+                                       @Header("x-access-token") String token);
 
     @DELETE("comment")
     @FormUrlEncoded
-    Call<JsonElement> deleteCommentFromPost(@Field("commentId") int commentId);
+    Call<JsonElement> deleteCommentFromPost(@Field("commentId") int commentId,
+                                            @Header("x-access-token") String token);
 }

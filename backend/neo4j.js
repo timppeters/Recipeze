@@ -5,19 +5,13 @@ const driver = neo4j.driver(
     neo4j.auth.basic('neo4j', process.env.NEO4J_PASSWORD)
   )
 
-var session;
-
-function startSession() {
-    session = driver.session({database: 'neo4j'})
-    console.log('Database session created')
-}
-
 
 function cypher(query, params) {
-    
+    let session = driver.session({database: 'neo4j'})
     return session
     .run(query, params)
-    .then(result => {
+    .then(async result => {
+      await session.close()
       return result.records
     })
     .catch(error => {
@@ -26,15 +20,49 @@ function cypher(query, params) {
 }
 
 
-async function createUser(username, email) { // Should not be public. Only used when registering
+async function createUser(email) { // Should not be public. Only used internally when registering
     let result = {}
-    let records = await cypher(`CREATE (n:User {username: $username, email: $email})`,
+    let records = await cypher(`CREATE (n:User {username: "", email: $email, bio: "", admin: false, settings: ""})`,
     {
-        username,
         email
     });
     return result
     
+}
+
+async function setUsername(username, email) {
+    let result = {}
+    let usernameConflicts = await cypher(`MATCH (n:User {username: $username}) RETURN n.email`,
+    {
+        username,
+    });
+    console.log(usernameConflicts);
+    if (usernameConflicts.length) {//this is setting off??
+        result['invalid'] = true;
+    } else {
+        let records = await cypher(`MATCH (n:User {email: $email}) SET n.username=$username`,
+        {
+            username,
+            email
+        });
+    }
+    
+    return result
+    
+}
+
+async function readUserByEmail(email) { // For login/register
+    let result = {}
+    let records = await cypher(`MATCH (n:User {email: $email}) RETURN {username: n.username, admin: n.admin} as data`,
+    {
+        email
+    });
+    if (records) {
+        records.forEach(record => {
+            result = JSON.parse(JSON.stringify(record.get('data')))
+          })
+    }
+    return result
 }
 
 async function readUser(username) { // Return private profile.
@@ -136,14 +164,15 @@ async function readRecipe(recipeId) {
     
 }
 
-async function updateRecipe(recipeId, updates) {
+async function updateRecipe(recipeId, updates, username) {
     let result = {}
     let tags = updates['tags']
     delete updates['tags']
-    let records = await cypher(`MATCH (n:Recipe) WHERE ID(n)=$recipeId SET n += $updates`,
+    let records = await cypher(`MATCH (n:Recipe)<-[:AUTHOR_OF]-(:User {username: $username}) WHERE ID(n)=$recipeId SET n += $updates`,
     {
         recipeId: parseInt(recipeId),
-        updates: JSON.parse(updates)
+        updates: JSON.parse(updates),
+        username
     });
     // Add tags to recipe
     for (tag in tags) {
@@ -156,11 +185,12 @@ async function updateRecipe(recipeId, updates) {
     return result
 }
 
-async function deleteRecipe(recipeId) {
+async function deleteRecipe(recipeId, username) {
     let result = {}
-    let records = await cypher(`MATCH (n:Recipe) WHERE ID(n)=$recipeId DETACH DELETE n`,
+    let records = await cypher(`MATCH (n:Recipe)<-[:AUTHOR_OF]-(:User {username: $username}) WHERE ID(n)=$recipeId DETACH DELETE n`,
     {
-        recipeId: parseInt(recipeId)
+        recipeId: parseInt(recipeId),
+        username
     });
     return result  
 }
@@ -220,21 +250,23 @@ async function getForumPostsByTag(tagName) {
     
 }
 
-async function updateForumPost(postId, updates) {
+async function updateForumPost(postId, updates, username) {
     let result = {}
-    let records = await cypher(`MATCH (n:Forum_Post) WHERE ID(n)=$postId SET n += $updates`,
+    let records = await cypher(`MATCH (n:Forum_Post)<-[:AUTHOR_OF]-(:User {username: $username}) WHERE ID(n)=$postId SET n += $updates`,
     {
         postId: parseInt(postId),
-        updates: JSON.parse(updates)
+        updates: JSON.parse(updates),
+        username
     });
     return result
 }
 
-async function deleteForumPost(postId) {
+async function deleteForumPost(postId, username) {
     let result = {}
-    let records = await cypher(`MATCH (f:Forum_Post)<-[:IN]-[c:Comment] WHERE ID(f)=$postId DETACH DELETE c,f`,
+    let records = await cypher(`MATCH (:User {username: $username})-[:AUTHOR_OF]->(f:Forum_Post)<-[:IN]-[c:Comment] WHERE ID(f)=$postId DETACH DELETE c,f`,
     {
-        postId: parseInt(postId)
+        postId: parseInt(postId),
+        username
     });
     return result  
 }
@@ -290,11 +322,12 @@ async function createComment(username, postId, body) {
     return result
 }
 
-async function deleteComment(commentId) {
+async function deleteComment(commentId, username) {
     let result = {}
-    let records = await cypher(`MATCH (c:Comment) WHERE ID(c)=$commentId DETACH DELETE c`,
+    let records = await cypher(`MATCH (c:Comment)<-[:AUTHOR_OF]-(:User {username: $username}) WHERE ID(c)=$commentId DETACH DELETE c`,
     {
-        commentId: parseInt(commentId)
+        commentId: parseInt(commentId),
+        username
     });
     return result
 }
@@ -589,11 +622,12 @@ async function search(query) {
     
 }
 
+
 // Ensure that the database session and connection are closed
 async function exitHandler() {
-    console.log('handling exit')
-    await session.close()
-    await driver.close()
+    console.log('handling exit')        
+    if (driver)
+        await driver.close()
     process.exit();
 }
 
@@ -606,9 +640,10 @@ process.on('SIGUSR2', exitHandler.bind());
 //catches uncaught exceptions
 process.on('uncaughtException', exitHandler.bind());
 
-exports.startSession = startSession;
 exports.createUser = createUser;
+exports.setUsername = setUsername;
 exports.readUser = readUser;
+exports.readUserByEmail = readUserByEmail;
 exports.readUserPublic = readUserPublic;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;

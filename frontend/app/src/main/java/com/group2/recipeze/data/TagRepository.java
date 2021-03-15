@@ -41,7 +41,7 @@ public class TagRepository extends Repository {
      * @param resultingTags The tags will be stored here.
      */
     public void getAllTags(MutableLiveData<ArrayList<Tag>> resultingTags) {
-        Call<JsonElement> response = service.getTags("all");
+        Call<JsonElement> response = service.getTags("all", loggedInUser.getToken());
         response.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -73,7 +73,7 @@ public class TagRepository extends Repository {
      * @param resultingTags The tags will be stored here.
      */
     public void getTop5Tags(MutableLiveData<ArrayList<Tag>> resultingTags) {
-        Call<JsonElement> response = service.getTags("popular5");
+        Call<JsonElement> response = service.getTags("popular5", loggedInUser.getToken());
         response.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {

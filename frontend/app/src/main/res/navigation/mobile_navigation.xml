@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_foodPreferences2_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_foodPreferences2_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -100,5 +103,9 @@
         android:id="@+id/filterFragment"
         android:name="com.group2.recipeze.ui.search.FilterFragment"
         android:label="fragment_filter"
-        tools:layout="@layout/fragment_filter" />
+        tools:layout="@layout/fragment_filter" >
+        <action
+            android:id="@+id/action_filterFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 </navigation>
