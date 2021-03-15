@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,9 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
+import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.Repository;
+import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.feed.FeedViewModel;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +33,14 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment {
     RecyclerView searchRecyclerView;
     endlessScroll endlessScrollManager;
+    private static int maxTime = 100;
+    private static ArrayList<String> ingrediantList;
+    private static int ingNum = 100;
+    private static ArrayList<String> tags;
+    private static String sortBy;
+    private static int skip;
+    private MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+    RecipeRepository repo;
 
     private SearchViewModel searchViewModel;
 
@@ -41,9 +54,11 @@ public class SearchFragment extends Fragment {
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("SEARCH FRAGMENT");
         searchViewModel =
                 new ViewModelProvider(this).get(SearchViewModel.class);
         View root = inflater.inflate(R.layout.search_fragment, container, false);
+
 
         searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
         searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
@@ -52,6 +67,8 @@ public class SearchFragment extends Fragment {
         endlessScrollManager.populateData();
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
+
+
 
         Button forButton = root.findViewById(R.id.forumButton);
         Fragment here = this;
@@ -72,6 +89,45 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        repo = RecipeRepository.getInstance();
+        recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
+
+            @Override
+            public void onChanged(ArrayList<Recipe> recipes) {
+                // Populate endlessScroll with recipes
+                System.out.println("THIS IS A RECIPE" + recipes);
+            }
+        });
+
         return root;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        searchRecyclerView = view.findViewById(R.id.searchRecipesScroll);
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+        searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        endlessScrollManager = new endlessScroll(searchRecyclerView);
+        endlessScrollManager.populateData();
+        endlessScrollManager.initAdapter();
+        endlessScrollManager.initScrollListener();
+
+
+        //filter
+        System.out.println("APPLY USER FILERS");
+        repo.getRecipesForFeedByTags(maxTime, ingrediantList, ingNum, tags, "likes", 0, recipes);
+        System.out.println("applied");
+    }
+
+
+    public static void setIngNum(int ingNum) {
+        SearchFragment.ingNum = ingNum;
+    }
+
+    public static void setMaxTime(int maxTime) {
+        SearchFragment.maxTime = maxTime;
+    }
+
+    public static void setTags(ArrayList<String> tags) {
+        SearchFragment.tags = tags;
     }
 }
