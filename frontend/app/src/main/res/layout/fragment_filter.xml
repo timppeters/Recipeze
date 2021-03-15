@@ -36,17 +36,6 @@
                 android:layout_height="804dp">
 
                 <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Min"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-                <TextView
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,23 +46,92 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Min"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
                 <SeekBar
-                    android:id="@+id/seekBar4"
+                    android:id="@+id/TimeMinSeek"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="32dp"
-                    android:max="4"
+                    android:max="24"
                     android:progress="3"
                     android:scrollbarSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <TextView
+                    android:id="@+id/minTimeShow"
+                    android:layout_width="70dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="5dp"
+                    android:text="3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TimeMinSeek" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Max"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TimeMinSeek" />
 
                 <SeekBar
-                    android:id="@+id/seekBar"
+                    android:id="@+id/TimeMaxSeek"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:max="24"
+                    android:progress="3"
+                    android:scrollbarSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+                <TextView
+                    android:id="@+id/maxTimeShow"
+                    android:layout_width="70dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="5dp"
+                    android:text="3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TimeMaxSeek" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Difficulty"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TimeMaxSeek" />
+
+                <SeekBar
+                    android:id="@+id/DifficultySeek"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -88,6 +146,53 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                 <TextView
+                    android:id="@+id/difficultyShow"
+                    android:layout_width="70dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="5dp"
+                    android:text="3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DifficultySeek" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Number of ingredients"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DifficultySeek" />
+
+                <SeekBar
+                    android:id="@+id/NumOfIndSeek"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:max="20"
+                    android:progress="3"
+                    android:scrollbarSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+                <TextView
+                    android:id="@+id/ingNumShow"
+                    android:layout_width="70dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:text="3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.501"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/NumOfIndSeek" />
+
+                <TextView
                     android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,18 +201,31 @@
                     android:text="Diet"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/seekBar4" />
+                    app:layout_constraintTop_toBottomOf="@+id/NumOfIndSeek" />
+
+                <Spinner
+                    android:id="@+id/DietSpinner"
+                    android:layout_width="181dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:entries="@array/filterOptions"
+                    android:spinnerMode="dropdown"
+                    android:text="@string/filterSpin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="122dp"
-                    android:layout_height="50dp"
+                    android:layout_width="123dp"
+                    android:layout_height="29dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="24dp"
                     android:text="Cuisine Type"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+                    app:layout_constraintTop_toBottomOf="@+id/DietSpinner" />
 
                 <TableLayout
                     android:id="@+id/tableLayout2"
@@ -126,25 +244,25 @@
                         android:layout_height="match_parent">
 
                         <CheckBox
-                            android:id="@+id/checkBox"
+                            android:id="@+id/BreakfastCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Breakfast" />
 
                         <CheckBox
-                            android:id="@+id/checkBox3"
+                            android:id="@+id/DinnerCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Dinner" />
 
                         <CheckBox
-                            android:id="@+id/checkBox7"
+                            android:id="@+id/SnackCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Snack" />
 
                         <CheckBox
-                            android:id="@+id/checkBox2"
+                            android:id="@+id/LunchCheck"
                             android:layout_width="81dp"
                             android:layout_height="43dp"
                             android:text="Lunch" />
@@ -157,25 +275,25 @@
                         android:textAlignment="center">
 
                         <CheckBox
-                            android:id="@+id/checkBox4"
+                            android:id="@+id/BritishCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="British" />
 
                         <CheckBox
-                            android:id="@+id/checkBox5"
+                            android:id="@+id/ChineseCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Chinese" />
 
                         <CheckBox
-                            android:id="@+id/checkBox6"
+                            android:id="@+id/JapaneseCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Japanese" />
 
                         <CheckBox
-                            android:id="@+id/checkBox10"
+                            android:id="@+id/ThaiCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Thai" />
@@ -187,25 +305,25 @@
                         android:layout_height="match_parent">
 
                         <CheckBox
-                            android:id="@+id/checkBox13"
+                            android:id="@+id/ItalianCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Italian" />
 
                         <CheckBox
-                            android:id="@+id/checkBox14"
+                            android:id="@+id/MexicanCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mexican" />
 
                         <CheckBox
-                            android:id="@+id/checkBox11"
+                            android:id="@+id/GreekCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Greek" />
 
                         <CheckBox
-                            android:id="@+id/checkBox12"
+                            android:id="@+id/FrenchCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="French" />
@@ -216,81 +334,17 @@
                         android:layout_height="match_parent" />
                 </TableLayout>
 
-                <SeekBar
-                    android:id="@+id/seekBar2"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/FiltersChosenBut"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="157dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp"
-                    android:max="24"
-                    android:progress="3"
-                    android:scrollbarSize="12sp"
+                    android:layout_marginEnd="161dp"
+                    android:text="Filter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Max"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/seekBar3" />
-
-                <SeekBar
-                    android:id="@+id/seekBar3"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp"
-                    android:max="24"
-                    android:progress="3"
-                    android:scrollbarSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Number of ingredients"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/seekBar" />
-
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="181dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_weight="1"
-                    android:entries="@array/filterOptions"
-                    android:spinnerMode="dropdown"
-                    android:text="@string/filterSpin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Difficulty"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/seekBar2" />
+                    app:layout_constraintTop_toBottomOf="@+id/tableLayout2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

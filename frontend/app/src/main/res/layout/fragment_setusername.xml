@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <EditText
+        android:id="@+id/usernameField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/dark_text"
+        android:hint="@string/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView11"
+        android:autofillHints=""
+        android:inputType="textNoSuggestions" />
+
+    <Button
+        android:id="@+id/setUsernameButton"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="70dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/poppinsregular"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:cornerRadius="10dp"
+        android:text="@string/done"
+        android:enabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameField" />
+
+    <CheckBox
+        android:id="@+id/termsconditions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/dark_text"
+        android:textSize="14dp"
+        android:text="@string/i_agree_to_the_terms_of_service_amp_privacy_policy"
+        app:layout_constraintBottom_toTopOf="@+id/setUsernameButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameField" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="286dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginBottom="54dp"
+        android:fontFamily="@font/poppins"
+        android:text="Choose a username."
+        android:textAlignment="center"
+        android:textColor="@color/dark_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/emailField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

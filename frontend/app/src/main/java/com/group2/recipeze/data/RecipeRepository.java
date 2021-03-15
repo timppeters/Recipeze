@@ -60,7 +60,7 @@ public class RecipeRepository extends Repository {
             e.printStackTrace();
         }
 
-        getRecipes("feedUser", this.username, "", filters, sortBy, skip, result);
+        getRecipes("feedUser", loggedInUser.getUsername(), "", filters, sortBy, skip, result);
     }
 
     /**
@@ -86,7 +86,7 @@ public class RecipeRepository extends Repository {
             e.printStackTrace();
         }
 
-        getRecipes("feedTag", this.username, "", filters, sortBy, skip, result);
+        getRecipes("feedTag", loggedInUser.getUsername(), "", filters, sortBy, skip, result);
     }
 
     /**
@@ -123,7 +123,7 @@ public class RecipeRepository extends Repository {
             e.printStackTrace();
         }
 
-        getRecipes("recipe book", this.username, "", filters, sortBy, skip, result);
+        getRecipes("recipe book", loggedInUser.getUsername(), "", filters, sortBy, skip, result);
     }
 
     /**
@@ -154,7 +154,7 @@ public class RecipeRepository extends Repository {
      * Helper function. Gets recipes asynchronously for /api/recipes
      */
     private void getRecipes(String for_, String username, String tagName, JSONObject filters, String sortBy, int skip, MutableLiveData<ArrayList<Recipe>> result) {
-        Call<JsonElement> recipes = service.getRecipes(for_, username, tagName, filters, sortBy, skip);
+        Call<JsonElement> recipes = service.getRecipes(for_, username, tagName, filters, sortBy, skip, loggedInUser.getToken());
         recipes.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -201,7 +201,7 @@ public class RecipeRepository extends Repository {
         JSONArray tags = new JSONArray(tags_);
 
 
-        Call<JsonElement> recipeId = service.createRecipe(this.username, title, description, ingredients, ingredientsAmounts, instructions, images, tags, prepTime, cookTime);
+        Call<JsonElement> recipeId = service.createRecipe(title, description, ingredients, ingredientsAmounts, instructions, images, tags, prepTime, cookTime, loggedInUser.getToken());
         recipeId.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -228,7 +228,7 @@ public class RecipeRepository extends Repository {
      * @param resultingRecipe The resulting recipe will be stored here
      */
     public void getRecipe(Integer recipeId, MutableLiveData<Recipe> resultingRecipe) {
-        Call<JsonElement> recipeJSON = service.getRecipe(recipeId);
+        Call<JsonElement> recipeJSON = service.getRecipe(recipeId, loggedInUser.getToken());
         recipeJSON.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -284,7 +284,7 @@ public class RecipeRepository extends Repository {
         }
 
 
-        Call<JsonElement> recipeJSON = service.updateRecipe(recipeId, updates);
+        Call<JsonElement> recipeJSON = service.updateRecipe(recipeId, updates, loggedInUser.getToken());
         recipeJSON.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -308,7 +308,7 @@ public class RecipeRepository extends Repository {
      * @param recipeId ID of the recipe
      */
     public void deleteRecipe(Integer recipeId) {
-        Call<JsonElement> result = service.deleteRecipe(recipeId);
+        Call<JsonElement> result = service.deleteRecipe(recipeId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -332,7 +332,7 @@ public class RecipeRepository extends Repository {
      * @param recipeId ID of the recipe
      */
     public void likeRecipe(Integer recipeId) {
-        Call<JsonElement> result = service.likeRecipe(this.username, recipeId);
+        Call<JsonElement> result = service.likeRecipe(recipeId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -356,7 +356,7 @@ public class RecipeRepository extends Repository {
      * @param recipeId ID of the recipe
      */
     public void unlikeRecipe(Integer recipeId) {
-        Call<JsonElement> result = service.unlikeRecipe(this.username, recipeId);
+        Call<JsonElement> result = service.unlikeRecipe(recipeId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -380,7 +380,7 @@ public class RecipeRepository extends Repository {
      * @param recipeId ID of the recipe
      */
     public void rateRecipe(Integer recipeId, int rating, String review) {
-        Call<JsonElement> result = service.rateRecipe(this.username, recipeId, rating, review);
+        Call<JsonElement> result = service.rateRecipe(recipeId, rating, review, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -404,7 +404,7 @@ public class RecipeRepository extends Repository {
      * @param recipeId ID of the recipe that the rating is on (only 1 rating per recipe per user)
      */
     public void deleteRatingOfRecipe(Integer recipeId) {
-        Call<JsonElement> result = service.deleteRatingOfRecipe(this.username, recipeId);
+        Call<JsonElement> result = service.deleteRatingOfRecipe(recipeId, loggedInUser.getToken());
         result.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
@@ -429,7 +429,7 @@ public class RecipeRepository extends Repository {
      * @param ratings The reviews will be stored here
      */
     public void getRatingsOfRecipe(Integer recipeId, MutableLiveData<ArrayList<Rating>> ratings) {
-        Call<JsonElement> ratingsJSON = service.deleteRatingOfRecipe(this.username, recipeId);
+        Call<JsonElement> ratingsJSON = service.getRatingsOfRecipe(recipeId, loggedInUser.getToken());
         ratingsJSON.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {

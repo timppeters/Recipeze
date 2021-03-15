@@ -1,18 +1,29 @@
 package com.group2.recipeze;
 
-import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.model.Recipe;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class endlessScroll {
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
-    ArrayList<String> rowsArrayList = new ArrayList<>();
+
+    RecipeRepository recipeRepository;
+    public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+
+    ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+
 
     boolean isLoading = false;
 
@@ -20,17 +31,53 @@ public class endlessScroll {
         recyclerView = recycler;
     }
 
-    public void populateData() {
-        int i = 0;
-        while (i < 10) {
-            rowsArrayList.add("Recipe " + i);
-            i++;
+    public void populateData(ArrayList<Recipe> initialRecipes) {
+        recipes.setValue(initialRecipes);
+    }
+
+    public void addFakeRecipe(String title, int amount){
+        ArrayList<String> ingredients = new ArrayList<String>();
+        ingredients.add("Tomatoes");
+        ArrayList<String> ingredientsAmounts = new ArrayList<String>();
+        ingredientsAmounts.add("200g");
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("tag1");
+        tags.add("tag2");
+        Recipe exampleRecipe = new Recipe(1,
+                4.5f,
+                123,
+                "Alf",
+                title,
+                "Recipe Description",
+                ingredients,
+                ingredientsAmounts,
+                new HashMap<Integer, String>(),
+                new HashMap<Integer, String>(),
+                tags,
+                15,
+                90
+        );
+        for(int i = 0; i < amount; i++) {
+            recipeList.add(exampleRecipe);
         }
+        recipes.setValue(recipeList);
     }
 
     public void initAdapter() {
         recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList, null);
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        recipeRepository = RecipeRepository.getInstance();
+        recipes.observeForever(new Observer<ArrayList<Recipe>>() {
+
+            @Override
+            public void onChanged(ArrayList<Recipe> recipes) {
+                recipeList = recipes;
+
+                recyclerViewAdapter.notifyDataSetChanged();
+                isLoading = false;
+            }
+        });
     }
 
     public void initScrollListener() {
@@ -47,7 +94,7 @@ public class endlessScroll {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
                 if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == rowsArrayList.size() - 1) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == recipeList.size() - 1) {
                         //bottom of list!
                         loadMore();
                         isLoading = true;
@@ -57,30 +104,24 @@ public class endlessScroll {
         });
     }
 
-    private void loadMore() {
-        rowsArrayList.add(null);
-        recyclerViewAdapter.notifyItemInserted(rowsArrayList.size() - 1);
+    public void loadMore() {
+        recipeList.add(null);
+        recyclerViewAdapter.notifyItemInserted(recipeList.size() - 1);
 
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                rowsArrayList.remove(rowsArrayList.size() - 1);
-                int scrollPosition = rowsArrayList.size();
+                recipeList.remove(recipeList.size() - 1);
+                int scrollPosition = recipeList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + 10;
 
-                while (currentSize - 1 < nextLimit) {
-                    rowsArrayList.add("Item " + currentSize);
-                    currentSize++;
-                }
-
-                recyclerViewAdapter.notifyDataSetChanged();
-                isLoading = false;
+                ArrayList<String> ingredients = new ArrayList<String>();
+                ArrayList<String> tags = new ArrayList<String>();
+                recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
             }
-        }, 2000);
+        }, 10000);
 
 
     }
