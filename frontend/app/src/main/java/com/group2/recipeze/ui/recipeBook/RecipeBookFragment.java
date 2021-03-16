@@ -21,8 +21,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.internal.$Gson$Preconditions;
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
+import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.recipe.RecipeFragment;
 
@@ -47,7 +49,7 @@ public class RecipeBookFragment extends Fragment {
      * @return
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        recipeBookViewModel = new ViewModelProvider(this).get(RecipeBookViewModel.class);
+//        recipeBookViewModel = new ViewModelProvider(this).get(RecipeBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
 
         recipeBookRecyclerView = root.findViewById(R.id.recipes);
@@ -60,5 +62,4 @@ public class RecipeBookFragment extends Fragment {
 
         return root;
     }
-
 }

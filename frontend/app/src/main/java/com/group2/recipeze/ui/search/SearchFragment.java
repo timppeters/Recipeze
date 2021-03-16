@@ -67,8 +67,6 @@ public class SearchFragment extends Fragment {
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
 
-
-
         Button forButton = root.findViewById(R.id.forumButton);
         Fragment here = this;
 
