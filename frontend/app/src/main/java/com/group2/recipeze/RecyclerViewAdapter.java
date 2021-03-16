@@ -119,7 +119,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         //populate card with values
         //String item = mItemList.get(position);
         //viewHolder.tvItem.setText(item);
-        position = 0;
+        //position = 0;
         viewHolder.titleTxt.setText(recipeList.get(position).getTitle());
         viewHolder.descriptionTxt.setText(recipeList.get(position).getDescription());
         viewHolder.likesTxt.setText(String.valueOf(recipeList.get(position).getLikes()));

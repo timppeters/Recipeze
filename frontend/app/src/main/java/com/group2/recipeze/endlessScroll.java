@@ -76,7 +76,7 @@ public class endlessScroll {
 
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
-                recipeList = recipes;
+                recipeList.addAll(recipes);
                 recyclerViewAdapter.notifyDataSetChanged();
                 isLoading = false;
             }
