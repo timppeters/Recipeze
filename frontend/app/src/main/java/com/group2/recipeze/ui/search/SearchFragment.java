@@ -95,7 +95,7 @@ public class SearchFragment extends Fragment {
                 // Populate endlessScroll with recipes
                 System.out.println("RECIPES: " + recipes);
                 searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-                searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
+                searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
                 searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(searchRecyclerView);
                 endlessScrollManager.populateData(recipes);
