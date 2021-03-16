@@ -106,6 +106,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ingredients" />
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/addIngredient"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/add"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/dark_text"
+                android:background="@color/light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
+
         <TextView
             android:id="@+id/steps"
             android:layout_width="wrap_content"
@@ -117,7 +131,7 @@
             android:textColor="@color/dark_text"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
+            app:layout_constraintTop_toBottomOf="@+id/addIngredient" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stepsList"
@@ -130,6 +144,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/steps" />
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/addStep"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/add"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/dark_text"
+                android:background="@color/light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stepsList" />
+
         <TextView
             android:id="@+id/tags"
             android:layout_width="wrap_content"
@@ -141,7 +169,7 @@
             android:textColor="@color/dark_text"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stepsList" />
+            app:layout_constraintTop_toBottomOf="@+id/addStep" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/tagsGroup"

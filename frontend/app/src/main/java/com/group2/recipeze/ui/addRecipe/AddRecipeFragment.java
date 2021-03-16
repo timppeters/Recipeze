@@ -3,12 +3,16 @@ package com.group2.recipeze.ui.addRecipe;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -54,12 +58,29 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
 
         tagRepository = TagRepository.getInstance();
         ChipGroup tagsGroup = view.findViewById(R.id.tagsGroup);
+        Chip addIngredientBtn = view.findViewById(R.id.addIngredient);
+
+        RecyclerView ingredientsList = view.findViewById(R.id.ingredientsList);
+        ingredientsList.addItemDecoration(new DividerItemDecoration(ingredientsList.getContext(), DividerItemDecoration.VERTICAL));
+        IngredientsListAdapter ingredientsAdapter = new IngredientsListAdapter(new ArrayList<String>(), new ArrayList<String>());
+        ingredientsList.setAdapter(ingredientsAdapter);
+        ingredientsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        RecyclerView stepsList = view.findViewById(R.id.stepList);
+
+
+        addIngredientBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ingredientsAdapter.addItem("", "");
+            }
+        });
 
         tags.observe(this, new Observer<ArrayList<Tag>>() {
             @Override
             public void onChanged(ArrayList<Tag> tags) {
                 for (Tag tag : tags) {
-                    System.out.println(tag.getName());
                     Chip tagChip = (Chip) getLayoutInflater().inflate(R.layout.layout_chip_filter, tagsGroup, false);
                     tagChip.setText(tag.getName());
                     tagsGroup.addView(tagChip);
