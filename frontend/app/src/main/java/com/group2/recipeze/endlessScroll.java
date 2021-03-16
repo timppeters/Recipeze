@@ -68,7 +68,7 @@ public class endlessScroll {
     }
 
     public void initAdapter() {
-        recyclerViewAdapter = new RecyclerViewAdapter(recipes.getValue());
+        recyclerViewAdapter = new RecyclerViewAdapter(recipeList);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         recipeRepository = RecipeRepository.getInstance();
@@ -77,7 +77,6 @@ public class endlessScroll {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 recipeList = recipes;
-
                 recyclerViewAdapter.notifyDataSetChanged();
                 isLoading = false;
             }
