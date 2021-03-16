@@ -121,7 +121,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         //String item = mItemList.get(position);
         //viewHolder.tvItem.setText(item);
         //position = 0;
-        viewHolder.titleTxt.setText(recipeList.get(position).getTitle());
+        String title = recipeList.get(position).getTitle();
+        int limit = 27;
+        if (title.length() > limit) {
+            title = title.substring(0, limit) + "...";
+        }
+        viewHolder.titleTxt.setText(title);
         viewHolder.descriptionTxt.setText(recipeList.get(position).getDescription());
         viewHolder.likesTxt.setText(String.valueOf(recipeList.get(position).getLikes()));
         viewHolder.comments.setText(String.valueOf(position)); //comments not added yet, using position instead
