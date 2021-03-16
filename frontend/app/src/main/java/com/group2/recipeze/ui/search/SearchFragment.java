@@ -60,14 +60,12 @@ public class SearchFragment extends Fragment {
 
 
         searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(searchRecyclerView);
         endlessScrollManager.populateData(new ArrayList<Recipe>());
         endlessScrollManager.initAdapter();
         endlessScrollManager.initScrollListener();
-
-
 
         Button forButton = root.findViewById(R.id.forumButton);
         Fragment here = this;
@@ -103,7 +101,7 @@ public class SearchFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         searchRecyclerView = view.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(searchRecyclerView);
         endlessScrollManager.populateData(new ArrayList<>());
