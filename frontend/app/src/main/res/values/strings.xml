@@ -97,6 +97,10 @@
     <string name="add">+ Add</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="add_">Add</string>
+    <string name="step">Step</string>
+    <string name="close">╳</string>
+    <string name="images">Images</string>
 
 
 </resources>

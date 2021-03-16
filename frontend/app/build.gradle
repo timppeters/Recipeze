@@ -26,7 +26,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [auth0Domain: "@string/com_auth0_domain", auth0Scheme: "https"]
     }
 
     buildTypes {
@@ -72,6 +71,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.facebook.android:facebook-login:9.0.0'
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.4.3'
 
     implementation 'androidx.preference:preference:1.1.1'
     def nav_version = "2.3.3"

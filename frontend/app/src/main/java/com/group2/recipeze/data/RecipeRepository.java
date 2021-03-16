@@ -193,7 +193,7 @@ public class RecipeRepository extends Repository {
      * @param cookTime How long it takes to cook the recipe
      * @param resultingRecipeId The recipeId of the created recipe will be stored here
      */
-    public void createRecipe(String title, String description, ArrayList<String> ingredients_, ArrayList<String> ingredientsAmounts_, HashMap<Integer, String> instructions_, HashMap<Integer, String> images_, ArrayList<Tag> tags_, int prepTime, int cookTime , MutableLiveData<Integer> resultingRecipeId) {
+    public void createRecipe(String title, String description, ArrayList<String> ingredients_, ArrayList<String> ingredientsAmounts_, HashMap<String, String> instructions_, HashMap<String, String> images_, ArrayList<String> tags_, int prepTime, int cookTime , MutableLiveData<Integer> resultingRecipeId) {
         JSONArray ingredients = new JSONArray(ingredients_);
         JSONArray ingredientsAmounts = new JSONArray(ingredientsAmounts_);
         JSONObject instructions = new JSONObject(instructions_);

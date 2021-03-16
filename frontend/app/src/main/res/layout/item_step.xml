@@ -7,7 +7,7 @@
     android:layout_marginTop="10dp">
 
     <TextView
-        android:id="@+id/ingredient"
+        android:id="@+id/step"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
@@ -22,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
-        android:text="@string/close"
-        android:layout_marginEnd="10dp"
+        android:text="╳"
+        android:layout_marginRight="10dp"
         android:textColor="@color/light_text"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

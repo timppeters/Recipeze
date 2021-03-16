@@ -86,18 +86,42 @@ public class Recipe {
      * @param bitmaps
      * @return Hashmap of base64 strings
      */
-    public static HashMap<Integer, String> convertBitmapsToBase64(HashMap<Integer, Bitmap> bitmaps) {
+    public static HashMap<String, String> convertBitmapsToBase64(HashMap<String, Bitmap> bitmaps) {
         // Convert base64 image string into bitmap
-        HashMap<Integer, String> imagesAsBase64 = new HashMap<>();
-        for (Map.Entry<Integer, Bitmap> entry : bitmaps.entrySet()) {
+        HashMap<String, String> imagesAsBase64 = new HashMap<>();
+        for (Map.Entry<String, Bitmap> entry : bitmaps.entrySet()) {
             Bitmap bitmap = entry.getValue();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            bitmap = getResizedBitmap(bitmap, 300);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
             byte[] imageBytes = baos.toByteArray();
             String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
             imagesAsBase64.put(entry.getKey(), imageString);
         }
         return imagesAsBase64;
+    }
+
+    /**
+     * reduces the size of the image
+     * https://stackoverflow.com/a/25136550
+     *
+     * @param image
+     * @param maxSize
+     * @return
+     */
+    public static Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
 
