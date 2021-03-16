@@ -34,7 +34,6 @@ import java.util.ArrayList;
 public class RecipeBookFragment extends Fragment {
 
     RecyclerView recipeBookRecyclerView;
-    RecyclerViewAdapter.RecyclerViewClickListener listener;
     endlessScroll endlessScrollManager;
 
     private RecipeBookViewModel recipeBookViewModel;
@@ -52,8 +51,7 @@ public class RecipeBookFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
 
         recipeBookRecyclerView = root.findViewById(R.id.recipes);
-        setOnClickListener(this);
-        recipeBookRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), listener));
+        recipeBookRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
         recipeBookRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(recipeBookRecyclerView);
         endlessScrollManager.populateData(new ArrayList<>());
@@ -61,15 +59,6 @@ public class RecipeBookFragment extends Fragment {
         endlessScrollManager.initScrollListener();
 
         return root;
-    }
-
-    private void setOnClickListener(Fragment here) {
-        listener = new RecyclerViewAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                NavHostFragment.findNavController(here).navigate(R.id.action_navigation_recipeBook_to_recipe);
-            }
-        };
     }
 
 }
