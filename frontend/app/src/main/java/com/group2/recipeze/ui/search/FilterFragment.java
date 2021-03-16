@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.group2.recipeze.R;
-import com.group2.recipeze.ui.addRecipe.AddRecipeViewModel;
 
 import java.util.ArrayList;
 
@@ -52,31 +51,34 @@ public class FilterFragment extends Fragment {
 
         Spinner diet = (Spinner) root.findViewById(R.id.DietSpinner);
 
-        CheckBox breakfastCheck = (CheckBox) root.findViewById(R.id.BreakfastCheck);
-        CheckBox lunchCheck = (CheckBox) root.findViewById(R.id.LunchCheck);
-        CheckBox dinnerCheck = (CheckBox) root.findViewById(R.id.DinnerCheck);
-        CheckBox snackCheck = (CheckBox) root.findViewById(R.id.SnackCheck);
-        CheckBox britishCheck = (CheckBox) root.findViewById(R.id.BritishCheck);
-        CheckBox chineseCheck = (CheckBox) root.findViewById(R.id.ChineseCheck);
-        CheckBox japanCheck = (CheckBox) root.findViewById(R.id.JapaneseCheck);
-        CheckBox thaiCheck = (CheckBox) root.findViewById(R.id.ThaiCheck);
-        CheckBox italianCheck = (CheckBox) root.findViewById(R.id.ItalianCheck);
-        CheckBox mexicanCheck = (CheckBox) root.findViewById(R.id.MexicanCheck);
-        CheckBox greekCheck = (CheckBox) root.findViewById(R.id.GreekCheck);
-        CheckBox frenchCheck = (CheckBox) root.findViewById(R.id.FrenchCheck);
-        CheckBox cuisineArray[] = {
-                breakfastCheck,
-                lunchCheck,
-                dinnerCheck,
-                snackCheck,
-                britishCheck,
-                chineseCheck,
-                japanCheck,
-                thaiCheck,
-                italianCheck,
-                mexicanCheck,
-                greekCheck,
-                frenchCheck,
+        CheckBox glutenCheck = (CheckBox) root.findViewById(R.id.GlutenFree);
+        CheckBox NoFish = (CheckBox) root.findViewById(R.id.NoFish);
+        CheckBox NutCheck = (CheckBox) root.findViewById(R.id.NutCheck);
+        CheckBox DairyFree = (CheckBox) root.findViewById(R.id.DairyFree);
+        CheckBox PotatoCheck = (CheckBox) root.findViewById(R.id.PotatoCheck);
+        CheckBox pastaCheck = (CheckBox) root.findViewById(R.id.pastaCheck);
+        CheckBox riceCheck = (CheckBox) root.findViewById(R.id.riceCheck);
+        CheckBox carrotCheck = (CheckBox) root.findViewById(R.id.carrotCheck);
+        CheckBox PepperCheck = (CheckBox) root.findViewById(R.id.PepperCheck);
+        CheckBox OnionCheck = (CheckBox) root.findViewById(R.id.OnionCheck);
+        CheckBox TomatoCheck = (CheckBox) root.findViewById(R.id.TomatoCheck);
+        CheckBox EggCheck = (CheckBox) root.findViewById(R.id.EggCheck);
+        CheckBox tagArr[] = {
+                glutenCheck,
+                NutCheck,
+                DairyFree,
+                NoFish
+        };
+
+        CheckBox specificIng[] = {
+                PotatoCheck,
+                pastaCheck,
+                riceCheck,
+                carrotCheck,
+                PepperCheck,
+                OnionCheck,
+                TomatoCheck,
+                EggCheck
         };
 
         minTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -156,16 +158,23 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ArrayList<String> tags = new ArrayList<>();
-                for(CheckBox each: cuisineArray){
+                for(CheckBox each: tagArr){
                     if(each.isChecked()){
                         tags.add(String.valueOf(each.getText()));
                         System.out.println(each.getText());
+                    }
+                }
+                ArrayList<String> ingList = new ArrayList<>();
+                for(CheckBox each: specificIng){
+                    if(each.isChecked()){
+                        ingList.add(String.valueOf(each.getText()));
                     }
                 }
                 tags.add(String.valueOf(diet.getSelectedItem()));
                 SearchFragment.setIngNum(ingNum.getProgress());
                 SearchFragment.setMaxTime(maxTime.getProgress());
                 SearchFragment.setTags(tags);
+                SearchFragment.setIngrediantList(ingList);
                 System.out.println("MIN TIME: " + minTimeText.getText());
                 System.out.println("MAX TIME: " + maxTimeText.getText());
                 System.out.println("Difficulty: " + difficultyText.getText());

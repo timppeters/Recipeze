@@ -26,6 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public ArrayList<Recipe> recipeList;
 
 
+
     public RecyclerViewAdapter(ArrayList<Recipe> itemList) {
 
         recipeList = itemList;
