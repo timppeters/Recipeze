@@ -61,8 +61,9 @@ public class FeedFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                System.out.println(recipes);
                 feedRecyclerView = root.findViewById(R.id.recipes);
-                feedRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<String>(), null));
+                feedRecyclerView.setAdapter(new RecyclerViewAdapter(recipes, null));
                 feedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(feedRecyclerView);
                 endlessScrollManager.populateData(recipes);

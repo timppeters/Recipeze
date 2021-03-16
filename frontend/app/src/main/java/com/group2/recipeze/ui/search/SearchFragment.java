@@ -59,13 +59,6 @@ public class SearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.search_fragment, container, false);
 
 
-        searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<String>(), null));
-        searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        endlessScrollManager = new endlessScroll(searchRecyclerView);
-        endlessScrollManager.populateData(new ArrayList<Recipe>());
-        endlessScrollManager.initAdapter();
-        endlessScrollManager.initScrollListener();
 
 
 
@@ -94,7 +87,14 @@ public class SearchFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
-                System.out.println("THIS IS A RECIPE" + recipes);
+                System.out.println("RECIPES: " + recipes);
+                searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
+                searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
+                searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                endlessScrollManager = new endlessScroll(searchRecyclerView);
+                endlessScrollManager.populateData(recipes);
+                endlessScrollManager.initAdapter();
+                endlessScrollManager.initScrollListener();
             }
         });
 
@@ -128,5 +128,9 @@ public class SearchFragment extends Fragment {
 
     public static void setTags(ArrayList<String> tags) {
         SearchFragment.tags = tags;
+    }
+
+    public static void setIngrediantList(ArrayList<String> ingrediantList) {
+        SearchFragment.ingrediantList = ingrediantList;
     }
 }

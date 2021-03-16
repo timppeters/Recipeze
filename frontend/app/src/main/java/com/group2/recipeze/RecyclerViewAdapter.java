@@ -28,8 +28,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public RecyclerViewClickListener listener;
 
-    public RecyclerViewAdapter(List<String> itemList, RecyclerViewClickListener listener) {
-        mItemList = itemList;
+    public RecyclerViewAdapter(ArrayList<Recipe> itemList, RecyclerViewClickListener listener) {
+        recipeList = itemList;
         this.listener = listener;
     }
 
