@@ -21,7 +21,6 @@ public class endlessScroll {
 
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
-
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
 
 
@@ -32,7 +31,12 @@ public class endlessScroll {
     }
 
     public void populateData(ArrayList<Recipe> initialRecipes) {
-        recipes.setValue(initialRecipes);
+        recipeList = initialRecipes;
+        recipes.setValue(recipeList);
+        //recipes.postValue(recipeList);
+        for(int x = 0; x < recipeList.size(); x++){
+            Log.d("recipe1", recipeList.get(x).getTitle());
+        }
     }
 
     public void addFakeRecipe(String title, int amount){
@@ -64,7 +68,8 @@ public class endlessScroll {
     }
 
     public void initAdapter() {
-        recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<Recipe>(), null);
+
+        recyclerViewAdapter = new RecyclerViewAdapter(recipeList);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         recipeRepository = RecipeRepository.getInstance();
@@ -72,8 +77,7 @@ public class endlessScroll {
 
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
-                recipeList = recipes;
-
+                recipeList.addAll(recipes);
                 recyclerViewAdapter.notifyDataSetChanged();
                 isLoading = false;
             }
@@ -119,7 +123,7 @@ public class endlessScroll {
 
                 ArrayList<String> ingredients = new ArrayList<String>();
                 ArrayList<String> tags = new ArrayList<String>();
-                recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
+                recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", recipeList.size(), recipes);
             }
         }, 10000);
 

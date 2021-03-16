@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
 
         recipeRepository.getRecipesForProfile("user", 0, recipes);
         recyclerView = root.findViewById(R.id.profileRecipes);
-        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
+        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(recyclerView);
         endlessScrollManager.populateData(new ArrayList<>());
