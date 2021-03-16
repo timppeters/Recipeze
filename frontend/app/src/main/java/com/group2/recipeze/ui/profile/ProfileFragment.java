@@ -39,11 +39,13 @@ import java.util.HashMap;
 public class ProfileFragment extends Fragment {
     public HashMap<String, ?> settings = new HashMap<>();
     private ProfileViewModel profileViewModel;
+
     RecyclerView recyclerView;
     endlessScroll endlessScrollManager;
     UserRepository userRepository;
     RecipeRepository recipeRepository;
     LoginRepository loginRepository;
+
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     private MutableLiveData<Boolean> profile_updated = new MutableLiveData<>();
 
@@ -58,19 +60,29 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        recipeRepository = RecipeRepository.getInstance();
-        loginRepository = LoginRepository.getInstance();
-        recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
+        recipeRepository = RecipeRepository.getInstance();
+        recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                recyclerView = root.findViewById(R.id.profileRecipes);
+                recyclerView.setAdapter(new RecyclerViewAdapter(recipes));
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                endlessScrollManager = new endlessScroll(recyclerView);
+                endlessScrollManager.populateData(recipes);
+                endlessScrollManager.initAdapter();
+                endlessScrollManager.initScrollListener();
             }
         });
+
+        loginRepository = LoginRepository.getInstance();
+
         TextView username = root.findViewById(R.id.username);
         TextView bio = root.findViewById(R.id.bio);
         username.setText(loginRepository.getUser().getUsername());
         bio.setText(loginRepository.getUser().getBio());
+
         profile_updated.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -80,23 +92,24 @@ public class ProfileFragment extends Fragment {
         });
 
         final TextView textView = root.findViewById(R.id.text_profile);
+
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
+
         ImageButton settingBut = root.findViewById(R.id.SetBut);
         Fragment here = this;
         userRepository = UserRepository.getInstance();
+
         settingBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(here).navigate(R.id.action_navigation_profile_to_settingsFragment2);
             }
         });
-
-
 
         Button button = root.findViewById(R.id.editFoodPreferences);
         Fragment here2 = this;
@@ -108,20 +121,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        recipeRepository.getRecipesForProfile("user", 0, recipes);
-        recyclerView = root.findViewById(R.id.profileRecipes);
-        recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        endlessScrollManager = new endlessScroll(recyclerView);
-        endlessScrollManager.populateData(new ArrayList<>());
-        endlessScrollManager.initAdapter();
-        endlessScrollManager.initScrollListener();
         userRepository.updateProfile(loginRepository.getUser().getUsername(), loginRepository.getUser().getEmail(), "I am vegan", settings);
         userRepository.getPrivateProfile(profile_updated);
         //userRepository.followUser("leokou");
         //userRepository.unfollowUser("leokou");
+
         return root;
     }
 
-
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        // Just an example request
+        recipeRepository.getRecipesForProfile(loginRepository.getUser().getUsername(), 0, recipes);
+    }
 }
