@@ -122,7 +122,7 @@ public class endlessScroll {
 
                 ArrayList<String> ingredients = new ArrayList<String>();
                 ArrayList<String> tags = new ArrayList<String>();
-                recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
+                recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", recipeList.size(), recipes);
             }
         }, 10000);
 
