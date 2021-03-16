@@ -139,7 +139,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Integer time = recipeList.get(position).getPrepTime() + recipeList.get(position).getCookTime();
         viewHolder.timeTxt.setText(time.toString());
         viewHolder.rating.setRating(recipeList.get(position).getRating());
-        new DownloadImageTask((ImageView) viewHolder.image).execute(recipeList.get(position).getImages().get(1));
+        viewHolder.image.setImageBitmap(recipeList.get(position).getImagesAsBitmaps().get(1));
+        //new DownloadImageTask((ImageView) viewHolder.image).execute(recipeList.get(position).getImages().get(1));
         //viewHolder.image.setImageBitmap(recipeList.get(position).getImagesAsBitmaps().get(0));
 
         ArrayList<TextView> tagObjects = new ArrayList<>();
