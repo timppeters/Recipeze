@@ -60,7 +60,7 @@ public class SearchFragment extends Fragment {
 
 
         searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<String>(), null));
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(searchRecyclerView);
         endlessScrollManager.populateData(new ArrayList<Recipe>());
@@ -103,7 +103,7 @@ public class SearchFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         searchRecyclerView = view.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), null));
+        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<Recipe>()));
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(searchRecyclerView);
         endlessScrollManager.populateData(new ArrayList<>());

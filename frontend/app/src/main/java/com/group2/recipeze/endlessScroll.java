@@ -21,7 +21,6 @@ public class endlessScroll {
 
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
-
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
 
 
@@ -32,7 +31,12 @@ public class endlessScroll {
     }
 
     public void populateData(ArrayList<Recipe> initialRecipes) {
-        recipes.setValue(initialRecipes);
+        recipeList = initialRecipes;
+        recipes.setValue(recipeList);
+        //recipes.postValue(recipeList);
+        for(int x = 0; x < recipeList.size(); x++){
+            Log.d("recipe1", recipeList.get(x).getTitle());
+        }
     }
 
     public void addFakeRecipe(String title, int amount){
