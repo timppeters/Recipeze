@@ -21,8 +21,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.internal.$Gson$Preconditions;
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
+import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.recipe.RecipeFragment;
 
@@ -34,7 +36,6 @@ import java.util.ArrayList;
 public class RecipeBookFragment extends Fragment {
 
     RecyclerView recipeBookRecyclerView;
-    RecyclerViewAdapter.RecyclerViewClickListener listener;
     endlessScroll endlessScrollManager;
 
     private RecipeBookViewModel recipeBookViewModel;
@@ -48,12 +49,11 @@ public class RecipeBookFragment extends Fragment {
      * @return
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        recipeBookViewModel = new ViewModelProvider(this).get(RecipeBookViewModel.class);
+//        recipeBookViewModel = new ViewModelProvider(this).get(RecipeBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
 
         recipeBookRecyclerView = root.findViewById(R.id.recipes);
-        setOnClickListener(this);
-        recipeBookRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>(), listener));
+        recipeBookRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
         recipeBookRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         endlessScrollManager = new endlessScroll(recipeBookRecyclerView);
         endlessScrollManager.populateData(new ArrayList<>());
@@ -62,14 +62,4 @@ public class RecipeBookFragment extends Fragment {
 
         return root;
     }
-
-    private void setOnClickListener(Fragment here) {
-        listener = new RecyclerViewAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                NavHostFragment.findNavController(here).navigate(R.id.action_navigation_recipeBook_to_recipe);
-            }
-        };
-    }
-
 }

@@ -24,13 +24,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
 
     public ArrayList<Recipe> recipeList;
-    List<String> mItemList;
 
-    public RecyclerViewClickListener listener;
 
-    public RecyclerViewAdapter(ArrayList<Recipe> itemList, RecyclerViewClickListener listener) {
+
+    public RecyclerViewAdapter(ArrayList<Recipe> itemList) {
+
         recipeList = itemList;
-        this.listener = listener;
     }
 
     @NonNull
@@ -74,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleTxt;
         TextView descriptionTxt;
@@ -88,13 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            //tvItem = itemView.findViewById(R.id.recipe_title3);
-            itemView.setOnClickListener(this);
-        }
 
-        @Override
-        public void onClick(View v) {
-            listener.onClick(v, getAdapterPosition());
             titleTxt = itemView.findViewById(R.id.recipe_title3);
             descriptionTxt = itemView.findViewById(R.id.description3);
             likesTxt = itemView.findViewById(R.id.likes3);
@@ -127,7 +120,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         //populate card with values
         //String item = mItemList.get(position);
         //viewHolder.tvItem.setText(item);
-        position = 0;
+        //position = 0;
         viewHolder.titleTxt.setText(recipeList.get(position).getTitle());
         viewHolder.descriptionTxt.setText(recipeList.get(position).getDescription());
         viewHolder.likesTxt.setText(String.valueOf(recipeList.get(position).getLikes()));
@@ -149,8 +142,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    public interface RecyclerViewClickListener {
-        void onClick(View v, int position);
-    }
 
 }

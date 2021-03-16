@@ -222,18 +222,18 @@
                     android:layout_height="29dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Cuisine Type"
+                    android:text="Food Choices"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/DietSpinner" />
 
                 <TableLayout
                     android:id="@+id/tableLayout2"
-                    android:layout_width="349dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_width="367dp"
+                    android:layout_height="134dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginEnd="16dp"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -244,28 +244,28 @@
                         android:layout_height="match_parent">
 
                         <CheckBox
-                            android:id="@+id/BreakfastCheck"
+                            android:id="@+id/GlutenFree"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Breakfast" />
+                            android:text="Gluten Free" />
 
                         <CheckBox
-                            android:id="@+id/DinnerCheck"
+                            android:id="@+id/NutCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dinner" />
+                            android:text="No Nuts" />
 
                         <CheckBox
-                            android:id="@+id/SnackCheck"
+                            android:id="@+id/DairyFree"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Snack" />
+                            android:text="Dairy Free" />
 
                         <CheckBox
-                            android:id="@+id/LunchCheck"
+                            android:id="@+id/NoFish"
                             android:layout_width="81dp"
                             android:layout_height="43dp"
-                            android:text="Lunch" />
+                            android:text="No fish" />
                     </TableRow>
 
                     <TableRow
@@ -275,28 +275,28 @@
                         android:textAlignment="center">
 
                         <CheckBox
-                            android:id="@+id/BritishCheck"
+                            android:id="@+id/PotatoCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="British" />
+                            android:text="Potato" />
 
                         <CheckBox
-                            android:id="@+id/ChineseCheck"
+                            android:id="@+id/pastaCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Chinese" />
+                            android:text="Pasta" />
 
                         <CheckBox
-                            android:id="@+id/JapaneseCheck"
+                            android:id="@+id/riceCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Japanese" />
+                            android:text="Rice" />
 
                         <CheckBox
-                            android:id="@+id/ThaiCheck"
+                            android:id="@+id/carrotCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thai" />
+                            android:text="carrot" />
 
                     </TableRow>
 
@@ -305,28 +305,28 @@
                         android:layout_height="match_parent">
 
                         <CheckBox
-                            android:id="@+id/ItalianCheck"
+                            android:id="@+id/PepperCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Italian" />
+                            android:text="Pepper" />
 
                         <CheckBox
-                            android:id="@+id/MexicanCheck"
+                            android:id="@+id/OnionCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mexican" />
+                            android:text="Onion" />
 
                         <CheckBox
-                            android:id="@+id/GreekCheck"
+                            android:id="@+id/TomatoCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Greek" />
+                            android:text="Tomato" />
 
                         <CheckBox
-                            android:id="@+id/FrenchCheck"
+                            android:id="@+id/EggCheck"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="French" />
+                            android:text="Egg" />
                     </TableRow>
 
                     <TableRow

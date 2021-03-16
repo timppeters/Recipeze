@@ -12,6 +12,12 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+    }
+
     defaultConfig {
         applicationId "com.group2.recipeze"
         minSdkVersion 27
