@@ -6,10 +6,11 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 public interface SearchService {
 
     @GET("search")
-    Call<JsonElement> search(@Field("query") String query,
+    Call<JsonElement> search(@Query("query") String query,
                              @Header("x-access-token") String token);
 }

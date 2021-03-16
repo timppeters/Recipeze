@@ -6,10 +6,11 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 public interface TagService {
 
     @GET("tag")
-    Call<JsonElement> getTags(@Field("type") String type,
+    Call<JsonElement> getTags(@Query("type") String type,
                               @Header("x-access-token") String token);
 }

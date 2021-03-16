@@ -28,7 +28,7 @@
 
     <dialog
         android:id="@+id/navigation_addRecipe"
-        android:name="com.group2.recipeze.ui.BottomSheet"
+        android:name="com.group2.recipeze.ui.addRecipe.AddRecipeFragment"
         android:label="@string/title_addRecipe"
         tools:layout="@layout/fragment_addrecipe" />
 

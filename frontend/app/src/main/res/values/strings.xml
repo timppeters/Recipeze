@@ -84,6 +84,16 @@
     <string name="send">Send</string>
     <string name="email_instructions_login">We will send you an email with a link that will log you in.</string>
     <string name="email_instructions_login_2">Open the email from us on this device and click on the link to finish logging in.</string>
+    <string name="create_recipe">Create Recipe</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="tags">Tags</string>
+    <string name="timing">Timing</string>
+    <string name="preparation_time">Preparation time</string>
+    <string name="cooking_time">Cooking time</string>
+    <string name="minutes">minutes</string>
 
 
 </resources>
