@@ -87,8 +87,6 @@ public class ExploreFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Just an example request
-        ArrayList<String> ingredients = new ArrayList<String>();
-        ArrayList<String> tags = new ArrayList<String>();
-        recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
+        recipeRepository.getRecipesForExplore(0, recipes);
     }
 }

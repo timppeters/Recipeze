@@ -94,6 +94,10 @@ public class SearchFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Just an example request
+
+        /* TODO I wasn't sure what was meant to be here so just did this for now
+           It doesn't seem to search by tag or filter so just left like this
+         */
         ArrayList<String> ingredients = new ArrayList<String>();
         ArrayList<String> tags = new ArrayList<String>();
         repo.getRecipesForFeedByTags(maxTime, ingredients, ingNum, tags, "likes", 0, recipes);
