@@ -1,39 +1,137 @@
 package com.group2.recipeze.ui.addRecipe;
 
+import android.app.Dialog;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.group2.recipeze.R;
-import com.group2.recipeze.ui.BottomSheet;
+import com.group2.recipeze.data.TagRepository;
+import com.group2.recipeze.data.model.Tag;
+import com.group2.recipeze.ui.addRecipe.AddRecipeViewModel;
 
-/**
- *  AddRecipeFragment.
- */
-public class AddRecipeFragment extends Fragment {
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
+public class AddRecipeFragment extends BottomSheetDialogFragment {
+
+    BottomSheetBehavior bottomSheetBehavior;
     private AddRecipeViewModel addRecipeViewModel;
+    private TagRepository tagRepository;
+    private MutableLiveData<ArrayList<Tag>> tags = new MutableLiveData<>();
 
-    /**
-     * Called when view is created.
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        addRecipeViewModel =
-                new ViewModelProvider(this).get(AddRecipeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_addrecipe, container, false);
+    @NotNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
 
-        return root;
+        //inflating layout
+        View view = View.inflate(getContext(), R.layout.fragment_addrecipe, null);
+
+        //setting layout with bottom sheet
+        bottomSheet.setContentView(view);
+
+        bottomSheetBehavior = BottomSheetBehavior.from((View) (view.getParent()));
+
+
+        //setting Peek at the 16:9 ratio keyline of its parent.
+        bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.PEEK_HEIGHT_AUTO);
+
+
+        //setting max height of bottom sheet
+        //view.findViewById(R.id.extraSpace).setMinimumHeight((Resources.getSystem().getDisplayMetrics().heightPixels));
+
+        tagRepository = TagRepository.getInstance();
+        ChipGroup tagsGroup = view.findViewById(R.id.tagsGroup);
+        Chip addIngredientBtn = view.findViewById(R.id.addIngredient);
+
+        RecyclerView ingredientsList = view.findViewById(R.id.ingredientsList);
+        ingredientsList.addItemDecoration(new DividerItemDecoration(ingredientsList.getContext(), DividerItemDecoration.VERTICAL));
+        IngredientsListAdapter ingredientsAdapter = new IngredientsListAdapter(new ArrayList<String>(), new ArrayList<String>());
+        ingredientsList.setAdapter(ingredientsAdapter);
+        ingredientsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        RecyclerView stepsList = view.findViewById(R.id.stepList);
+
+
+        addIngredientBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ingredientsAdapter.addItem("", "");
+            }
+        });
+
+        tags.observe(this, new Observer<ArrayList<Tag>>() {
+            @Override
+            public void onChanged(ArrayList<Tag> tags) {
+                for (Tag tag : tags) {
+                    Chip tagChip = (Chip) getLayoutInflater().inflate(R.layout.layout_chip_filter, tagsGroup, false);
+                    tagChip.setText(tag.getName());
+                    tagsGroup.addView(tagChip);
+                }
+
+            }
+        });
+
+        tagRepository.getAllTags(tags);
+
+
+
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                if (BottomSheetBehavior.STATE_EXPANDED == i) {
+                    //
+
+                }
+                if (BottomSheetBehavior.STATE_COLLAPSED == i) {
+                    //
+                }
+
+                if (BottomSheetBehavior.STATE_HIDDEN == i) {
+                    dismiss();
+                }
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
+
+
+        return bottomSheet;
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    private void showView(View view, int size) {
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.height = size;
+        view.setLayoutParams(params);
+    }
+
 }
