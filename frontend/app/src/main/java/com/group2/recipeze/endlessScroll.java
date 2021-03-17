@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,38 +40,12 @@ public class endlessScroll {
         }
     }
 
-    public void addFakeRecipe(String title, int amount){
-        ArrayList<String> ingredients = new ArrayList<String>();
-        ingredients.add("Tomatoes");
-        ArrayList<String> ingredientsAmounts = new ArrayList<String>();
-        ingredientsAmounts.add("200g");
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add("tag1");
-        tags.add("tag2");
-        Recipe exampleRecipe = new Recipe(1,
-                4.5f,
-                123,
-                "Alf",
-                title,
-                "Recipe Description",
-                ingredients,
-                ingredientsAmounts,
-                new HashMap<Integer, String>(),
-                new HashMap<Integer, String>(),
-                tags,
-                15,
-                90
-        );
-        for(int i = 0; i < amount; i++) {
-            recipeList.add(exampleRecipe);
-        }
-        recipes.setValue(recipeList);
-    }
-
-    public void initAdapter() {
+    public void initAdapter(Fragment fragmment) {
 
         recyclerViewAdapter = new RecyclerViewAdapter(recipeList);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(fragmment.getContext()));
+        recyclerViewAdapter.setThisFragment(fragmment);
 
         recipeRepository = RecipeRepository.getInstance();
         recipes.observeForever(new Observer<ArrayList<Recipe>>() {
