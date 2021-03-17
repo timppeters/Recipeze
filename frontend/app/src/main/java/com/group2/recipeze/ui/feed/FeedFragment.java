@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +20,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-// TODO I'm not sure why but I can't seem to import androidx.recyclerview.selection
 
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
@@ -35,12 +34,14 @@ import java.util.ArrayList;
  */
 public class FeedFragment extends Fragment {
     RecyclerView feedRecyclerView;
+    RecyclerViewAdapter feedRecyclerViewAdapter;
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
 
     Button tagsBtn;
     Button usersBtn;
+    Button btn;
     Drawable selectedTab;
 
     private FeedViewModel feedViewModel;
@@ -64,7 +65,8 @@ public class FeedFragment extends Fragment {
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 feedRecyclerView = root.findViewById(R.id.recipes);
-                feedRecyclerView.setAdapter(new RecyclerViewAdapter(recipes));
+                feedRecyclerViewAdapter = new RecyclerViewAdapter(recipes);
+                feedRecyclerView.setAdapter(feedRecyclerViewAdapter);
                 feedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(feedRecyclerView);
                 endlessScrollManager.populateData(recipes);
@@ -75,6 +77,7 @@ public class FeedFragment extends Fragment {
 
         tagsBtn = root.findViewById(R.id.tagsTab);
         usersBtn = root.findViewById(R.id.usersTab);
+        btn = root.findViewById(R.id.button_get_selected);
 
         selectedTab = ContextCompat.getDrawable(getContext(), R.drawable.tab_background);
 
@@ -94,7 +97,25 @@ public class FeedFragment extends Fragment {
             }
         });
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (feedRecyclerViewAdapter.getSelected() != null) {
+                    showToast(feedRecyclerViewAdapter.getSelected().getDescription());
+                    Log.d("SELECT-RECIPE", feedRecyclerViewAdapter.getSelected().getDescription());
+                }
+                else {
+                    showToast("no selection");
+                    Log.d("SELECT-RECIPE", "no selection");
+                }
+            }
+        });
+
         return root;
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -103,4 +124,5 @@ public class FeedFragment extends Fragment {
         ArrayList<String> tags = new ArrayList<String>();
         recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
+
 }

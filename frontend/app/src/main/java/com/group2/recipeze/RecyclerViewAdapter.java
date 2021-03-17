@@ -30,11 +30,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
 
     public ArrayList<Recipe> recipeList;
-
+    int checkedPosition = 0; // -1: no default selection 0: 1st item selected
 
 
     public RecyclerViewAdapter(ArrayList<Recipe> itemList) {
-
         recipeList = itemList;
     }
 
@@ -52,10 +51,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-
         if (viewHolder instanceof ItemViewHolder) {
-
             populateItemRows((ItemViewHolder) viewHolder, position);
+            ((ItemViewHolder) viewHolder).bind(recipeList.get(position));
         } else if (viewHolder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) viewHolder, position);
         }
@@ -103,6 +101,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             image = itemView.findViewById(R.id.recipeIamge);
             tag1 = itemView.findViewById(R.id.tag4);
             tag2 = itemView.findViewById(R.id.tag5);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (checkedPosition != getAdapterPosition()){
+                        descriptionTxt.setText(descriptionTxt.getText() + " SELECTED! ");
+                        notifyItemChanged(checkedPosition);
+                        checkedPosition = getAdapterPosition();
+                    }
+                }
+            });
+        }
+
+        void bind (Recipe recipe) {
+            if (checkedPosition == -1) {
+                //Not selected
+                image.setVisibility(View.GONE);
+            }
+            else {
+                if (checkedPosition == getAdapterPosition()) {
+                    //Selected
+                    image.setVisibility(View.VISIBLE);
+                }
+                else {
+                    //Not selected
+                    image.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
@@ -155,6 +180,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    public Recipe getSelected() {
+        if (checkedPosition != -1) {
+            return recipeList.get(checkedPosition);
+        }
+        return null;
+    }
 
 }
 
