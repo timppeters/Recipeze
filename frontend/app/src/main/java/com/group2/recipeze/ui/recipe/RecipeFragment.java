@@ -56,6 +56,9 @@ public class RecipeFragment extends Fragment {
                 new ViewModelProvider(this).get(RecipeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipe, container, false);
 
+
+        Integer recipeId = getArguments().getInt("recipeId");
+
         final TextView prepTimeValue = root.findViewById(R.id.prepTimeValue);
         final TextView cookTimeValue = root.findViewById(R.id.cookTimeValue);
 

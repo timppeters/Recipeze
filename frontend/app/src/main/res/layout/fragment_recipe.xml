@@ -93,22 +93,56 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0">
 
+                    <Button
+                        android:id="@+id/tpoBar"
+                        android:layout_width="46dp"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/darker_background"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+
+                    <TextView
+                        android:id="@+id/Ingredients"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:elevation="5dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Ingredients"
+                        android:textColor="@color/dark_text"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/ingredientsList"
+                        app:layout_constraintTop_toTopOf="@+id/ingredientsList" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/ingredientsList"
-                        android:layout_width="349dp"
-                        android:layout_height="131dp"
-                        app:layout_constraintBottom_toTopOf="@+id/steps"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/ingredients_list"
+                        android:elevation="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.645"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recipeDescription"
-                        app:layout_constraintVertical_bias="0.52" />
+                        app:layout_constraintTop_toBottomOf="@+id/recipeDescription" />
+
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/stepList"
-                        android:layout_width="336dp"
+                        android:layout_width="0dp"
                         android:layout_height="53dp"
+                        android:layout_marginStart="30dp"
                         android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.533"
                         app:layout_constraintStart_toStartOf="parent"
@@ -116,12 +150,12 @@
 
                     <ImageView
                         android:id="@+id/timer"
-                        android:layout_width="59dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="32dp"
-                        android:src="@android:drawable/ic_lock_idle_alarm"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="35dp"
+                        android:src="@drawable/ic_clock"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.693"
+                        app:layout_constraintHorizontal_bias="0.635"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -130,10 +164,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
+                        android:fontFamily="@font/poppins"
                         android:text="Prep"
+                        android:textColor="@color/dark_text"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintHorizontal_bias="0.07"
                         app:layout_constraintStart_toEndOf="@+id/timer"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,11 +177,13 @@
                         android:id="@+id/cookTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="64dp"
+                        android:layout_marginTop="56dp"
+                        android:fontFamily="@font/poppins"
                         android:text="Cook"
+                        android:textColor="@color/dark_text"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintHorizontal_bias="0.066"
                         app:layout_constraintStart_toEndOf="@+id/timer"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,10 +192,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/poppins"
                         android:hint="Prep Time"
+                        android:textColor="@color/dark_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintHorizontal_bias="0.482"
                         app:layout_constraintStart_toEndOf="@+id/prepTime"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -165,85 +205,137 @@
                         android:id="@+id/cookTimeValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="64dp"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="56dp"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/poppins"
                         android:hint="Cook Time"
+                        android:textColor="@color/dark_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintHorizontal_bias="0.478"
                         app:layout_constraintStart_toEndOf="@+id/cookTime"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/restrictionType"
-                        android:layout_width="wrap_content"
+                    <HorizontalScrollView
+                        android:id="@+id/tags"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="64dp"
-                        android:background="#8BC34A"
-                        android:hint="Gluten Free"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="50dp"
                         app:layout_constraintEnd_toStartOf="@+id/timer"
-                        app:layout_constraintHorizontal_bias="0.247"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/restrictionType2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="64dp"
-                        android:background="#8BC34A"
-                        android:hint="Vegan"
-                        app:layout_constraintEnd_toStartOf="@+id/timer"
-                        app:layout_constraintHorizontal_bias="0.207"
-                        app:layout_constraintStart_toEndOf="@+id/restrictionType"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/restrictionType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/tag"
+                                android:elevation="100dp"
+                                android:fontFamily="@font/poppinsregular"
+                                android:gravity="center"
+                                android:paddingHorizontal="5dp"
+                                android:text="Gluten Free"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:visibility="visible"
+                                app:backgroundTint="@color/green"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <TextView
+                                android:id="@+id/restrictionType2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/tag"
+                                android:elevation="100dp"
+                                android:fontFamily="@font/poppinsregular"
+                                android:gravity="center"
+                                android:paddingHorizontal="5dp"
+                                android:text="Vegan"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:visibility="visible"
+                                app:backgroundTint="@color/green"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+                        </LinearLayout>
+
+
+                    </HorizontalScrollView>
+
 
                     <TextView
                         android:id="@+id/recipeName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="20dp"
-                        android:hint="Recipe Name"
-                        android:textColor="#8BC34A"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Recipe Name"
+                        android:textColor="@color/green"
                         android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/restrictionType" />
+                        app:layout_constraintTop_toBottomOf="@+id/tags" />
 
                     <TextView
                         android:id="@+id/recipeDescription"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="30dp"
                         android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"
+                        android:fontFamily="@font/poppins"
                         android:hint="Recipe Description"
+                        android:textColor="@color/dark_text"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/recipeName" />
 
                     <TextView
                         android:id="@+id/steps"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="180dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins"
                         android:text="Steps"
-                        android:textColor="#000000"
+                        android:textColor="@color/dark_text"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.122"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recipeDescription" />
+                        app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/videoButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="40dp"
+                        android:fontFamily="@font/poppins"
                         android:text="Watch Video"
-                        app:layout_constraintBottom_toTopOf="@+id/stepList"
+                        android:textAllCaps="false"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:padding="0dp"
+                        android:background="@drawable/video_button"
+                        android:textSize="11sp"
+                        android:drawableEnd="@drawable/ic_play_button_arrowhead"
+                        app:layout_constraintBottom_toBottomOf="@+id/steps"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.795"
-                        app:layout_constraintStart_toEndOf="@+id/steps"
-                        app:layout_constraintTop_toBottomOf="@+id/ingredientsList"
-                        app:layout_constraintVertical_bias="0.4" />
+                        app:layout_constraintTop_toTopOf="@+id/steps" />
+
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

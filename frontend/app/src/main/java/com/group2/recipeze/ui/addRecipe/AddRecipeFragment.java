@@ -12,8 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +34,7 @@ import com.group2.recipeze.R;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.TagRepository;
 import com.group2.recipeze.data.model.Tag;
+import com.group2.recipeze.ui.recipe.RecipeFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -142,8 +147,16 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
 
                 resultingRecipeId.observe(thisFragment, new Observer<Integer>() {
                     @Override
-                    public void onChanged(Integer integer) {
-                        System.out.println("NEW RECIPE: " + integer);
+                    public void onChanged(Integer recipeId) {
+                        //System.out.println("NEW RECIPE: " + recipeId);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("recipeId", recipeId);
+
+                        FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.setReorderingAllowed(true);
+                        transaction.replace(R.id.nav_host_fragment, RecipeFragment.class, bundle);
+                        transaction.commit();
                     }
                 });
 
