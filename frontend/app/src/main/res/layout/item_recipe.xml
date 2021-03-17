@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,8 +35,7 @@
         android:text="Spaghetti with Meatballs"
         android:textColor="@color/green"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
-        app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+
         app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="@+id/recipe_card3"
         app:layout_constraintTop_toTopOf="@+id/recipe_card3"
@@ -58,8 +57,7 @@
         android:textSize="12sp"
         android:visibility="invisible"
         app:backgroundTint="@color/green"
-        app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
-        app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintStart_toStartOf="@+id/recipe_card3"
         app:layout_constraintTop_toTopOf="@+id/recipe_card3"
@@ -80,8 +78,6 @@
         android:textSize="12sp"
         android:visibility="invisible"
         app:backgroundTint="@color/green"
-        app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
-        app:layout_constraintEnd_toEndOf="@+id/recipe_card"
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toEndOf="@+id/tag4"
         app:layout_constraintTop_toTopOf="@+id/tag4"
@@ -98,8 +94,6 @@
             android:rating="4"
             android:secondaryProgressTint="#FFFFFF"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
-            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
             app:layout_constraintHorizontal_bias="0.060"
             app:layout_constraintStart_toStartOf="@+id/recipe_card3"
             app:layout_constraintTop_toBottomOf="@+id/recipe_title3"
@@ -115,7 +109,6 @@
             android:text="Easy vegan gluten-free spaghetti and meatball recipe!"
             android:textSize="10sp"
             android:elevation="100dp"
-            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
             app:layout_constraintHorizontal_bias="0.13"
             app:layout_constraintStart_toStartOf="@+id/recipe_card3"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar3" />
@@ -128,8 +121,6 @@
             android:layout_marginTop="5dp"
             android:src="@drawable/ic_like"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
-            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
             app:layout_constraintHorizontal_bias="0.040"
             app:layout_constraintStart_toStartOf="@+id/recipe_card3"
             app:layout_constraintTop_toBottomOf="@+id/description3"
@@ -147,7 +138,6 @@
             android:textColor="@color/dark_text"
             android:textSize="11dp"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
             app:layout_constraintStart_toEndOf="@+id/likeImg3"
             app:layout_constraintTop_toBottomOf="@+id/description3"
             app:layout_constraintVertical_bias="0.49" />
@@ -160,7 +150,6 @@
             android:layout_marginTop="5dp"
             android:src="@drawable/ic_chat_comment_oval_speech_bubble_with_text_lines"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
             app:layout_constraintStart_toEndOf="@+id/likes3"
             app:layout_constraintTop_toBottomOf="@+id/description3"
             app:layout_constraintVertical_bias="0.950"
@@ -177,7 +166,6 @@
             android:textColor="@color/dark_text"
             android:textSize="11dp"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
             app:layout_constraintStart_toEndOf="@+id/commentImg3"
             app:layout_constraintTop_toBottomOf="@+id/description3"
             app:layout_constraintVertical_bias="0.970" />
@@ -190,7 +178,6 @@
             android:layout_marginTop="5dp"
             android:elevation="100dp"
             android:src="@drawable/ic_clock"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
             app:layout_constraintStart_toEndOf="@+id/comments3"
             app:layout_constraintTop_toBottomOf="@+id/description3"
             app:layout_constraintVertical_bias="0.950"
@@ -207,7 +194,6 @@
             android:textColor="@color/dark_text"
             android:textSize="11dp"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
             app:layout_constraintStart_toEndOf="@+id/timeImg3"
             app:layout_constraintTop_toBottomOf="@+id/description3"
             app:layout_constraintVertical_bias="0.970" />
