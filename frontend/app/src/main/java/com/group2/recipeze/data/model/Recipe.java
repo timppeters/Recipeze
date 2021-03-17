@@ -71,7 +71,7 @@ public class Recipe {
         // Convert base64 image string into bitmap
         HashMap<Integer, Bitmap> imagesAsBitmaps = new HashMap<>();
         for (Map.Entry<Integer, String> entry : images.entrySet()) {
-            String pureBase64Encoded = entry.getValue().substring(entry.getValue().indexOf(",") + 1);
+            String pureBase64Encoded = entry.getValue();//.substring(entry.getValue().indexOf(",") + 1);
             byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
             imagesAsBitmaps.put(entry.getKey(), decodedBitmap);

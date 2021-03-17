@@ -23,23 +23,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/recipe_title3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="35dp"
-            android:elevation="100dp"
-            android:fontFamily="@font/poppinsregular"
-            android:text="Spaghetti with Meatballs"
-            android:textColor="@color/green"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
-            app:layout_constraintEnd_toEndOf="@+id/recipe_card"
-            app:layout_constraintHorizontal_bias="0.09"
-            app:layout_constraintStart_toStartOf="@+id/recipe_card3"
-            app:layout_constraintTop_toTopOf="@+id/recipe_card3"
-            app:layout_constraintVertical_bias="0.051" />
+    <TextView
+        android:id="@+id/recipe_title3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="35dp"
+        android:elevation="100dp"
+        android:fontFamily="@font/poppinsregular"
+        android:maxLength="30"
+        android:text="Spaghetti with Meatballs"
+        android:textColor="@color/green"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_card"
+        app:layout_constraintEnd_toEndOf="@+id/recipe_card"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+        app:layout_constraintTop_toTopOf="@+id/recipe_card3"
+        app:layout_constraintVertical_bias="0.051" />
 
     <TextView
         android:id="@+id/tag4"
