@@ -32,7 +32,6 @@ import java.util.ArrayList;
 public class ExploreFragment extends Fragment {
     RecyclerView recyclerView;
     endlessScroll endlessScrollManager;
-
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
 
@@ -46,10 +45,8 @@ public class ExploreFragment extends Fragment {
      * @param savedInstanceState
      * @return
      */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        exploreViewModel =
-                new ViewModelProvider(this).get(ExploreViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        exploreViewModel = new ViewModelProvider(this).get(ExploreViewModel.class);
         View root = inflater.inflate(R.layout.fragment_explore, container, false);
 
     
@@ -59,9 +56,8 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
-                System.out.println("Recipes" + recipes);
                 recyclerView = root.findViewById(R.id.exploreRecipes);
-                recyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
+                recyclerView.setAdapter(new RecyclerViewAdapter(recipes));
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(recyclerView);
                 endlessScrollManager.populateData(recipes);
@@ -87,5 +83,10 @@ public class ExploreFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        // Just an example request
+        recipeRepository.getRecipesForExplore(0, recipes);
     }
 }

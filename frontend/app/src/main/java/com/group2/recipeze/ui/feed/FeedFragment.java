@@ -100,6 +100,4 @@ public class FeedFragment extends Fragment {
         ArrayList<String> tags = new ArrayList<String>();
         recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
-
-
 }

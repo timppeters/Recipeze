@@ -27,19 +27,18 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 /**
- * FeedFragment.
+ * SearchFragment.
  */
 public class SearchFragment extends Fragment {
     RecyclerView searchRecyclerView;
     endlessScroll endlessScrollManager;
+    RecipeRepository repo;
+    private MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+
     private static int maxTime = 100;
-    private static ArrayList<String> ingrediantList;
+    private static ArrayList<String> ingredientList;
     private static int ingNum = 100;
     private static ArrayList<String> tags;
-    private static String sortBy;
-    private static int skip;
-    private MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
-    RecipeRepository repo;
 
     private SearchViewModel searchViewModel;
 
@@ -51,22 +50,25 @@ public class SearchFragment extends Fragment {
      * @param savedInstanceState
      * @return
      */
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("SEARCH FRAGMENT");
-        searchViewModel =
-                new ViewModelProvider(this).get(SearchViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         View root = inflater.inflate(R.layout.search_fragment, container, false);
 
+        repo = RecipeRepository.getInstance();
+        recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
-        /*
-        searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
-        searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        endlessScrollManager = new endlessScroll(searchRecyclerView);
-        endlessScrollManager.populateData(new ArrayList<Recipe>());
-        endlessScrollManager.initAdapter();
-        endlessScrollManager.initScrollListener();*/
+            @Override
+            public void onChanged(ArrayList<Recipe> recipes) {
+                // Populate endlessScroll with recipes
+                searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
+                searchRecyclerView.setAdapter(new RecyclerViewAdapter(recipes));
+                searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                endlessScrollManager = new endlessScroll(searchRecyclerView);
+                endlessScrollManager.populateData(recipes);
+                endlessScrollManager.initAdapter();
+                endlessScrollManager.initScrollListener();
+            }
+        });
 
         Button forButton = root.findViewById(R.id.forumButton);
         Fragment here = this;
@@ -87,40 +89,18 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        repo = RecipeRepository.getInstance();
-        recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
-
-            @Override
-            public void onChanged(ArrayList<Recipe> recipes) {
-                // Populate endlessScroll with recipes
-                System.out.println("RECIPES: " + recipes);
-                searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-                searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
-                searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                endlessScrollManager = new endlessScroll(searchRecyclerView);
-                endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter();
-                endlessScrollManager.initScrollListener();
-            }
-        });
-
         return root;
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        searchRecyclerView = view.findViewById(R.id.searchRecipesScroll);
-        searchRecyclerView.setAdapter(new RecyclerViewAdapter(new ArrayList<>()));
-        searchRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        endlessScrollManager = new endlessScroll(searchRecyclerView);
-        endlessScrollManager.populateData(new ArrayList<>());
-        endlessScrollManager.initAdapter();
-        endlessScrollManager.initScrollListener();
+        // Just an example request
 
-
-        //filter
-        System.out.println("APPLY USER FILERS");
-        repo.getRecipesForFeedByTags(maxTime, ingrediantList, ingNum, tags, "likes", 0, recipes);
-        System.out.println("applied");
+        /* TODO I wasn't sure what was meant to be here so just did this for now
+           It doesn't seem to search by tag or filter so just left like this
+         */
+        ArrayList<String> ingredients = new ArrayList<String>();
+        ArrayList<String> tags = new ArrayList<String>();
+        repo.getRecipesForFeedByTags(maxTime, ingredients, ingNum, tags, "likes", 0, recipes);
     }
 
 
@@ -136,7 +116,5 @@ public class SearchFragment extends Fragment {
         SearchFragment.tags = tags;
     }
 
-    public static void setIngrediantList(ArrayList<String> ingrediantList) {
-        SearchFragment.ingrediantList = ingrediantList;
-    }
+    public static void setIngredientList(ArrayList<String> ingredientList) { SearchFragment.ingredientList = ingredientList; }
 }

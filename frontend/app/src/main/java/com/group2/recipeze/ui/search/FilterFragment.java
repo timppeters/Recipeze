@@ -174,7 +174,7 @@ public class FilterFragment extends Fragment {
                 SearchFragment.setIngNum(ingNum.getProgress());
                 SearchFragment.setMaxTime(maxTime.getProgress());
                 SearchFragment.setTags(tags);
-                SearchFragment.setIngrediantList(ingList);
+                SearchFragment.setIngredientList(ingList);
                 System.out.println("MIN TIME: " + minTimeText.getText());
                 System.out.println("MAX TIME: " + maxTimeText.getText());
                 System.out.println("Difficulty: " + difficultyText.getText());
