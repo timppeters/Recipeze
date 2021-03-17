@@ -2,13 +2,19 @@ package com.group2.recipeze.data.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Path;
 import android.media.Image;
+import android.os.Environment;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Recipe {
 
@@ -25,6 +31,8 @@ public class Recipe {
     private ArrayList<String> tags;
     private int prepTime;
     private int cookTime;
+    private boolean liked;
+    private static Random r = new Random();
 
 
     /**
@@ -45,7 +53,7 @@ public class Recipe {
      */
     public Recipe(int recipeId, float rating, int likes, String author, String title,
                   String description, ArrayList<String> ingredients, ArrayList<String> ingredientsAmounts,
-                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime) {
+                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime, boolean liked) {
         this.recipeId = recipeId;
         this.rating = rating;
         this.likes = likes;
@@ -59,6 +67,7 @@ public class Recipe {
         this.cookTime = cookTime;
         this.instructions = instructions;
         this.images = images;
+        this.liked = liked;
     }
 
     /**
@@ -224,5 +233,7 @@ public class Recipe {
     public void setCookTime(int cookTime) {
         this.cookTime = cookTime;
     }
+
+    public boolean getLiked() {return liked; }
 
 }

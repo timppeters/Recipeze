@@ -200,7 +200,6 @@ public class RecipeRepository extends Repository {
         JSONObject images = new JSONObject(images_);
         JSONArray tags = new JSONArray(tags_);
 
-
         Call<JsonElement> recipeId = service.createRecipe(title, description, ingredients, ingredientsAmounts, instructions, images, tags, prepTime, cookTime, loggedInUser.getToken());
         recipeId.enqueue(new Callback<JsonElement>() {
             @Override

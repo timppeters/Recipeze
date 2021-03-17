@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +26,7 @@ import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
+import com.group2.recipeze.ui.recipe.RecipeFragment;
 
 import java.util.ArrayList;
 
@@ -53,6 +56,7 @@ public class FeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         feedViewModel = new ViewModelProvider(this).get(FeedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_feed, container, false);
+        FeedFragment thisFragment = this;
 
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
@@ -67,6 +71,7 @@ public class FeedFragment extends Fragment {
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter();
                 endlessScrollManager.initScrollListener();
+                
             }
         });
 

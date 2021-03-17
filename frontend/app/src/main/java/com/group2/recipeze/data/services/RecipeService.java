@@ -13,6 +13,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -52,7 +53,7 @@ public interface RecipeService {
                                    @Field("updates") JSONObject updates,
                                    @Header("x-access-token") String token);
 
-    @DELETE("recipe")
+    @HTTP(method = "DELETE", path = "recipe", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> deleteRecipe(@Field("recipeId") int recipeId,
                                    @Header("x-access-token") String token);
@@ -62,7 +63,7 @@ public interface RecipeService {
     Call<JsonElement> likeRecipe(@Field("recipeId") int recipeId,
                                  @Header("x-access-token") String token);
 
-    @DELETE("like")
+    @HTTP(method = "DELETE", path = "like", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> unlikeRecipe(@Field("recipeId") int recipeId,
                                    @Header("x-access-token") String token);
@@ -78,7 +79,7 @@ public interface RecipeService {
     Call<JsonElement> getRatingsOfRecipe(@Field("recipeId") int recipeId,
                                          @Header("x-access-token") String token);
 
-    @DELETE("rate")
+    @HTTP(method = "DELETE", path = "rate", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> deleteRatingOfRecipe(@Field("recipeId") int recipeId,
                                            @Header("x-access-token") String token);
