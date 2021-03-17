@@ -73,6 +73,7 @@ public class FeedFragment extends Fragment {
                 endlessScrollManager.initScrollListener();
 
                 Bundle bundle = new Bundle();
+                System.out.println(recipes);
                 bundle.putInt("recipeId", recipes.get(1).getRecipeId());
 
                 FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
