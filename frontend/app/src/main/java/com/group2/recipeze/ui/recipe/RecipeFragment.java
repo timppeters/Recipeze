@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -33,9 +34,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
@@ -173,13 +171,9 @@ public class RecipeFragment extends Fragment {
             likeButton.setTag("liked");
         }
 
-        ImageSlider imageSlider = root.findViewById(R.id.slider);
-
-        List<SlideModel> slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel("https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg",ScaleTypes.CENTER_CROP));
-        slideModels.add(new SlideModel("https://live.staticflickr.com/7006/6621416427_8504865e6a_z.jpg",ScaleTypes.CENTER_CROP));
-        slideModels.add(new SlideModel("https://c4.wallpaperflare.com/wallpaper/662/618/496/natur-2560x1600-sceneries-wallpaper-preview.jpg",ScaleTypes.CENTER_CROP));
-        imageSlider.setImageList(slideModels, ScaleTypes.CENTER_CROP);
+        ViewPager imageSlider = root.findViewById(R.id.slider);
+        SliderAdapter sliderAdapter = new SliderAdapter(this.getContext(), recipe.getImagesAsBitmaps());
+        imageSlider.setAdapter(sliderAdapter);
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,18 +8,14 @@
     tools:context=".ui.recipe.RecipeFragment">
 
 
-    <com.denzcoskun.imageslider.ImageSlider
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="235dp"
-        app:iss_corner_radius="0"
-        app:iss_delay="0"
-        app:iss_error_image="@drawable/image_placeholder"
-        app:iss_placeholder="@drawable/image_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topbar"
-        app:layout_constraintVertical_bias="0.0"></com.denzcoskun.imageslider.ImageSlider>
+        app:layout_constraintVertical_bias="0.0"></androidx.viewpager.widget.ViewPager>
 
     <Button
         android:id="@+id/topbar"

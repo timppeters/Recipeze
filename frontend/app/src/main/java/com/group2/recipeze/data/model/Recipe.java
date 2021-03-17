@@ -2,13 +2,19 @@ package com.group2.recipeze.data.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Path;
 import android.media.Image;
+import android.os.Environment;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Recipe {
 
@@ -26,6 +32,7 @@ public class Recipe {
     private int prepTime;
     private int cookTime;
     private Boolean liked;
+    private static Random r = new Random();
 
 
     /**
