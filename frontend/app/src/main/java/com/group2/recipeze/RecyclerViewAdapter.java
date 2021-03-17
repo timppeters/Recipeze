@@ -30,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
 
     public ArrayList<Recipe> recipeList;
-    int checkedPosition = 0; // -1: no default selection 0: 1st item selected
+    private Integer selectedRecipePosition;
 
 
     public RecyclerViewAdapter(ArrayList<Recipe> itemList) {
@@ -53,7 +53,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ItemViewHolder) {
             populateItemRows((ItemViewHolder) viewHolder, position);
-            ((ItemViewHolder) viewHolder).bind(recipeList.get(position));
         } else if (viewHolder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) viewHolder, position);
         }
@@ -88,6 +87,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView image;
         TextView tag1;
         TextView tag2;
+        Integer position;
+        TextView invisibleLayer;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,34 +102,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             image = itemView.findViewById(R.id.recipeIamge);
             tag1 = itemView.findViewById(R.id.tag4);
             tag2 = itemView.findViewById(R.id.tag5);
+            invisibleLayer = itemView.findViewById(R.id.invisLayer);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            invisibleLayer.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (checkedPosition != getAdapterPosition()){
-                        descriptionTxt.setText(descriptionTxt.getText() + " SELECTED! ");
-                        notifyItemChanged(checkedPosition);
-                        checkedPosition = getAdapterPosition();
-                    }
+                    Log.d("CLICK-RECIPE", "CLICKED");
+                    descriptionTxt.setText(descriptionTxt.getText() + " SELECTED! ");
+                    selectedRecipePosition = position;
                 }
             });
         }
 
-        void bind (Recipe recipe) {
-            if (checkedPosition == -1) {
-                //Not selected
-                image.setVisibility(View.GONE);
-            }
-            else {
-                if (checkedPosition == getAdapterPosition()) {
-                    //Selected
-                    image.setVisibility(View.VISIBLE);
-                }
-                else {
-                    //Not selected
-                    image.setVisibility(View.GONE);
-                }
-            }
-        }
     }
 
     private class LoadingViewHolder extends RecyclerView.ViewHolder {
@@ -157,6 +141,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (title.length() > limit) {
             title = title.substring(0, limit) + "...";
         }
+        viewHolder.position = position;
         viewHolder.titleTxt.setText(title);
         viewHolder.descriptionTxt.setText(recipeList.get(position).getDescription());
         viewHolder.likesTxt.setText(String.valueOf(recipeList.get(position).getLikes()));
@@ -181,8 +166,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public Recipe getSelected() {
-        if (checkedPosition != -1) {
-            return recipeList.get(checkedPosition);
+        if (selectedRecipePosition != null) {
+            return recipeList.get(selectedRecipePosition);
         }
         return null;
     }
