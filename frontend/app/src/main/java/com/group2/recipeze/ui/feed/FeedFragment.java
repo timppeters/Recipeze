@@ -71,16 +71,7 @@ public class FeedFragment extends Fragment {
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter();
                 endlessScrollManager.initScrollListener();
-
-                Bundle bundle = new Bundle();
-                System.out.println(recipes);
-                bundle.putInt("recipeId", recipes.get(1).getRecipeId());
-
-                FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setReorderingAllowed(true);
-                transaction.replace(R.id.nav_host_fragment, RecipeFragment.class, bundle);
-                transaction.commit();
+                
             }
         });
 

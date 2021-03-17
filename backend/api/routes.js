@@ -69,7 +69,7 @@ router.route('/recipe')
     })
     // Read
     .get(async (req, res) => {
-      result = await db.readRecipe(req.query.recipeId)
+      result = await db.readRecipe(req.query.recipeId, req.username)
       res.send(result)
     })
     // Update
@@ -115,7 +115,7 @@ router.route('/posts')
 router.route('/like')
     // Create
     .post(async (req, res) => {
-      if (req.recipeId) { // like a recipe
+      if (req.body.recipeId) { // like a recipe
         result = await db.likeRecipe(req.username, req.body.recipeId)
         res.send(result)
       } else { // like a forum post
@@ -125,7 +125,7 @@ router.route('/like')
       })
     // Delete
     .delete(async (req, res) => {
-      if (req.recipeId) { // unlike a recipe
+      if (req.body.recipeId) { // unlike a recipe
         result = await db.unlikeRecipe(req.username, req.body.recipeId)
         res.send(result)
       } else { // unlike a forum post
@@ -161,7 +161,7 @@ router.route('/recipes')
             break;
 
           case "explore":
-            result = await db.getRecipesForExplore(req.query.skip)
+            result = await db.getRecipesForExplore(req.query.skip, req.username)
             res.send(result)
             break;
 
@@ -176,7 +176,7 @@ router.route('/recipes')
             break;
 
           case "tag":
-            result = await db.getRecipesForTag(req.query.tagName, req.query.skip)
+            result = await db.getRecipesForTag(req.query.tagName, req.query.skip, req.username)
             res.send(result)
             break;
 
@@ -241,7 +241,7 @@ router.route('/rate')
 
 router.route('/search')
     .get(async (req, res) => {
-      result = await db.search(req.query.query)
+      result = await db.search(req.query.query, req.username)
       res.send(result)
     });
 module.exports = router;

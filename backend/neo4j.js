@@ -143,11 +143,12 @@ async function createRecipe(username, title, description, ingredients, ingredien
     return result 
 }
 
-async function readRecipe(recipeId) {
+async function readRecipe(recipeId, username) {
     let result = {}
-    let records = await cypher(`MATCH (n:Recipe), (n)-[:HAS]->(t:Tag), (a:User)-[:AUTHOR_OF]->(n) WHERE ID(n)=$recipeId OPTIONAL MATCH (:User)-[r:RATED]->(n) WITH properties(n) as properties, collect(DISTINCT t.name) as tags, avg(r.rating) as rating, a.username as author, size((n)<-[:LIKED]-(:User)) as likes RETURN properties{.*, tags: tags, rating: rating, author: author, likes: likes}`,
+    let records = await cypher(`MATCH (n:Recipe), (n)-[:HAS]->(t:Tag), (a:User)-[:AUTHOR_OF]->(n) WHERE ID(n)=$recipeId OPTIONAL MATCH (:User)-[r:RATED]->(n) WITH EXISTS((:User {username: $username})-[:LIKED]->(n)) as liked, properties(n) as properties, collect(DISTINCT t.name) as tags, avg(r.rating) as rating, a.username as author, size((n)<-[:LIKED]-(:User)) as likes RETURN properties{.*, tags: tags, rating: rating, author: author, likes: likes, liked: liked}`,
     {
-        recipeId: parseInt(recipeId)
+        recipeId: parseInt(recipeId),
+        username
     });
     if (records) {
         records.forEach(record => {
@@ -444,7 +445,7 @@ async function getRecipesForFeedByUsers(username, filters, sortBy, skip) {
     if (sortBy != "likes") {
         sortBy = "r.creationTime"
     }
-    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(a:User)-[:AUTHOR_OF]->(r:Recipe), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes} LIMIT 10`,
+    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(a:User)-[:AUTHOR_OF]->(r:Recipe), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         username,
         maxTime: parseInt(filters.maxTime),
@@ -457,7 +458,7 @@ async function getRecipesForFeedByUsers(username, filters, sortBy, skip) {
     if (records) {
         records.forEach(record => {
             recipe = record.get('properties');
-            result['recipeId'] = result['recipeId']['low']
+            recipe['recipeId'] = recipe['recipeId']['low']
             recipe['likes'] = recipe['likes']['low']
             recipe['cookTime'] = recipe['cookTime']['low']
             recipe['prepTime'] = recipe['prepTime']['low']
@@ -476,7 +477,7 @@ async function getRecipesForFeedByTags(username, filters, sortBy, skip) {
     if (sortBy != "likes") {
         sortBy = "r.creationTime"
     }
-    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(t:Tag)<-[:HAS]-(r:Recipe), (r)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes} LIMIT 10`,
+    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(t:Tag)<-[:HAS]-(r:Recipe), (r)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         username,
         maxTime: parseInt(filters.maxTime),
@@ -489,7 +490,7 @@ async function getRecipesForFeedByTags(username, filters, sortBy, skip) {
     if (records) {
         records.forEach(record => {
             recipe = record.get('properties');
-            result['recipeId'] = result['recipeId']['low']
+            recipe['recipeId'] = recipe['recipeId']['low']
             recipe['likes'] = recipe['likes']['low']
             recipe['cookTime'] = recipe['cookTime']['low']
             recipe['prepTime'] = recipe['prepTime']['low']
@@ -502,16 +503,17 @@ async function getRecipesForFeedByTags(username, filters, sortBy, skip) {
     
 }
 
-async function getRecipesForExplore(skip) {
+async function getRecipesForExplore(skip, username) {
     let result = []
-    let records = await cypher(`MATCH (n:Recipe), (n)-[:HAS]->(t:Tag), (a:User)-[:AUTHOR_OF]->(n) OPTIONAL MATCH (:User)-[r:RATED]->(n) WITH properties(n) as properties, collect(DISTINCT t.name) as tags, avg(r.rating) as rating, a.username as author, size((n)<-[:LIKED]-(:User)) as likes ORDER BY likes SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes} LIMIT 10`,
+    let records = await cypher(`MATCH (n:Recipe), (n)-[:HAS]->(t:Tag), (a:User)-[:AUTHOR_OF]->(n) OPTIONAL MATCH (:User)-[r:RATED]->(n) WITH EXISTS((:User {username: $username})-[:LIKED]->(n)) as liked, n, properties(n) as properties, collect(DISTINCT t.name) as tags, avg(r.rating) as rating, a.username as author, size((n)<-[:LIKED]-(:User)) as likes ORDER BY likes SKIP $skip RETURN properties{.*, recipeId: ID(n), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
-        skip: neo4j.int(skip)
+        skip: neo4j.int(skip),
+        username
     });
     if (records) {
         records.forEach(record => {
             recipe = record.get('properties');
-            result['recipeId'] = result['recipeId']['low']
+            recipe['recipeId'] = recipe['recipeId']['low']
             recipe['likes'] = recipe['likes']['low']
             recipe['cookTime'] = recipe['cookTime']['low']
             recipe['prepTime'] = recipe['prepTime']['low']
@@ -529,7 +531,7 @@ async function getRecipesForRecipeBook(username, filters, sortBy, skip) {
     if (sortBy != "likes") {
         sortBy = "r.creationTime"
     }
-    let records = await cypher(`MATCH (u:User {username: $username})-[:LIKED]->(r:Recipe)<-[:AUTHOR_OF]-(a:User), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes} LIMIT 10`,
+    let records = await cypher(`MATCH (u:User {username: $username})-[:LIKED]->(r:Recipe)<-[:AUTHOR_OF]-(a:User), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         username,
         maxTime: parseInt(filters.maxTime),
@@ -542,7 +544,7 @@ async function getRecipesForRecipeBook(username, filters, sortBy, skip) {
     if (records) {
         records.forEach(record => {
             recipe = record.get('properties');
-            result['recipeId'] = result['recipeId']['low']
+            recipe['recipeId'] = recipe['recipeId']['low']
             recipe['likes'] = recipe['likes']['low']
             recipe['cookTime'] = recipe['cookTime']['low']
             recipe['prepTime'] = recipe['prepTime']['low']
@@ -557,7 +559,7 @@ async function getRecipesForRecipeBook(username, filters, sortBy, skip) {
 
 async function getRecipesForProfile(username, skip) {
     let result = []
-    let records = await cypher(`MATCH (u:User {username: $username})-[:AUTHOR_OF]->(r:Recipe), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WITH r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, u.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY r.creationTime desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes} LIMIT 10`,
+    let records = await cypher(`MATCH (u:User {username: $username})-[:AUTHOR_OF]->(r:Recipe), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, u.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY r.creationTime desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         username,
         skip: neo4j.int(skip)
@@ -565,7 +567,7 @@ async function getRecipesForProfile(username, skip) {
     if (records) {
         records.forEach(record => {
             recipe = record.get('properties');
-            result['recipeId'] = result['recipeId']['low']
+            recipe['recipeId'] = recipe['recipeId']['low']
             recipe['likes'] = recipe['likes']['low']
             recipe['cookTime'] = recipe['cookTime']['low']
             recipe['prepTime'] = recipe['prepTime']['low']
@@ -578,17 +580,18 @@ async function getRecipesForProfile(username, skip) {
     
 }
 
-async function getRecipesForTag(tagName, skip) {
+async function getRecipesForTag(tagName, skip, username) {
     let result = []
-    let records = await cypher(`MATCH (:Tag {name: $tagName})<-[:HAS]-(r:Recipe)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (:User)-[n:RATED]->(r) MATCH (r)-[:HAS]->(t:Tag) WITH r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY r.creationTime desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes} LIMIT 10`,
+    let records = await cypher(`MATCH (:Tag {name: $tagName})<-[:HAS]-(r:Recipe)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (:User)-[n:RATED]->(r) MATCH (r)-[:HAS]->(t:Tag) WITH EXISTS((:User {username: $username})-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY r.creationTime desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         tagName,
-        skip: neo4j.int(skip)
+        skip: neo4j.int(skip),
+        username
     });
     if (records) {
         records.forEach(record => {
             recipe = record.get('properties');
-            result['recipeId'] = result['recipeId']['low']
+            recipe['recipeId'] = recipe['recipeId']['low']
             recipe['likes'] = recipe['likes']['low']
             recipe['cookTime'] = recipe['cookTime']['low']
             recipe['prepTime'] = recipe['prepTime']['low']
@@ -601,22 +604,23 @@ async function getRecipesForTag(tagName, skip) {
     
 }
 
-async function search(query) {
+async function search(query, username) {
     let result = {}
     query = query.toLowerCase()
     let records = await cypher(`OPTIONAL MATCH (u:User) WHERE toLower(u.username) STARTS WITH $query OPTIONAL MATCH (r:Recipe) WHERE toLower(r.title) CONTAINS $query OR toLower(r.description) CONTAINS $query OR $query IN r.ingredients OPTIONAL MATCH (t:Tag) WHERE toLower(t.name) CONTAINS $query WITH collect(DISTINCT t.name) as tags, collect(DISTINCT u.username) as users, properties(r) as p 
     MATCH (r)-[:HAS]->(t2:Tag), (r)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (:User)-[n:RATED]->(r)
-    WITH tags, users, p{.*, recipeId: ID(r), tags: collect(DISTINCT t2.name), rating: avg(n.rating), author: a.username, likes: size((r)<-[:LIKED]-(:User))} as recipe
+    WITH tags, users, p{.*, recipeId: ID(r), tags: collect(DISTINCT t2.name), rating: avg(n.rating), author: a.username, likes: size((r)<-[:LIKED]-(:User)), liked: EXISTS((:User {username: $username})-[:LIKED]->(r)) } as recipe
     RETURN {users: users, tags: tags, recipes: collect(recipe)} as results
     `,
     {
-        query
+        query,
+        username
     });
     if (records) {
         records.forEach(record => {
             result = record.get('results')
             result['recipes'].forEach(recipe => {
-                result['recipeId'] = result['recipeId']['low']
+                recipe['recipeId'] = recipe['recipeId']['low']
                 recipe['likes'] = recipe['likes']['low']
                 recipe['cookTime'] = recipe['cookTime']['low']
                 recipe['prepTime'] = recipe['prepTime']['low']

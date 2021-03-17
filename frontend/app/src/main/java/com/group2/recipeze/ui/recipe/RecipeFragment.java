@@ -1,7 +1,9 @@
 package com.group2.recipeze.ui.recipe;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,14 +16,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,8 +39,10 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
+import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -98,8 +107,7 @@ public class RecipeFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) contentParent.getLayoutParams();
                 int marginDelta = layoutParams.topMargin;
-                if (marginDelta > marginMin && marginDelta < originalTopMargin || (marginDelta == marginMin && content.getScrollY() == 0)) { // block scrolling
-                    System.out.println(event.getAction());
+                if (marginDelta > marginMin && marginDelta <= originalTopMargin || (marginDelta == marginMin && content.getScrollY() == 0)) { // block scrolling
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
 
@@ -132,11 +140,13 @@ public class RecipeFragment extends Fragment {
     public void showRecipe(Recipe recipe, View root) {
         final TextView prepTimeValue = root.findViewById(R.id.prepTimeValue);
         final TextView cookTimeValue = root.findViewById(R.id.cookTimeValue);
-        final HorizontalScrollView tags = root.findViewById(R.id.tags);
+        final LinearLayout tagsLayout = root.findViewById(R.id.tagsLayout);
         final TextView recipeName = root.findViewById(R.id.recipeName);
         final TextView recipeDescription = root.findViewById(R.id.recipeDescription);
         final RecyclerView ingredientsList = root.findViewById(R.id.ingredientsList);
         final RecyclerView stepsList = root.findViewById(R.id.stepList);
+        final ImageButton likeButton = root.findViewById(R.id.like);
+        final ImageButton backButton = root.findViewById(R.id.back);
 
         prepTimeValue.setText(String.valueOf(recipe.getPrepTime()) + " mins");
         cookTimeValue.setText(String.valueOf(recipe.getCookTime()) + " mins");
@@ -144,20 +154,63 @@ public class RecipeFragment extends Fragment {
         recipeDescription.setText(recipe.getDescription());
         if (recipe.getTags() != null) {
             for (String tagName : recipe.getTags()) {
-                TextView tagView = (TextView) getLayoutInflater().inflate(R.layout.item_tag, (ViewGroup) root);
+                TextView tagView = (TextView) getLayoutInflater().inflate(R.layout.item_tag, null);
                 tagView.setText(tagName);
-                tags.addView(tagView);
+                tagsLayout.addView(tagView);
             }
+        }
+
+        RecipeIngredientsListAdapter ingredientsAdapter = new RecipeIngredientsListAdapter(recipe.getIngredients(), recipe.getIngredientsAmounts());
+        ingredientsList.setAdapter(ingredientsAdapter);
+        ingredientsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        RecipeStepsListAdapter stepsAdapter = new RecipeStepsListAdapter(recipe.getInstructions());
+        stepsList.setAdapter(stepsAdapter);
+        stepsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if (recipe.getLiked()) {
+            likeButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_like__1_filled,null));
+            likeButton.setTag("liked");
         }
 
         ImageSlider imageSlider = root.findViewById(R.id.slider);
 
         List<SlideModel> slideModels = new ArrayList<>();
-        Bitmap bitmap = null;
-        slideModels.add(new SlideModel("https://p.ecopetit.cat/wpic/lpic/26-263518_tumblr-photography-wallpaper-rocks-on-earth-background.jpg",ScaleTypes.CENTER_CROP));
         slideModels.add(new SlideModel("https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg",ScaleTypes.CENTER_CROP));
         slideModels.add(new SlideModel("https://live.staticflickr.com/7006/6621416427_8504865e6a_z.jpg",ScaleTypes.CENTER_CROP));
         slideModels.add(new SlideModel("https://c4.wallpaperflare.com/wallpaper/662/618/496/natur-2560x1600-sceneries-wallpaper-preview.jpg",ScaleTypes.CENTER_CROP));
         imageSlider.setImageList(slideModels, ScaleTypes.CENTER_CROP);
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // If button in non-liked state
+                if (((String)likeButton.getTag()).equals("unliked")) {
+                    recipeRepository.likeRecipe(recipe.getRecipeId());
+                    likeButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_like__1_filled,null));
+                    likeButton.setTag("liked");
+                } else {
+                    recipeRepository.unlikeRecipe(recipe.getRecipeId());
+                    likeButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_like__1_,null));
+                    likeButton.setTag("unliked");
+                }
+
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("hello");
+                FragmentManager fm = getParentFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    fm.popBackStack();
+                } else {
+
+                }
+            }
+        });
+
+
     }
 }

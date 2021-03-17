@@ -59,7 +59,8 @@ public class endlessScroll {
                 new HashMap<Integer, String>(),
                 tags,
                 15,
-                90
+                90,
+                Boolean.FALSE
         );
         for(int i = 0; i < amount; i++) {
             recipeList.add(exampleRecipe);

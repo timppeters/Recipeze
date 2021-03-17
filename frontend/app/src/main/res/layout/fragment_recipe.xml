@@ -56,7 +56,7 @@
         android:backgroundTint="#00FFFFFF"
         android:elevation="2dp"
         android:src="@drawable/ic_like__1_"
-        android:tint="@color/dark_text"
+        android:tag="unliked"
         app:layout_constraintBottom_toBottomOf="@+id/topbar"
         app:layout_constraintEnd_toEndOf="@+id/topbar"
         app:layout_constraintTop_toTopOf="parent" />
@@ -149,9 +149,9 @@
 
                     <ImageView
                         android:id="@+id/timer"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="35dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="40dp"
                         android:src="@drawable/ic_clock"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.635"
@@ -191,7 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="5dp"
                         android:fontFamily="@font/poppins"
                         android:hint="Prep Time"
                         android:textColor="@color/dark_text"
@@ -205,7 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="56dp"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="5dp"
                         android:fontFamily="@font/poppins"
                         android:hint="Cook Time"
                         android:textColor="@color/dark_text"
@@ -217,57 +217,23 @@
                     <HorizontalScrollView
                         android:id="@+id/tags"
                         android:layout_width="0dp"
+                        android:scrollbars="none"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="50dp"
+                        android:layout_marginEnd="15dp"
                         app:layout_constraintEnd_toStartOf="@+id/timer"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/tagsLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:divider="@drawable/divider"
+                            android:showDividers="middle">
 
-                            <TextView
-                                android:id="@+id/restrictionType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="0dp"
-                                android:layout_marginTop="0dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@drawable/tag"
-                                android:elevation="100dp"
-                                android:fontFamily="@font/poppinsregular"
-                                android:gravity="center"
-                                android:paddingHorizontal="5dp"
-                                android:text="Gluten Free"
-                                android:textColor="@color/white"
-                                android:textSize="12sp"
-                                android:visibility="visible"
-                                app:backgroundTint="@color/green"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <TextView
-                                android:id="@+id/restrictionType2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="0dp"
-                                android:layout_marginTop="0dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@drawable/tag"
-                                android:elevation="100dp"
-                                android:fontFamily="@font/poppinsregular"
-                                android:gravity="center"
-                                android:paddingHorizontal="5dp"
-                                android:text="Vegan"
-                                android:textColor="@color/white"
-                                android:textSize="12sp"
-                                android:visibility="visible"
-                                app:backgroundTint="@color/green"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
                         </LinearLayout>
 
 
@@ -279,7 +245,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
                         android:fontFamily="@font/poppins"
                         android:text="Recipe Name"
@@ -328,6 +294,7 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:padding="0dp"
+                        app:backgroundTint="@null"
                         android:background="@drawable/video_button"
                         android:textSize="11sp"
                         android:drawableEnd="@drawable/ic_play_button_arrowhead"
