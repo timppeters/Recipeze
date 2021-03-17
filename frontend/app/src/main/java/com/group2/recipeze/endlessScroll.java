@@ -70,7 +70,7 @@ public class endlessScroll {
         recipes.setValue(recipeList);
     }
 
-    public void initAdapter() {
+    public void initAdapter(Fragment fragmment) {
 
         recyclerViewAdapter = new RecyclerViewAdapter(recipeList);
         recyclerView.setAdapter(recyclerViewAdapter);
