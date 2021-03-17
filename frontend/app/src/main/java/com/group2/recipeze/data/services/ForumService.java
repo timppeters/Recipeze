@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.GET;
@@ -37,7 +38,7 @@ public interface ForumService {
                                       @Field("updates") JSONObject updates,
                                       @Header("x-access-token") String token);
 
-    @DELETE("user")
+    @HTTP(method = "DELETE", path = "user", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> deleteForumPost(@Field("postId") int postId,
                                       @Header("x-access-token") String token);
@@ -47,7 +48,7 @@ public interface ForumService {
     Call<JsonElement> likePost(@Field("postId") int postId,
                                @Header("x-access-token") String token);
 
-    @DELETE("like")
+    @HTTP(method = "DELETE", path = "like", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> unlikePost(@Field("postId") int postId,
                                  @Header("x-access-token") String token);
@@ -58,7 +59,7 @@ public interface ForumService {
                                        @Field("body") String body,
                                        @Header("x-access-token") String token);
 
-    @DELETE("comment")
+    @HTTP(method = "DELETE", path = "comment", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> deleteCommentFromPost(@Field("commentId") int commentId,
                                             @Header("x-access-token") String token);

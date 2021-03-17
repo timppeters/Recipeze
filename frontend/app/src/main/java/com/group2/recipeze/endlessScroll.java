@@ -40,7 +40,37 @@ public class endlessScroll {
         }
     }
 
-    public void initAdapter(Fragment fragmment) {
+
+    public void addFakeRecipe(String title, int amount) {
+        ArrayList<String> ingredients = new ArrayList<String>();
+        ingredients.add("Tomatoes");
+        ArrayList<String> ingredientsAmounts = new ArrayList<String>();
+        ingredientsAmounts.add("200g");
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("tag1");
+        tags.add("tag2");
+        Recipe exampleRecipe = new Recipe(1,
+                4.5f,
+                123,
+                "Alf",
+                title,
+                "Recipe Description",
+                ingredients,
+                ingredientsAmounts,
+                new HashMap<Integer, String>(),
+                new HashMap<Integer, String>(),
+                tags,
+                15,
+                90,
+                Boolean.FALSE
+        );
+        for(int i = 0; i < amount; i++) {
+            recipeList.add(exampleRecipe);
+        }
+        recipes.setValue(recipeList);
+    }
+
+    public void initAdapter() {
 
         recyclerViewAdapter = new RecyclerViewAdapter(recipeList);
         recyclerView.setAdapter(recyclerViewAdapter);

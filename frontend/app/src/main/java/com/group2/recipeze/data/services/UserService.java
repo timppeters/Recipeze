@@ -9,6 +9,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -37,7 +38,7 @@ public interface UserService {
     Call<JsonElement> followUser(@Field("followUser") String followUser,
                                  @Header("x-access-token") String token);
 
-    @DELETE("follow")
+    @HTTP(method = "DELETE", path = "follow", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> unfollowUser(@Field("unfollowUser") String unfollowUser,
                                    @Header("x-access-token") String token);
