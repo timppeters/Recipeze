@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -41,7 +42,6 @@ public class FeedFragment extends Fragment {
 
     Button tagsBtn;
     Button usersBtn;
-    Button btn;
     Drawable selectedTab;
 
     private FeedViewModel feedViewModel;
@@ -58,6 +58,8 @@ public class FeedFragment extends Fragment {
         feedViewModel = new ViewModelProvider(this).get(FeedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_feed, container, false);
 
+        FeedFragment thisFragment = this;
+
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
@@ -66,6 +68,7 @@ public class FeedFragment extends Fragment {
                 // Populate endlessScroll with recipes
                 feedRecyclerView = root.findViewById(R.id.recipes);
                 feedRecyclerViewAdapter = new RecyclerViewAdapter(recipes);
+                feedRecyclerViewAdapter.setThisFragment(thisFragment);
                 feedRecyclerView.setAdapter(feedRecyclerViewAdapter);
                 feedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(feedRecyclerView);
@@ -77,7 +80,6 @@ public class FeedFragment extends Fragment {
 
         tagsBtn = root.findViewById(R.id.tagsTab);
         usersBtn = root.findViewById(R.id.usersTab);
-        btn = root.findViewById(R.id.button_get_selected);
 
         selectedTab = ContextCompat.getDrawable(getContext(), R.drawable.tab_background);
 
@@ -97,25 +99,7 @@ public class FeedFragment extends Fragment {
             }
         });
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (feedRecyclerViewAdapter.getSelected() != null) {
-                    showToast(feedRecyclerViewAdapter.getSelected().getDescription());
-                    Log.d("SELECT-RECIPE", feedRecyclerViewAdapter.getSelected().getDescription());
-                }
-                else {
-                    showToast("no selection");
-                    Log.d("SELECT-RECIPE", "no selection");
-                }
-            }
-        });
-
         return root;
-    }
-
-    private void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {

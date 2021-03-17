@@ -1,12 +1,17 @@
 package com.group2.recipeze;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +22,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.group2.recipeze.data.model.Recipe;
-
-import org.w3c.dom.Text;
+import com.group2.recipeze.ui.recipe.RecipeFragment;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -30,11 +33,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
 
     public ArrayList<Recipe> recipeList;
+    public Fragment thisFragment;
     private Integer selectedRecipePosition;
 
 
     public RecyclerViewAdapter(ArrayList<Recipe> itemList) {
         recipeList = itemList;
+    }
+
+    public void setThisFragment(Fragment fragment) {
+        thisFragment = fragment;
     }
 
     @NonNull
@@ -109,6 +117,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     Log.d("CLICK-RECIPE", "CLICKED");
                     descriptionTxt.setText(descriptionTxt.getText() + " SELECTED! ");
                     selectedRecipePosition = position;
+
+                    int recipeId = recipeList.get(selectedRecipePosition).getRecipeId();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("recipeId", recipeId);
+                    FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setReorderingAllowed(true);
+                    transaction.add(R.id.nav_host_fragment, RecipeFragment.class, bundle);
+                    transaction.commit();
                 }
             });
         }
