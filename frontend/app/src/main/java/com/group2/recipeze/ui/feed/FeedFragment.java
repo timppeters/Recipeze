@@ -62,8 +62,6 @@ public class FeedFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_feed, container, false);
         FeedFragment thisFragment = this;
 
-        FeedFragment thisFragment = this;
-
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
