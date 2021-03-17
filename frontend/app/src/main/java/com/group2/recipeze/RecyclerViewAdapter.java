@@ -1,12 +1,17 @@
 package com.group2.recipeze;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +22,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.group2.recipeze.data.model.Recipe;
-
-import org.w3c.dom.Text;
+import com.group2.recipeze.ui.recipe.RecipeFragment;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -30,12 +33,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
 
     public ArrayList<Recipe> recipeList;
-
+    public Fragment thisFragment;
+    private Integer selectedRecipePosition;
 
 
     public RecyclerViewAdapter(ArrayList<Recipe> itemList) {
-
         recipeList = itemList;
+    }
+
+    public void setThisFragment(Fragment fragment) {
+        thisFragment = fragment;
     }
 
     @NonNull
@@ -52,9 +59,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-
         if (viewHolder instanceof ItemViewHolder) {
-
             populateItemRows((ItemViewHolder) viewHolder, position);
         } else if (viewHolder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) viewHolder, position);
@@ -90,6 +95,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView image;
         TextView tag1;
         TextView tag2;
+        Integer position;
+        TextView invisibleLayer;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,7 +110,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             image = itemView.findViewById(R.id.recipeIamge);
             tag1 = itemView.findViewById(R.id.tag4);
             tag2 = itemView.findViewById(R.id.tag5);
+            invisibleLayer = itemView.findViewById(R.id.invisLayer);
+
+            invisibleLayer.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Log.d("CLICK-RECIPE", "CLICKED");
+                    descriptionTxt.setText(descriptionTxt.getText() + " SELECTED! ");
+                    selectedRecipePosition = position;
+
+                    int recipeId = recipeList.get(selectedRecipePosition).getRecipeId();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("recipeId", recipeId);
+                    FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setReorderingAllowed(true);
+                    transaction.addToBackStack("recipe " + String.valueOf(recipeId));
+                    transaction.add(R.id.nav_host_fragment, RecipeFragment.class, bundle);
+                    transaction.commit();
+                }
+            });
         }
+
     }
 
     private class LoadingViewHolder extends RecyclerView.ViewHolder {
@@ -132,6 +160,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (title.length() > limit) {
             title = title.substring(0, limit) + "...";
         }
+        viewHolder.position = position;
         viewHolder.titleTxt.setText(title);
         viewHolder.descriptionTxt.setText(recipeList.get(position).getDescription());
         viewHolder.likesTxt.setText(String.valueOf(recipeList.get(position).getLikes()));
@@ -155,6 +184,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    public Recipe getSelected() {
+        if (selectedRecipePosition != null) {
+            return recipeList.get(selectedRecipePosition);
+        }
+        return null;
+    }
 
 }
 

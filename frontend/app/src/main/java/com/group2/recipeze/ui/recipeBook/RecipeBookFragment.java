@@ -54,18 +54,16 @@ public class RecipeBookFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         recipeBookViewModel = new ViewModelProvider(this).get(RecipeBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
-
+        RecipeBookFragment thisFragment = this;
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 recipeBookRecyclerView = root.findViewById(R.id.recipes);
-                recipeBookRecyclerView.setAdapter(new RecyclerViewAdapter(recipes));
-                recipeBookRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(recipeBookRecyclerView);
                 endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter();
+                endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
             }
         });

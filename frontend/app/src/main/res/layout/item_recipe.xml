@@ -35,7 +35,6 @@
         android:text="Spaghetti with Meatballs"
         android:textColor="@color/green"
         android:textSize="14sp"
-
         app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="@+id/recipe_card3"
         app:layout_constraintTop_toTopOf="@+id/recipe_card3"
@@ -57,7 +56,6 @@
         android:textSize="12sp"
         android:visibility="invisible"
         app:backgroundTint="@color/green"
-
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintStart_toStartOf="@+id/recipe_card3"
         app:layout_constraintTop_toTopOf="@+id/recipe_card3"
@@ -219,6 +217,21 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/spag" />
+
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/invisLayer"
+        android:layout_width="360dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

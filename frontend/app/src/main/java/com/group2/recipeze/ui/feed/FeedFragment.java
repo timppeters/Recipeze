@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
  */
 public class FeedFragment extends Fragment {
     RecyclerView feedRecyclerView;
+    RecyclerViewAdapter feedRecyclerViewAdapter;
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
@@ -58,6 +62,8 @@ public class FeedFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_feed, container, false);
         FeedFragment thisFragment = this;
 
+        FeedFragment thisFragment = this;
+
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
@@ -65,11 +71,9 @@ public class FeedFragment extends Fragment {
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 feedRecyclerView = root.findViewById(R.id.recipes);
-                feedRecyclerView.setAdapter(new RecyclerViewAdapter(recipes));
-                feedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(feedRecyclerView);
                 endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter();
+                endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
                 
             }
@@ -105,4 +109,5 @@ public class FeedFragment extends Fragment {
         ArrayList<String> tags = new ArrayList<String>();
         recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
+
 }

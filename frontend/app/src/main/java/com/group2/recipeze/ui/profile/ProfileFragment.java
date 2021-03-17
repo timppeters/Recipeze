@@ -60,18 +60,16 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-
+        ProfileFragment thisFragment = this;
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 recyclerView = root.findViewById(R.id.profileRecipes);
-                recyclerView.setAdapter(new RecyclerViewAdapter(recipes));
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(recyclerView);
                 endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter();
+                endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
             }
         });
@@ -101,27 +99,25 @@ public class ProfileFragment extends Fragment {
         });
 
         ImageButton settingBut = root.findViewById(R.id.SetBut);
-        Fragment here = this;
         userRepository = UserRepository.getInstance();
 
         settingBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(here).navigate(R.id.action_navigation_profile_to_settingsFragment2);
+                NavHostFragment.findNavController(thisFragment).navigate(R.id.action_navigation_profile_to_settingsFragment2);
             }
         });
 
         Button button = root.findViewById(R.id.editFoodPreferences);
-        Fragment here2 = this;
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(here2).navigate(R.id.action_navigation_profile_to_foodPreferences2);
+                NavHostFragment.findNavController(thisFragment).navigate(R.id.action_navigation_profile_to_foodPreferences2);
             }
         });
 
-        userRepository.updateProfile(loginRepository.getUser().getUsername(), loginRepository.getUser().getEmail(), "I am vegan", settings);
+        //userRepository.updateProfile(loginRepository.getUser().getUsername(), loginRepository.getUser().getEmail(), "I am vegan", settings);
         userRepository.getPrivateProfile(profile_updated);
         //userRepository.followUser("leokou");
         //userRepository.unfollowUser("leokou");

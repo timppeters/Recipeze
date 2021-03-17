@@ -53,7 +53,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         View root = inflater.inflate(R.layout.search_fragment, container, false);
-
+        SearchFragment thisFragment = this;
         repo = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
@@ -61,11 +61,9 @@ public class SearchFragment extends Fragment {
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-                searchRecyclerView.setAdapter(new RecyclerViewAdapter(recipes));
-                searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 endlessScrollManager = new endlessScroll(searchRecyclerView);
                 endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter();
+                endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
             }
         });
