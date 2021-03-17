@@ -118,8 +118,8 @@ async function createRecipe(username, title, description, ingredients, ingredien
         username,
         title,
         description,
-        ingredients,
-        ingredientsAmounts,
+        ingredients: JSON.parse(ingredients),
+        ingredientsAmounts: JSON.parse(ingredientsAmounts),
         instructions,
         images,
         prepTime,
@@ -132,12 +132,13 @@ async function createRecipe(username, title, description, ingredients, ingredien
     }
 
     // Add tags to recipe
-    for (tag in tags) {
+    tags = JSON.parse(tags)
+    for (index in tags) {
         await cypher(`MATCH (r:Recipe), (t:Tag {name: $tag}) WHERE ID(r)=$recipeId CREATE (r)-[:HAS]->(t)`,
-    {
-        tag,
-        recipeId: parseInt(result['recipeId'])
-    });
+        {
+            tag: tags[index],
+            recipeId: parseInt(result['recipeId'])
+        });
     }
 
     return result 
@@ -176,10 +177,11 @@ async function updateRecipe(recipeId, updates, username) {
         username
     });
     // Add tags to recipe
-    for (tag in tags) {
+    tags = JSON.parse(tags)
+    for (index in tags) {
         await cypher(`MATCH (r:Recipe), (t:Tag {name: $tag}) WHERE ID(r)=$recipeID MERGE (r)-[:HAS]->(t)`,
     {
-        tag,
+        tag: tags[index],
         recipeId: parseInt(recipeId)
     });
     }

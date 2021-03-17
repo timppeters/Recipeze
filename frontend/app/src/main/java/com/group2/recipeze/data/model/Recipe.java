@@ -31,7 +31,7 @@ public class Recipe {
     private ArrayList<String> tags;
     private int prepTime;
     private int cookTime;
-    private Boolean liked;
+    private boolean liked;
     private static Random r = new Random();
 
 
@@ -53,7 +53,7 @@ public class Recipe {
      */
     public Recipe(int recipeId, float rating, int likes, String author, String title,
                   String description, ArrayList<String> ingredients, ArrayList<String> ingredientsAmounts,
-                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime, Boolean liked) {
+                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime, boolean liked) {
         this.recipeId = recipeId;
         this.rating = rating;
         this.likes = likes;
@@ -234,6 +234,6 @@ public class Recipe {
         this.cookTime = cookTime;
     }
 
-    public boolean getLiked() {return this.liked; }
+    public boolean getLiked() {return liked; }
 
 }

@@ -155,8 +155,10 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
                         FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         transaction.setReorderingAllowed(true);
+                        transaction.addToBackStack("recipe " + String.valueOf(recipeId) + " created");
                         transaction.replace(R.id.nav_host_fragment, RecipeFragment.class, bundle);
                         transaction.commit();
+                        dismiss();
                     }
                 });
 

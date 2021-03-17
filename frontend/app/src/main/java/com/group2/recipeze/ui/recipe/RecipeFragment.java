@@ -4,6 +4,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,10 +35,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.group2.recipeze.MainActivity;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
+import com.group2.recipeze.ui.feed.FeedFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -195,12 +198,9 @@ public class RecipeFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("hello");
                 FragmentManager fm = getParentFragmentManager();
                 if (fm.getBackStackEntryCount() > 0) {
                     fm.popBackStack();
-                } else {
-
                 }
             }
         });
