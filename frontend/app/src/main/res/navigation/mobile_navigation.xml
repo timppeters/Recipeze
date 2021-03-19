@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_feed">
+
+    <fragment
+        android:id="@+id/navigation_feed"
+        android:name="com.group2.recipeze.ui.feed.FeedFragment"
+        android:label="@string/title_feed"
+        tools:layout="@layout/fragment_feed" >
+
+        <action
+            android:id="@+id/action_navigation_feed_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_explore"
+        android:name="com.group2.recipeze.ui.explore.ExploreFragment"
+        android:label="@string/title_explore"
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_navigation_explore_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/navigation_addRecipe"
+        android:name="com.group2.recipeze.ui.addRecipe.AddRecipeFragment"
+        android:label="@string/title_addRecipe"
+        tools:layout="@layout/fragment_addrecipe" />
+
+    <fragment
+        android:id="@+id/navigation_recipeBook"
+        android:name="com.group2.recipeze.ui.recipeBook.RecipeBookFragment"
+        android:label="@string/title_recipeBook"
+        tools:layout="@layout/fragment_recipebook" >
+        <action
+            android:id="@+id/action_navigation_recipeBook_to_recipe"
+            app:destination="@id/recipe" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.group2.recipeze.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_settingsFragment2"
+            app:destination="@id/settingsFragment2" />
+        <action
+            android:id="@+id/action_navigation_profile_to_foodPreferences2"
+            app:destination="@id/foodPreferences2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment2"
+        android:name="com.group2.recipeze.ui.Settings.SettingsFragment"
+        android:label="SettingsFragment"
+        android:parentActivityName=".MainActivity" >
+        <action
+            android:id="@+id/action_settingsFragment2_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe"
+        android:name="com.group2.recipeze.ui.recipe.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" />
+
+    <fragment
+        android:id="@+id/foodPreferences2"
+        android:name="com.group2.recipeze.ui.profile.FoodPreferencesFragment"
+        android:label="foodPreferences"
+        android:parentActivityName=".MainActivity">
+        <action
+            android:id="@+id/action_foodPreferences2_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_foodPreferences2_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.group2.recipeze.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodForumFragment"
+        android:name="com.group2.recipeze.ui.forum.FoodForumFragment"
+        android:label="FoodForumFragment" />
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.group2.recipeze.ui.search.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" >
+        <action
+            android:id="@+id/action_filterFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+</navigation>

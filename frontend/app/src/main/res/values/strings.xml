@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">Recipeze</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_explore">Explore</string>
+    <string name="title_addRecipe">Add Recipe</string>
+    <string name="title_recipeBook">Recipe Book</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="login_instructions">Login or create a free account</string>
+    <string name="continue_with_email">Continue with email</string>
+    <string name="slogan">Recipes for restricted diets</string>
+    <string name="continue_with_google">Continue with google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="noodles">Noodles</string>
+    <string name="chef">Chef</string>
+
+
+    <string name="trending_tags">Trending Tags</string>
+    <string name="view_all">View All</string>
+    <string name="vegan">Vegan</string>
+    <string name="trending_recipes">Trending Recipes</string>
+
+
+    <string name="title_activity_settings">Hi</string>
+
+
+    <!--searching recipe page-->
+    <string name="forum_button">Forum</string>
+    <string name= "filter_button">Filter</string>
+
+    <!--filter page-->
+    <string name="filterSpin">Filters</string>
+
+    <!-- Settings -->
+    <!-- Preference Titles -->
+    <string name="view_pref_header">View Preferences</string>
+    <string name="tracking_header">Tracking</string>
+    <string name="account_header">Account Settings</string>
+
+    <!-- View/sound Preferences -->
+    <string name="Notification_title">Disable Notification</string>
+    <string name="DarkLight_title">Dark Mode</string>
+    <string name="language_title">Prefered Language</string>
+
+    <!-- tracking Preferences -->
+    <string name="Nut_tracking">Nutrients Tracking</string>
+    <string name="Cal_tracking">Calory Tracking</string>
+
+    <!-- account management -->
+    <string name="change_username">Change Username</string>
+    <string name="change_password">Change Password</string>
+    <string name="del_posts">Delete Post</string>
+    <string name="log_out">Logout</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="edit_food_preferences">Edit Food Preferences</string>
+    <string name="invalid_email">Invalid email</string>
+  
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="google_server_client_id">542066750478-ed9ha3ahegt1ggqh88oube3kc71c8it5.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">340378020725020</string>
+    <string name="fb_login_protocol_scheme">fb340378020725020</string>
+    <string name="username">Username</string>
+    <string name="done">Done</string>
+    <string name="i_agree_to_the_terms_of_service_amp_privacy_policy"><![CDATA[I Agree to the Terms of Service & Privacy Policy]]></string>
+    <string name="email">Email</string>
+    <string name="emailLoginIntent">Login with email</string>
+    <string name="send">Send</string>
+    <string name="email_instructions_login">We will send you an email with a link that will log you in.</string>
+    <string name="email_instructions_login_2">Open the email from us on this device and click on the link to finish logging in.</string>
+    <string name="create_recipe">Create Recipe</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="tags">Tags</string>
+    <string name="timing">Timing</string>
+    <string name="preparation_time">Preparation time</string>
+    <string name="cooking_time">Cooking time</string>
+    <string name="minutes">minutes</string>
+    <string name="add">+ Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="add_">Add</string>
+    <string name="step">Step</string>
+    <string name="close">╳</string>
+    <string name="images">Images</string>
+
+
+</resources>
