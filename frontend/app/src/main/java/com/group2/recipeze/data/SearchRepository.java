@@ -11,6 +11,7 @@ import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.data.model.Tag;
 import com.group2.recipeze.data.model.User;
 import com.group2.recipeze.data.services.SearchService;
+import com.group2.recipeze.ui.search.SearchFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +41,7 @@ public class SearchRepository extends Repository {
         return instance;
     }
 
-    public void search(String query, MutableLiveData<Map<String, ArrayList<?>>> results) {
+    public void search(String query, MutableLiveData<Map<String, ArrayList<?>>> results, MutableLiveData<ArrayList<Recipe>> justRecipes) {
         Call<JsonElement> response = service.search(query, loggedInUser.getToken());
         response.enqueue(new Callback<JsonElement>() {
             @RequiresApi(api = Build.VERSION_CODES.R)
@@ -75,11 +76,13 @@ public class SearchRepository extends Repository {
                                 "recipes", recipeArrayList,
                                 "users", usersArrayList,
                                 "tags", tagsArrayList);
+                        System.out.println("TYPES: "+ types);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
+                    justRecipes.postValue(recipeArrayList);
                     results.postValue(types);
+                    System.out.println("RESULTS: " +results);
                 }
 
             }

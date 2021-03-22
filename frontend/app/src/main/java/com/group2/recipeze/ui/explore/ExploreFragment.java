@@ -21,10 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.SearchRepository;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
+import com.group2.recipeze.ui.search.SearchFragment;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * ExploreFragment.
@@ -34,7 +37,9 @@ public class ExploreFragment extends Fragment {
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
-
+    SearchRepository searchRepo;
+    
+    
     private ExploreViewModel exploreViewModel;
 
     /**
@@ -72,6 +77,11 @@ public class ExploreFragment extends Fragment {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                searchRepo = SearchRepository.getInstance();
+                MutableLiveData<Map<String, ArrayList<?>>> searchRecipes = new MutableLiveData<>();
+                MutableLiveData< ArrayList<Recipe>> searchedRecipes2 = new MutableLiveData<>();
+                searchRepo.search(query, searchRecipes, searchedRecipes2);
+                SearchFragment.setSearchedRecipes2(searchedRecipes2);
                 NavHostFragment.findNavController(thisFrag).navigate(R.id.action_navigation_explore_to_searchFragment);
                 Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
                 return true;
