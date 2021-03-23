@@ -22,14 +22,17 @@ import com.group2.recipeze.ui.search.SearchViewModel;
 import java.util.ArrayList;
 public class FoodForumFragment extends Fragment {
     RecyclerView forumRecyclerView;
-    RecyclerViewAdapter forumRecyclerViewAdapter;
-    endlessScroll endlessScrollManager;
+    ForumPostAdapter forumRecyclerViewAdapter;
+    endlessScrollForum endlessScrollManager;
     ForumRepository forumRepository;
     FoodForumViewModel mViewModel;
     public MutableLiveData<Integer> resultingPostId = new MutableLiveData<>();
     public MutableLiveData<ForumPost> resultingPost = new MutableLiveData<>();
     public MutableLiveData<ArrayList<ForumPost>> resultingPosts = new MutableLiveData<>();
     ForumPost forumpost;
+    private String tagName;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class FoodForumFragment extends Fragment {
         View root = inflater.inflate(R.layout.food_forum_fragment, container, false);
         FoodForumFragment thisFragment = this;
 
+        // Get tagName from whoever called fragment
+        tagName = getArguments().getString("tagName");
+
         forumRepository = ForumRepository.getInstance();
         resultingPosts.observe(getViewLifecycleOwner(), new Observer<ArrayList<ForumPost>>() {
 
@@ -46,21 +52,25 @@ public class FoodForumFragment extends Fragment {
             public void onChanged(ArrayList<ForumPost> resultingPosts) {
                 // Populate endlessScroll with forums
                 forumRecyclerView = root.findViewById(R.id.forums);
-                endlessScrollManager = new endlessScroll(forumRecyclerView);
-                endlessScrollManager.populateData2(resultingPosts);
+                endlessScrollManager = new endlessScrollForum(forumRecyclerView, tagName);
+                endlessScrollManager.populateData(resultingPosts);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
 
             }
         });
+        /*
         forumRepository.createForumPost("Vegan", "I have been vegeterian for 2 weeks","Vegan",resultingPostId);
-        forumRepository.getForumPostsInTag("Vegan", resultingPosts);
         forumRepository.addCommentToPost(1, "Very good recipe");
         forumRepository.likePost(1);
         forumRepository.updatePost(1,"Recently Vegan","I have been vegeterian for 2 weeks");
-        forumRepository.readForumPost(1,resultingPost);
+        forumRepository.readForumPost(1,resultingPost);*/
 
         return root;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        forumRepository.getForumPostsInTag(tagName, resultingPosts);
     }
 
 }

@@ -41,6 +41,7 @@ import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
 import com.group2.recipeze.ui.feed.FeedFragment;
+import com.group2.recipeze.ui.forum.FoodForumFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +57,7 @@ public class RecipeFragment extends Fragment {
     private int originalTopMargin;
     private MutableLiveData<Recipe> recipe = new MutableLiveData<Recipe>();
     private RecipeRepository recipeRepository;
+    private RecipeFragment thisFragment = this;
 
     /**
      * Called when view is created.
@@ -158,6 +160,20 @@ public class RecipeFragment extends Fragment {
                 TextView tagView = (TextView) getLayoutInflater().inflate(R.layout.item_tag, null);
                 tagView.setText(tagName);
                 tagsLayout.addView(tagView);
+                tagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("tagName", tagName);
+                        FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.setReorderingAllowed(true);
+                        transaction.addToBackStack("forum " + tagName);
+                        transaction.add(R.id.nav_host_fragment, FoodForumFragment.class, bundle);
+                        transaction.commit();
+                    }
+                });
             }
         }
 

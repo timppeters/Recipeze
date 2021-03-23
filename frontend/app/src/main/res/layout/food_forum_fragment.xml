@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.forum.FoodForumFragment"
+    android:id="@+id/forumContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/textView3"
@@ -14,7 +14,7 @@
         android:fontFamily="@font/comfortaaregular"
         android:fontStyle="italic"
         android:text="Food Forum"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:elevation="30dp"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,16 +34,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <RelativeLayout
-        android:id="@+id/rootRL"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/food"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
