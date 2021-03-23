@@ -10,8 +10,11 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.group2.recipeze.data.ForumRepository;
 import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.model.ForumPost;
 import com.group2.recipeze.data.model.Recipe;
+import com.group2.recipeze.ui.forum.ForumPostAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,10 +22,14 @@ import java.util.HashMap;
 public class endlessScroll {
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
+    ForumPostAdapter forumPostAdapter;
 
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+    ForumRepository forumRepository;
+    public MutableLiveData<ArrayList<ForumPost>> resultingPosts = new MutableLiveData<>();
+    ArrayList<ForumPost> forumPostsList = new ArrayList<ForumPost>();
 
 
     boolean isLoading = false;
@@ -37,6 +44,15 @@ public class endlessScroll {
         //recipes.postValue(recipeList);
         for(int x = 0; x < recipeList.size(); x++){
             Log.d("recipe1", recipeList.get(x).getTitle());
+        }
+    }
+
+    public void populateData2(ArrayList<ForumPost> initialForum) {
+        forumPostsList = initialForum;
+        resultingPosts.setValue(forumPostsList);
+        //recipes.postValue(recipeList);
+        for(int x = 0; x < forumPostsList.size(); x++){
+            Log.d("forums1", forumPostsList.get(x).getTitle());
         }
     }
 
@@ -84,6 +100,18 @@ public class endlessScroll {
             public void onChanged(ArrayList<Recipe> recipes) {
                 recipeList.addAll(recipes);
                 recyclerViewAdapter.notifyDataSetChanged();
+                isLoading = false;
+            }
+        });
+        forumPostAdapter = new ForumPostAdapter(forumPostsList);
+        forumRepository = ForumRepository.getInstance();
+        resultingPosts.observeForever(new Observer<ArrayList<ForumPost>>() {
+
+            @Override
+            public void onChanged(ArrayList<ForumPost> resultingPosts) {
+                // Populate endlessScroll with forums
+                forumPostsList.addAll(resultingPosts);
+                forumPostAdapter.notifyDataSetChanged();
                 isLoading = false;
             }
         });
