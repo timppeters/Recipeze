@@ -1,9 +1,11 @@
 package com.group2.recipeze.ui.forum;
 
 import android.app.AlertDialog;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,18 +13,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.group2.recipeze.R;
-import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.model.ForumPost;
 import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
+
 import java.util.ArrayList;
 
 public class ForumPostAdapter  extends RecyclerView.Adapter<ForumPostAdapter.ViewHolder>{
 
     private ArrayList<ForumPost> forumPosts;
     private Fragment thisFragment;
-
+    private Integer selectedPostPosition;
+    public void setThisFragment(Fragment fragment) {
+        thisFragment = fragment;
+    }
     // Use this when editing forum post. Don't need to implement just yet
     public static class FoodForumDialog extends AlertDialog {
         AlertDialog dialogBuilder;
@@ -49,7 +55,7 @@ public class ForumPostAdapter  extends RecyclerView.Adapter<ForumPostAdapter.Vie
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView username;
         private final TextView title;
         private final TextView body;
@@ -64,17 +70,43 @@ public class ForumPostAdapter  extends RecyclerView.Adapter<ForumPostAdapter.Vie
             body = view.findViewById(R.id.body);
         }
 
-        public TextView getUsername() {return this.username;}
-        public TextView getTitle() {return this.title;}
-        public TextView getBody() {return this.body;}
+        public TextView getUsername() {
+            return this.username;
+        }
+
+        public TextView getTitle() {
+            return this.title;
+        }
+
+        public TextView getBody() {
+            return this.body;
+        }
+
         public void setPosition(int position) {
             this.position = position;
         }
+
+        public void ItemView(@NonNull View itemView) {
+
+            Button button = itemView.findViewById(R.id.invisibleLayer);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    selectedPostPosition = position;
+                    int postId = forumPosts.get(selectedPostPosition).getPostId();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("postId", postId);
+                    FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setReorderingAllowed(true);
+                    transaction.addToBackStack("post " + String.valueOf(postId));
+                    transaction.add(R.id.nav_host_fragment, FoodForumFragment.class, bundle);
+                    transaction.commit();
+                }
+            });
+        }
     }
 
-    public void setThisFragment(Fragment fragment) {
-        thisFragment = fragment;
-    }
 
 
 

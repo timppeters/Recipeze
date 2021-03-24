@@ -83,6 +83,7 @@
             android:id="@+id/action_foodPreferences2_to_foodForumFragment"
             app:destination="@id/foodForumFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.group2.recipeze.ui.search.SearchFragment"
@@ -96,9 +97,25 @@
             app:destination="@id/filterFragment" />
     </fragment>
     <fragment
+        android:id="@+id/add_forumpost"
+        android:name ="com.group2.recipeze.ui.forum.AddPostFragment"
+        android:label="AddPostFragment"
+        tools:layout = "@layout/add_forumpost">
+    <action
+        android:id="@+id/action_add_forumpost_to_foodForumFragment"
+        app:destination="@+id/foodForumFragment"/>
+    </fragment>
+
+    <fragment
         android:id="@+id/foodForumFragment"
         android:name="com.group2.recipeze.ui.forum.FoodForumFragment"
-        android:label="FoodForumFragment" />
+        android:label="FoodForumFragment"
+        tools:layout="@layout/food_forum_fragment" >
+    <action
+        android:id="@+id/action_foodForumFragment_to_add_forumpost"
+        app:destination="@id/add_forumpost" />
+    </fragment>
+
     <fragment
         android:id="@+id/filterFragment"
         android:name="com.group2.recipeze.ui.search.FilterFragment"
@@ -108,4 +125,5 @@
             android:id="@+id/action_filterFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
+
 </navigation>

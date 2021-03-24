@@ -29,12 +29,12 @@
         android:textColor="@color/green"
         android:textOff="Gluten Free"
         android:textOn="Gluten Free"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/Title1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toEndOf="@+id/tag3"
         app:layout_constraintTop_toBottomOf="@+id/tag2"
-        app:layout_constraintVertical_bias="0.051" />
+        app:layout_constraintVertical_bias="0.207" />
 
     <ToggleButton
         android:id="@+id/tag2"
@@ -48,8 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toEndOf="@+id/tag4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472" />
+        app:layout_constraintTop_toBottomOf="@+id/Title2"
+        app:layout_constraintVertical_bias="0.076" />
 
     <ToggleButton
         android:id="@+id/tag3"
@@ -59,12 +59,12 @@
         android:textColor="@color/green"
         android:textOff="Dairy Free"
         android:textOn="Dairy Free"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/Title1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tag4"
-        app:layout_constraintVertical_bias="0.051" />
+        app:layout_constraintVertical_bias="0.207" />
 
     <ToggleButton
         android:id="@+id/tag4"
@@ -109,8 +109,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toEndOf="@+id/tag5"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803" />
+        app:layout_constraintTop_toBottomOf="@+id/Title1"
+        app:layout_constraintVertical_bias="0.157" />
 
     <ToggleButton
         android:id="@+id/tag7"
@@ -162,7 +162,6 @@
         android:id="@+id/Title1"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="24dp"
         android:layout_marginBottom="176dp"
         android:layout_weight="1"
         android:fontFamily="@font/comfortaaregular"
@@ -171,15 +170,16 @@
         android:textSize="24sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.106"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title2"
-        app:layout_constraintVertical_bias="0.848" />
+        app:layout_constraintVertical_bias="0.847" />
 
     <TextView
         android:id="@+id/Title2"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="24dp"
         android:layout_marginBottom="424dp"
         android:layout_weight="1"
         android:fontFamily="@font/comfortaaregular"
@@ -188,26 +188,11 @@
         android:textSize="24sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_food" />
-
-    <Button
-        android:id="@+id/button_food"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/roundstyle"
-        android:fontFamily="@font/comfortaaregular"
-        android:text="Tags forum"
-        android:textColor="@color/black"
-        app:backgroundTint="@color/darker_background"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
+        app:layout_constraintTop_toBottomOf="@+id/tags"
+        app:layout_constraintVertical_bias="0.508" />
 
     <ToggleButton
         android:id="@+id/tag9"
@@ -218,7 +203,7 @@
         android:textColor="@color/green"
         android:textOff="Peanut Free"
         android:textOn="Peanut Free"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/Title1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toEndOf="@+id/tag1"
@@ -237,8 +222,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toEndOf="@+id/tag2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472" />
+        app:layout_constraintTop_toBottomOf="@+id/Title2"
+        app:layout_constraintVertical_bias="0.076" />
 
     <ToggleButton
         android:id="@+id/tag11"
@@ -252,8 +237,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toEndOf="@+id/tag6"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803" />
+        app:layout_constraintTop_toBottomOf="@+id/Title1"
+        app:layout_constraintVertical_bias="0.157" />
 
     <ToggleButton
         android:id="@+id/tag12"
