@@ -1,6 +1,7 @@
 package com.group2.recipeze;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -60,6 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ItemViewHolder) {
+            viewHolder.setIsRecyclable(false);
             populateItemRows((ItemViewHolder) viewHolder, position);
         } else if (viewHolder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) viewHolder, position);
@@ -97,6 +99,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tag2;
         Integer position;
         TextView invisibleLayer;
+        ImageView likeImage;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,22 +113,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             image = itemView.findViewById(R.id.recipeIamge);
             tag1 = itemView.findViewById(R.id.tag4);
             tag2 = itemView.findViewById(R.id.tag5);
+            likeImage = itemView.findViewById(R.id.likeImg3);
             invisibleLayer = itemView.findViewById(R.id.invisLayer);
 
             invisibleLayer.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Log.d("CLICK-RECIPE", "CLICKED");
-                    descriptionTxt.setText(descriptionTxt.getText() + " SELECTED! ");
                     selectedRecipePosition = position;
-
-                    int recipeId = recipeList.get(selectedRecipePosition).getRecipeId();
+                    Recipe recipe = recipeList.get(selectedRecipePosition);
 
                     Bundle bundle = new Bundle();
-                    bundle.putInt("recipeId", recipeId);
+                    bundle.putParcelable("recipe", recipe);
+
                     FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     transaction.setReorderingAllowed(true);
-                    transaction.addToBackStack("recipe " + String.valueOf(recipeId));
+                    transaction.addToBackStack("recipe " + String.valueOf(position));
                     transaction.add(R.id.nav_host_fragment, RecipeFragment.class, bundle);
                     transaction.commit();
                 }
@@ -171,6 +173,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.image.setImageBitmap(recipeList.get(position).getImagesAsBitmaps().get(1));
         //new DownloadImageTask((ImageView) viewHolder.image).execute(recipeList.get(position).getImages().get(1));
         //viewHolder.image.setImageBitmap(recipeList.get(position).getImagesAsBitmaps().get(0));
+
+        if (recipeList.get(position).getLiked()) {
+            viewHolder.likeImage.setImageDrawable(ResourcesCompat.getDrawable(thisFragment.getResources(), R.drawable.ic_like__1_filled,null));
+        }
 
         ArrayList<TextView> tagObjects = new ArrayList<>();
         tagObjects.add(viewHolder.tag1);

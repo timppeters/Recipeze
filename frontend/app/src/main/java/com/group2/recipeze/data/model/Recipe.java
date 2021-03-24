@@ -4,8 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Path;
 import android.media.Image;
+import android.os.Binder;
+import android.os.Build;
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Base64;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -16,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Recipe {
+public class Recipe extends Binder implements Parcelable {
 
     private int recipeId;
     private float rating;
@@ -31,7 +37,7 @@ public class Recipe {
     private ArrayList<String> tags;
     private int prepTime;
     private int cookTime;
-    private boolean liked;
+    private Boolean liked;
     private static Random r = new Random();
 
 
@@ -235,5 +241,30 @@ public class Recipe {
     }
 
     public boolean getLiked() {return liked; }
+
+    public void setLiked(boolean liked) { this.liked = liked;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStrongBinder(this);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
+        public Recipe createFromParcel(Parcel in) {
+            return (Recipe) in.readStrongBinder().queryLocalInterface("com.group2.recipeze.data.model.recipe");
+        }
+
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
 }
