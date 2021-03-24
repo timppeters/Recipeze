@@ -1,6 +1,7 @@
 package com.group2.recipeze.ui.feed;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class FeedFragment extends Fragment {
 
     Button tagsBtn;
     Button usersBtn;
+    Button filtersBtn;
     Drawable selectedTab;
 
     private FeedViewModel feedViewModel;
@@ -95,6 +97,16 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 usersBtn.setBackground(selectedTab);
                 tagsBtn.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
+        filtersBtn = root.findViewById(R.id.filter);
+
+        filtersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filters filterDialog = new filters();
+                filterDialog.show(getParentFragmentManager(), "Test");
             }
         });
 
