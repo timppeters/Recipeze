@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.group2.recipeze.R;
@@ -22,10 +23,12 @@ public class filters extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomAlertDialog);
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.fragment_filter_feed, null);
-        dialogView.setClipToOutline(true);
+        //dialogView.setClipToOutline(true);
+        //dialogView.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.dialog_bg));
+        //dialogView.setBackground(new ColorDrawable(Color.TRANSPARENT));
 
         builder.setView(dialogView)
                 // Add action buttons
