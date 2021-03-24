@@ -10,8 +10,11 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.group2.recipeze.data.ForumRepository;
 import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.model.ForumPost;
 import com.group2.recipeze.data.model.Recipe;
+import com.group2.recipeze.ui.forum.ForumPostAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
