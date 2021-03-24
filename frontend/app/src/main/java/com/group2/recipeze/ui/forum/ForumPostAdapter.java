@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.model.ForumPost;
@@ -68,6 +69,19 @@ public class ForumPostAdapter  extends RecyclerView.Adapter<ForumPostAdapter.Vie
             username = view.findViewById(R.id.username);
             title = view.findViewById(R.id.post_title);
             body = view.findViewById(R.id.body);
+
+            TextView invisibleLayer = itemView.findViewById(R.id.invisibleLayer);
+
+            invisibleLayer.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    selectedPostPosition = position;
+                    int postId = forumPosts.get(selectedPostPosition).getPostId();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("postId", postId);
+                    NavHostFragment.findNavController(thisFragment).navigate(R.id.action_foodForumFragment_to_forumpost, bundle);
+                }
+            });
         }
 
         public TextView getUsername() {
@@ -84,26 +98,6 @@ public class ForumPostAdapter  extends RecyclerView.Adapter<ForumPostAdapter.Vie
 
         public void setPosition(int position) {
             this.position = position;
-        }
-
-        public void ItemView(@NonNull View itemView) {
-
-            Button button = itemView.findViewById(R.id.invisibleLayer);
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    selectedPostPosition = position;
-                    int postId = forumPosts.get(selectedPostPosition).getPostId();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("postId", postId);
-                    FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.setReorderingAllowed(true);
-                    transaction.addToBackStack("post " + String.valueOf(postId));
-                    transaction.add(R.id.nav_host_fragment, FoodForumFragment.class, bundle);
-                    transaction.commit();
-                }
-            });
         }
     }
 

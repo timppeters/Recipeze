@@ -62,13 +62,12 @@ public class FoodForumFragment extends Fragment {
 
             }
         });
-        Button button = root.findViewById(R.id.add_forumpost);
-        Fragment here = this;
+        Button button = root.findViewById(R.id.add_post);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(thisFragment).navigate(R.id.action_foodForumFragment_to_addPostFragment);
+                NavHostFragment.findNavController(thisFragment).navigate(R.id.action_foodForumFragment_to_add_forumpost);
             }
         });
         /*
