@@ -2,34 +2,75 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:layout_marginTop="10dp">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/ingredient"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/commentCard"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text=""
-        android:textColor="@color/green"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/cross"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="@string/close"
-        android:layout_marginEnd="10dp"
-        android:textColor="@color/light_text"
-        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/floating_card_background"
+        android:fontFamily="@font/comfortaaregular"
+        android:translationZ="4dp"
+        app:backgroundTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.221" >
 
+        <TextView
+            android:id="@+id/username_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:elevation="100dp"
+            android:fontFamily="@font/poppinsregular"
+            android:maxLength="30"
+            android:text="Username"
+            android:textColor="@color/green"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/recipe_card3"
+            app:layout_constraintHorizontal_bias="0.466"
+            app:layout_constraintStart_toStartOf="@+id/commentCard"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.187" />
+
+        <TextView
+            android:id="@+id/body_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="100dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="I struggled with similar issues and I will give you some advices"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/commentCard"
+            app:layout_constraintStart_toStartOf="@+id/commentCard"
+            app:layout_constraintTop_toBottomOf="@id/username_comment"
+            app:layout_constraintBottom_toBottomOf="@id/commentCard"/>
+
+
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_threedots"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

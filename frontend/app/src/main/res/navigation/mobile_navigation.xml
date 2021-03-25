@@ -116,12 +116,23 @@
             android:id="@+id/action_foodForumFragment_to_forumpost"
             app:destination="@id/postFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/add_comment"
+        android:name="com.group2.recipeze.ui.forum.AddCommentFragment"
+        android:label="AddCommentFragment"
+        tools:layout="@layout/add_comment" >
+    </fragment>
     <fragment
         android:id="@+id/postFragment"
         android:name="com.group2.recipeze.ui.forum.ForumPostFragment"
         android:label="ForumPostFragment"
         tools:layout="@layout/fragment_post" >
+        <action
+            android:id="@+id/postFragment_to_add_comment"
+            app:destination="@id/add_comment" />
+        <action
+            android:id="@+id/action_postFragment_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
     </fragment>
 
     <fragment

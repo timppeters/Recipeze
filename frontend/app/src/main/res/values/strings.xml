@@ -101,6 +101,8 @@
     <string name="step">Step</string>
     <string name="close">╳</string>
     <string name="images">Images</string>
+    <string name="delete">Delete</string>
+    <string name="report">Report</string>
 
 
 </resources>

@@ -81,58 +81,40 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <TextView
-        android:id="@+id/Ingredients"
+        android:id="@+id/commentsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:elevation="5dp"
         android:fontFamily="@font/poppins"
         android:text="Comments"
         android:textColor="@color/dark_text"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/commentList"
-        app:layout_constraintEnd_toEndOf="@+id/commentList"
-        app:layout_constraintHorizontal_bias="0.080"
-        app:layout_constraintStart_toStartOf="@+id/commentList"
-        app:layout_constraintTop_toTopOf="@+id/commentList"
-        app:layout_constraintVertical_bias="0.070" />
+        app:layout_constraintTop_toBottomOf="@id/postBody"
+        app:layout_constraintBottom_toTopOf="@+id/commentList"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/ingredients_list"
         android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_comment"
         app:layout_constraintVertical_bias="0.1" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_add_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:text="Add Comment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postBody"
-        app:layout_constraintVertical_bias="0.050" />
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Post"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentList" />
+        app:layout_constraintEnd_toEndOf="@+id/commentList"
+        app:layout_constraintTop_toTopOf="@id/commentsTitle"
+        app:layout_constraintBottom_toBottomOf="@id/commentsTitle"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ public class ForumPost {
     private String title;
     private String body;
     private Comment[] comments;
+    private boolean liked;
 
     /**
      * Forum post
@@ -22,11 +23,14 @@ public class ForumPost {
         this.title = title;
         this.body = body;
         this.comments = comments;
+        this.liked = liked;
     }
 
     public int getPostId() {
         return postId;
     }
+
+    public boolean getLiked() {return liked; }
 
     public void setPostId(int postId) {
         this.postId = postId;
