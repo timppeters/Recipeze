@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
@@ -123,13 +124,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("recipe", recipe);
-
-                    FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.setReorderingAllowed(true);
-                    transaction.addToBackStack("recipe " + String.valueOf(position));
-                    transaction.add(R.id.nav_host_fragment, RecipeFragment.class, bundle);
-                    transaction.commit();
+                    NavHostFragment.findNavController(thisFragment).navigate(R.id.action_navigation_feed_to_recipeFragment, bundle);
                 }
             });
         }

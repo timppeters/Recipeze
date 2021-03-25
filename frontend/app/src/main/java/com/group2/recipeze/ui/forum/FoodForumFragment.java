@@ -6,11 +6,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.ForumRepository;
@@ -22,49 +27,48 @@ import com.group2.recipeze.ui.search.SearchViewModel;
 import java.util.ArrayList;
 public class FoodForumFragment extends Fragment {
     RecyclerView forumRecyclerView;
-    ForumPostAdapter forumRecyclerViewAdapter;
-    endlessScrollForum endlessScrollManager;
     ForumRepository forumRepository;
-    FoodForumViewModel mViewModel;
-    public MutableLiveData<Integer> resultingPostId = new MutableLiveData<>();
-    public MutableLiveData<ForumPost> resultingPost = new MutableLiveData<>();
-    public MutableLiveData<ArrayList<ForumPost>> resultingPosts = new MutableLiveData<>();
-    ForumPost forumpost;
+    private MutableLiveData<ArrayList<ForumPost>> resultingPosts = new MutableLiveData<>();
     private String tagName;
+    private ForumPostAdapter recyclerViewAdapter;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        mViewModel =
-                new ViewModelProvider(this).get(FoodForumViewModel.class);
         View root = inflater.inflate(R.layout.food_forum_fragment, container, false);
         FoodForumFragment thisFragment = this;
 
         // Get tagName from whoever called fragment
         tagName = getArguments().getString("tagName");
 
+        TextView forumTitle = root.findViewById(R.id.forumTitle);
+        forumTitle.setText(tagName + " Forum");
+
         forumRepository = ForumRepository.getInstance();
         resultingPosts.observe(getViewLifecycleOwner(), new Observer<ArrayList<ForumPost>>() {
 
             @Override
-            public void onChanged(ArrayList<ForumPost> resultingPosts) {
-                // Populate endlessScroll with forums
+            public void onChanged(ArrayList<ForumPost> posts) {
                 forumRecyclerView = root.findViewById(R.id.forums);
-                endlessScrollManager = new endlessScrollForum(forumRecyclerView, tagName);
-                endlessScrollManager.populateData(resultingPosts);
-                endlessScrollManager.initAdapter(thisFragment);
-                endlessScrollManager.initScrollListener();
+                recyclerViewAdapter = new ForumPostAdapter(posts);
+                forumRecyclerView.setAdapter(recyclerViewAdapter);
+                forumRecyclerView.setLayoutManager(new LinearLayoutManager(thisFragment.getContext()));
+                recyclerViewAdapter.setThisFragment(thisFragment);
 
             }
         });
-        /*
-        forumRepository.createForumPost("Vegan", "I have been vegeterian for 2 weeks","Vegan",resultingPostId);
-        forumRepository.addCommentToPost(1, "Very good recipe");
-        forumRepository.likePost(1);
-        forumRepository.updatePost(1,"Recently Vegan","I have been vegeterian for 2 weeks");
-        forumRepository.readForumPost(1,resultingPost);*/
+        Button addPostButton = root.findViewById(R.id.add_post);
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("tagName", tagName);
+                NavHostFragment.findNavController(thisFragment).navigate(R.id.action_foodForumFragment_to_add_forumpost, bundle);
+            }
+        });
 
         return root;
     }

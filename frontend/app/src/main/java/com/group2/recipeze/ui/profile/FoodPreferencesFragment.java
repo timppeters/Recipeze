@@ -38,15 +38,7 @@ public class FoodPreferencesFragment extends Fragment {
             public void onChanged(@Nullable String s) {
             }
         });
-        Button settingBut = root.findViewById(R.id.button_food);
         Fragment here = this;
-
-        settingBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(here).navigate(R.id.action_navigation_profile_to_settingsFragment2);
-            }
-        });
 
         return root;
     }
