@@ -60,6 +60,8 @@ public class RecipeRepository extends Repository {
             e.printStackTrace();
         }
 
+        System.out.println("Filters " + filters.toString());
+
         getRecipes("feedUser", loggedInUser.getUsername(), "", filters, sortBy, skip, result);
     }
 

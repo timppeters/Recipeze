@@ -67,17 +67,17 @@ public class FeedFragment extends Fragment{
         FeedFragment thisFragment = this;
 
         recipeRepository = RecipeRepository.getInstance();
+
+        feedRecyclerView = root.findViewById(R.id.recipes);
+        endlessScrollManager = new endlessScroll(feedRecyclerView);
+        endlessScrollManager.initAdapter(thisFragment);
+        endlessScrollManager.initScrollListener();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
-                feedRecyclerView = root.findViewById(R.id.recipes);
-                endlessScrollManager = new endlessScroll(feedRecyclerView);
                 endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter(thisFragment);
-                endlessScrollManager.initScrollListener();
-                
             }
         });
 
