@@ -1,6 +1,7 @@
 package com.group2.recipeze.ui.feed;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,16 +25,23 @@ import com.google.android.material.chip.ChipGroup;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.TagRepository;
 import com.group2.recipeze.data.model.Tag;
+import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class filters extends DialogFragment {
     private MutableLiveData<ArrayList<Tag>> tags = new MutableLiveData<>();
     private TagRepository tagRepository;
     private AlertDialog filterDialog;
+    private FeedFragment feedFragment;
+
+    public filters(FeedFragment feedFragment){
+        this.feedFragment = feedFragment;
+    }
 
     @NotNull
     @Override
@@ -42,24 +50,8 @@ public class filters extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomAlertDialog);
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.fragment_filter_feed, null);
-        //dialogView.setClipToOutline(true);
-        //dialogView.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.dialog_bg));
-        //dialogView.setBackground(new ColorDrawable(Color.TRANSPARENT));
 
-        builder.setView(dialogView)
-                // Add action buttons
-//                .setPositiveButton("test1", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // sign in the user ...
-//                    }
-//                })
-//                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        LoginDialogFragment.this.getDialog().cancel();
-//                    }
-//                });
-        ;
+        builder.setView(dialogView);
         filterDialog = builder.create();
 
 
@@ -67,6 +59,8 @@ public class filters extends DialogFragment {
         Chip addIngredientBtn = dialogView.findViewById(R.id.addIngredient2);
         ChipGroup tagsGroup = dialogView.findViewById(R.id.filtertagsGroup);
         Button filterBtn = dialogView.findViewById(R.id.FiltersChosenBut);
+        com.google.android.material.slider.Slider maxTime = dialogView.findViewById(R.id.TimeSeek);
+        com.google.android.material.slider.Slider maxIngredients = dialogView.findViewById(R.id.NumOfIndSeek);
 
         ingredientsList.addItemDecoration(new DividerItemDecoration(dialogView.getContext(), DividerItemDecoration.VERTICAL));
         filterIngredientsListAdapter ingredientsAdapter = new filterIngredientsListAdapter(new ArrayList<String>(), new ArrayList<String>());
@@ -76,6 +70,14 @@ public class filters extends DialogFragment {
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<String> tagNames = new ArrayList<>();
+                List<Integer> ids = tagsGroup.getCheckedChipIds();
+                for (Integer id:ids){
+                    Chip chip = tagsGroup.findViewById(id);
+                    tagNames.add(chip.getText().toString());
+                }
+
+                feedFragment.updateFilters((int) maxTime.getValue(),  ingredientsAdapter.getIngredients(), (int) maxIngredients.getValue(), tagNames);
                 filterDialog.dismiss();
             }
         });
@@ -104,5 +106,4 @@ public class filters extends DialogFragment {
         // Create the AlertDialog object and return it
         return filterDialog;
     }
-
 }

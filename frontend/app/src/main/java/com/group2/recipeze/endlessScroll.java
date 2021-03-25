@@ -24,6 +24,11 @@ public class endlessScroll {
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
 
+    ArrayList<String> ingredients = new ArrayList<String>();
+    ArrayList<String> tags = new ArrayList<String>();
+    int maxTime = 1000;
+    int maxIngredients = 1000;
+
 
     boolean isLoading = false;
 
@@ -34,10 +39,6 @@ public class endlessScroll {
     public void populateData(ArrayList<Recipe> initialRecipes) {
         recipeList = initialRecipes;
         recipes.setValue(recipeList);
-        //recipes.postValue(recipeList);
-        for(int x = 0; x < recipeList.size(); x++){
-            Log.d("recipe1", recipeList.get(x).getTitle());
-        }
     }
 
 
@@ -126,9 +127,7 @@ public class endlessScroll {
                 int scrollPosition = recipeList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
 
-                ArrayList<String> ingredients = new ArrayList<String>();
-                ArrayList<String> tags = new ArrayList<String>();
-                recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", recipeList.size(), recipes);
+                recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, 2, tags, "likes", recipeList.size(), recipes);
             }
         }, 10000);
 

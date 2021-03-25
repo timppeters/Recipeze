@@ -1,5 +1,6 @@
 package com.group2.recipeze.ui.feed;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 /**
  * FeedFragment.
  */
-public class FeedFragment extends Fragment {
+public class FeedFragment extends Fragment{
     RecyclerView feedRecyclerView;
     RecyclerViewAdapter feedRecyclerViewAdapter;
     endlessScroll endlessScrollManager;
@@ -105,8 +107,8 @@ public class FeedFragment extends Fragment {
         filtersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                filters filterDialog = new filters();
-                filterDialog.show(getParentFragmentManager(), "Test");
+                DialogFragment filterDialog = new filters(FeedFragment.this);
+                filterDialog.show(getParentFragmentManager(), "FilterDialog");
             }
         });
 
@@ -117,7 +119,13 @@ public class FeedFragment extends Fragment {
         // Just an example request
         ArrayList<String> ingredients = new ArrayList<String>();
         ArrayList<String> tags = new ArrayList<String>();
+        ingredients.add("chicken");
         recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
 
+    public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags){
+        Log.d("awd", String.valueOf(maxTime) + ingredients.toString() + String.valueOf(maxIngredients) + tags.toString());
+        ingredients.add("butter");
+        recipeRepository.getRecipesForFeedByUsers(30, ingredients, 1000, tags, "likes", 0, recipes);
+    }
 }
