@@ -226,6 +226,9 @@ async function readForumPost(postId) {
         records.forEach(record => {
             result = JSON.parse(JSON.stringify(record.get('properties')))
             result['likes'] = result['likes']['low']
+            for (index in result['comments']) {
+                result['comments'][index]['commentId'] = result['comments'][index]['commentId']['low']
+            }
           })
     }
     return result

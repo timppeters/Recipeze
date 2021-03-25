@@ -17,6 +17,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -166,12 +167,7 @@ public class RecipeFragment extends Fragment {
 
                         Bundle bundle = new Bundle();
                         bundle.putString("tagName", tagName);
-                        FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.setReorderingAllowed(true);
-                        transaction.addToBackStack("forum " + tagName);
-                        transaction.add(R.id.nav_host_fragment, FoodForumFragment.class, bundle);
-                        transaction.commit();
+                        NavHostFragment.findNavController(thisFragment).navigate(R.id.action_recipeFragment_to_foodForumFragment, bundle);
                     }
                 });
             }
@@ -214,10 +210,11 @@ public class RecipeFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getParentFragmentManager();
+                /*FragmentManager fm = getParentFragmentManager();
                 if (fm.getBackStackEntryCount() > 0) {
                     fm.popBackStack();
-                }
+                }*/
+                NavHostFragment.findNavController(thisFragment).popBackStack();
             }
         });
 

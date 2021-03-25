@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.ForumRepository;
@@ -57,6 +60,14 @@ public class FoodForumFragment extends Fragment {
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
 
+            }
+        });
+        Button button = root.findViewById(R.id.add_post);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(thisFragment).navigate(R.id.action_foodForumFragment_to_add_forumpost);
             }
         });
         /*
