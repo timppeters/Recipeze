@@ -38,18 +38,18 @@
         android:textColorHint="@color/light_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.253" />
+        app:layout_constraintVertical_bias="0.208" />
+
 
     <EditText
         android:id="@+id/body"
-        android:layout_width="0dp"
+        android:layout_width="357dp"
         android:layout_height="149dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="332dp"
         android:autofillHints=""
         android:background="@drawable/addrecipe_input"
         android:ems="10"
@@ -61,7 +61,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeTitle" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.491" />
 
     <Button
         android:id="@+id/savePostButton"
@@ -95,7 +96,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.639" />
+        app:layout_constraintVertical_bias="0.713" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
