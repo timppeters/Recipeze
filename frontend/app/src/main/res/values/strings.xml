@@ -41,7 +41,7 @@
 
     <!--searching recipe page-->
     <string name="forum_button">Forum</string>
-    <string name= "filter_button">Filter</string>
+    <string name="filter_button">Filter</string>
 
     <!--filter page-->
     <string name="filterSpin">Filters</string>
@@ -70,7 +70,7 @@
     <string name="my_recipes">My Recipes</string>
     <string name="edit_food_preferences">Edit Food Preferences</string>
     <string name="invalid_email">Invalid email</string>
-  
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="google_server_client_id">542066750478-ed9ha3ahegt1ggqh88oube3kc71c8it5.apps.googleusercontent.com</string>
@@ -101,6 +101,8 @@
     <string name="step">Step</string>
     <string name="close">╳</string>
     <string name="images">Images</string>
+    <string name="delete">Delete</string>
+    <string name="report">Report</string>
 
 
 </resources>

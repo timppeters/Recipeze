@@ -6,45 +6,35 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.group2.recipeze.MainActivity;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
-import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
-import com.group2.recipeze.ui.feed.FeedFragment;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.group2.recipeze.ui.forum.FoodForumFragment;
 
 /**
  * Recipe Fragment
@@ -56,6 +46,7 @@ public class RecipeFragment extends Fragment {
     private int originalTopMargin;
     private MutableLiveData<Recipe> recipe = new MutableLiveData<Recipe>();
     private RecipeRepository recipeRepository;
+    private RecipeFragment thisFragment = this;
 
     /**
      * Called when view is created.
@@ -73,19 +64,10 @@ public class RecipeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_recipe, container, false);
 
 
-        // Get recipeId from whoever called fragment
-        Integer recipeId = getArguments().getInt("recipeId");
+        Recipe recipe = getArguments().getParcelable("recipe");
+        showRecipe(recipe, root);
         recipeRepository = RecipeRepository.getInstance();
 
-        recipe.observe(getViewLifecycleOwner(), new Observer<Recipe>() {
-            @Override
-            public void onChanged(Recipe recipe) {
-                showRecipe(recipe, root);
-            }
-        });
-
-        // get recipe from db
-        recipeRepository.getRecipe(recipeId, recipe);
 
         LinearLayout contentParent = root.findViewById(R.id.contentParent);
         NestedScrollView content = root.findViewById(R.id.content);
@@ -158,6 +140,15 @@ public class RecipeFragment extends Fragment {
                 TextView tagView = (TextView) getLayoutInflater().inflate(R.layout.item_tag, null);
                 tagView.setText(tagName);
                 tagsLayout.addView(tagView);
+                tagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("tagName", tagName);
+                        NavHostFragment.findNavController(thisFragment).navigate(R.id.action_recipeFragment_to_foodForumFragment, bundle);
+                    }
+                });
             }
         }
 
@@ -185,10 +176,12 @@ public class RecipeFragment extends Fragment {
                 if (((String)likeButton.getTag()).equals("unliked")) {
                     recipeRepository.likeRecipe(recipe.getRecipeId());
                     likeButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_like__1_filled,null));
+                    recipe.setLiked(true);
                     likeButton.setTag("liked");
                 } else {
                     recipeRepository.unlikeRecipe(recipe.getRecipeId());
                     likeButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_like__1_,null));
+                    recipe.setLiked(false);
                     likeButton.setTag("unliked");
                 }
 
@@ -198,10 +191,11 @@ public class RecipeFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getParentFragmentManager();
+                /*FragmentManager fm = getParentFragmentManager();
                 if (fm.getBackStackEntryCount() > 0) {
                     fm.popBackStack();
-                }
+                }*/
+                NavHostFragment.findNavController(thisFragment).popBackStack();
             }
         });
 
