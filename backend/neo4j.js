@@ -218,7 +218,7 @@ async function createForumPost(username, title, body, tag) {
 
 async function readForumPost(postId) {
     let result = {}
-    let records = await cypher(`MATCH (n:Forum_Post)<-[:AUTHOR_OF]-(a:User), (n)<-[:IN]-(c:Comment), (c)<-[:AUTHOR_OF]-(u:User) WHERE ID(n)=$postId WITH properties(n) as properties, collect({body: c.body, author: u.username, commentId: ID(c)}) as comments, a.username as author, size((n)<-[:LIKED]-(:User)) as likes RETURN properties{.*, comments: comments, author: author, likes: likes}`,
+    let records = await cypher(`MATCH (n:Forum_Post)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (n)<-[:IN]-(c:Comment), (c)<-[:AUTHOR_OF]-(u:User) WHERE ID(n)=$postId WITH properties(n) as properties, collect({body: c.body, author: u.username, commentId: ID(c)}) as comments, a.username as author, size((n)<-[:LIKED]-(:User)) as likes RETURN properties{.*, comments: comments, author: author, likes: likes}`,
     {
         postId: parseInt(postId)
     });
@@ -237,7 +237,7 @@ async function readForumPost(postId) {
 
 async function getForumPostsByTag(tagName) {
     let result = {}
-    let records = await cypher(`MATCH (t:Tag {name: "Gluten Free"})<-[:IN]-(n:Forum_Post)<-[:AUTHOR_OF]-(a:User) WITH properties(n) as properties, a.username as author, size((n)<-[:LIKED]-(:User)) as likes, ID(n) as postId RETURN collect(properties{.*, author: author, likes: likes, postId: postId}) as posts`,
+    let records = await cypher(`MATCH (t:Tag {name: $tagName})<-[:IN]-(n:Forum_Post)<-[:AUTHOR_OF]-(a:User) WITH properties(n) as properties, a.username as author, size((n)<-[:LIKED]-(:User)) as likes, ID(n) as postId RETURN collect(properties{.*, author: author, likes: likes, postId: postId}) as posts`,
     {
         tagName: tagName
     });

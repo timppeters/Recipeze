@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/forumTitle"
         android:layout_width="203dp"
         android:layout_height="94dp"
         android:elevation="30dp"

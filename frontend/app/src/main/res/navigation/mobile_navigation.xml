@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/add_comment"
-        android:name="com.group2.recipeze.ui.comment.AddCommentFragment"
+        android:name="com.group2.recipeze.ui.forum.AddCommentFragment"
         android:label="AddCommentFragment"
         tools:layout="@layout/add_comment" >
     </fragment>

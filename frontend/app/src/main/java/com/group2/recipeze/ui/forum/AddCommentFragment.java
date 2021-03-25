@@ -10,21 +10,24 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.ForumRepository;
-import com.group2.recipeze.ui.forum.ViewPostFragment;
-import com.group2.recipeze.ui.forum.ViewPostView;
+import com.group2.recipeze.data.model.ForumPost;
 
 public class AddCommentFragment extends Fragment {
-    ForumRepository forumRepository;
-    AddCommentView addCommentView;
+    private ForumRepository forumRepository;
+    private Integer postId;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         AddCommentFragment thisFragment = this;
-      addCommentView =
-                new ViewModelProvider(this).get(AddCommentView.class);
+        postId = getArguments().getInt("postId");
+
+
         forumRepository = ForumRepository.getInstance();
         android.view.View root = inflater.inflate(R.layout.add_comment, container, false);
         EditText body = root.findViewById(R.id.body_comment);
@@ -32,7 +35,8 @@ public class AddCommentFragment extends Fragment {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                forumRepository.addCommentToPost(1,body.getText().toString());
+                forumRepository.addCommentToPost(postId,body.getText().toString());
+                NavHostFragment.findNavController(thisFragment).popBackStack();
             }
         });
                 return root;
