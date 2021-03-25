@@ -79,7 +79,7 @@ public class ForumPostFragment extends Fragment {
         postBody.setText(forumPost.getBody());
         ArrayList<Comment> comments = new ArrayList<>();
         if (forumPost.getComments() != null) {
-            comments = (ArrayList<Comment>) Arrays.asList(forumPost.getComments());
+            comments = new ArrayList<>(Arrays.asList(forumPost.getComments()));
         }
         CommentAdapter commentAdapter = new CommentAdapter(comments);
         commentsRecyclerView.setAdapter(commentAdapter);

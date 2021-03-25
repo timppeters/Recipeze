@@ -218,7 +218,7 @@ async function createForumPost(username, title, body, tag) {
 
 async function readForumPost(postId) {
     let result = {}
-    let records = await cypher(`MATCH (n:Forum_Post)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (n)<-[:IN]-(c:Comment), (c)<-[:AUTHOR_OF]-(u:User) WHERE ID(n)=$postId WITH properties(n) as properties, collect({body: c.body, author: u.username, commentId: ID(c)}) as comments, a.username as author, size((n)<-[:LIKED]-(:User)) as likes RETURN properties{.*, comments: comments, author: author, likes: likes}`,
+    let records = await cypher(`MATCH (n:Forum_Post)<-[:AUTHOR_OF]-(a:User) WHERE ID(n)=$postId OPTIONAL MATCH (n)<-[:IN]-(c:Comment), (c)<-[:AUTHOR_OF]-(u:User) WITH properties(n) as properties, CASE WHEN c IS NULL THEN [] ELSE collect({body: c.body, author: u.username, commentId: ID(c)}) END as comments, a.username as author, size((n)<-[:LIKED]-(:User)) as likes RETURN properties{.*, comments: comments, author: author, likes: likes}`,
     {
         postId: parseInt(postId)
     });
@@ -226,8 +226,10 @@ async function readForumPost(postId) {
         records.forEach(record => {
             result = JSON.parse(JSON.stringify(record.get('properties')))
             result['likes'] = result['likes']['low']
-            for (index in result['comments']) {
-                result['comments'][index]['commentId'] = result['comments'][index]['commentId']['low']
+            if (result['comments'].length > 0) {
+                for (index in result['comments']) {
+                    result['comments'][index]['commentId'] = result['comments'][index]['commentId']['low']
+                }
             }
           })
     }

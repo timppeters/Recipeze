@@ -79,8 +79,6 @@ public class ForumRepository extends Repository {
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
 
                 if (response.code() == 200 && response.body() != null) {
-                    System.out.println(postId);
-                    System.out.println(response.body().getAsJsonObject().toString());
                     ForumPost post = gson.fromJson(response.body().getAsJsonObject(), ForumPost.class);
                     resultingPost.postValue(post);
                 }
