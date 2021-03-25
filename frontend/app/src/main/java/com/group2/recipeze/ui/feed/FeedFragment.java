@@ -51,6 +51,11 @@ public class FeedFragment extends Fragment{
     Button filtersBtn;
     Drawable selectedTab;
 
+    int maxTime = 1000;
+    ArrayList<String> ingredients = new ArrayList<String>();
+    int maxIngredients = 1000;
+    ArrayList<String> tags = new ArrayList<String>();
+
     private FeedViewModel feedViewModel;
 
     /**
@@ -68,16 +73,17 @@ public class FeedFragment extends Fragment{
 
         recipeRepository = RecipeRepository.getInstance();
 
-        feedRecyclerView = root.findViewById(R.id.recipes);
-        endlessScrollManager = new endlessScroll(feedRecyclerView);
-        endlessScrollManager.initAdapter(thisFragment);
-        endlessScrollManager.initScrollListener();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                feedRecyclerView = root.findViewById(R.id.recipes);
+                endlessScrollManager = new endlessScroll(feedRecyclerView);
+                endlessScrollManager.initAdapter(thisFragment);
+                endlessScrollManager.initScrollListener();
                 endlessScrollManager.populateData(recipes);
+                endlessScrollManager.updateFilters(maxTime, ingredients, maxIngredients, tags);
             }
         });
 
@@ -119,13 +125,14 @@ public class FeedFragment extends Fragment{
         // Just an example request
         ArrayList<String> ingredients = new ArrayList<String>();
         ArrayList<String> tags = new ArrayList<String>();
-        ingredients.add("chicken");
         recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
 
     public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags){
-        Log.d("awd", String.valueOf(maxTime) + ingredients.toString() + String.valueOf(maxIngredients) + tags.toString());
-        ingredients.add("butter");
-        recipeRepository.getRecipesForFeedByUsers(30, ingredients, 1000, tags, "likes", 0, recipes);
+        this.maxTime = maxTime;
+        this.ingredients = ingredients;
+        this.maxIngredients = maxIngredients;
+        this.tags = tags;
+        recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", 0, recipes);
     }
 }

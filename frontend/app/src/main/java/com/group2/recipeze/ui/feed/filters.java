@@ -76,8 +76,17 @@ public class filters extends DialogFragment {
                     Chip chip = tagsGroup.findViewById(id);
                     tagNames.add(chip.getText().toString());
                 }
+                //if user has put 0 as filter, set it to 1000 (otherwise you get no results)
+                int time = (int) maxTime.getValue();
+                if (time == 0){
+                    time = 1000;
+                }
+                int ing = (int) maxIngredients.getValue();
+                if(ing == 0){
+                    ing = 1000;
+                }
 
-                feedFragment.updateFilters((int) maxTime.getValue(),  ingredientsAdapter.getIngredients(), (int) maxIngredients.getValue(), tagNames);
+                feedFragment.updateFilters(time,  ingredientsAdapter.getIngredients(), ing, tagNames);
                 filterDialog.dismiss();
             }
         });
