@@ -22,6 +22,12 @@ public class endlessScroll {
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Comment>> comment = new MutableLiveData<>();
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+
+    int maxTime = 1000;
+    ArrayList<String> ingredients = new ArrayList<String>();
+    int maxIngredients = 1000;
+    ArrayList<String> tags = new ArrayList<String>();
+
     ArrayList<Comment> commentlist = new ArrayList<>();
     ForumRepository forumRepository;
     public MutableLiveData<ArrayList<ForumPost>> resultingPosts = new MutableLiveData<>();
@@ -32,13 +38,10 @@ public class endlessScroll {
         recyclerView = recycler;
     }
     public void populateData(ArrayList<Recipe> initialRecipes) {
-        recipeList = initialRecipes;
-        recipes.setValue(recipeList);
-        //recipes.postValue(recipeList);
-        for(int x = 0; x < recipeList.size(); x++){
-            Log.d("recipe1", recipeList.get(x).getTitle());
-        }
+        //recipeList = initialRecipes;
+        recipes.setValue(initialRecipes);
     }
+  
     public void populateData2(ArrayList<Comment> commentList) {
         commentlist = commentList;
         comment.setValue(commentlist);
@@ -47,34 +50,7 @@ public class endlessScroll {
             Log.d("recipe1", commentlist.get(x).getBody());
         }
     }
-    public void addFakeRecipe(String title, int amount) {
-        ArrayList<String> ingredients = new ArrayList<String>();
-        ingredients.add("Tomatoes");
-        ArrayList<String> ingredientsAmounts = new ArrayList<String>();
-        ingredientsAmounts.add("200g");
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add("tag1");
-        tags.add("tag2");
-        Recipe exampleRecipe = new Recipe(1,
-                4.5f,
-                123,
-                "Alf",
-                title,
-                "Recipe Description",
-                ingredients,
-                ingredientsAmounts,
-                new HashMap<Integer, String>(),
-                new HashMap<Integer, String>(),
-                tags,
-                15,
-                90,
-                Boolean.FALSE
-        );
-        for(int i = 0; i < amount; i++) {
-            recipeList.add(exampleRecipe);
-        }
-        recipes.setValue(recipeList);
-    }
+  
     public void initAdapter(Fragment fragmment) {
         recyclerViewAdapter = new RecyclerViewAdapter(recipeList);
         recyclerView.setAdapter(recyclerViewAdapter);
@@ -132,11 +108,15 @@ public class endlessScroll {
                 recipeList.remove(recipeList.size() - 1);
                 int scrollPosition = recipeList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
-                ArrayList<String> ingredients = new ArrayList<String>();
-                ArrayList<String> tags = new ArrayList<String>();
-                recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", recipeList.size(), recipes);
+                recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
             }
         }, 10000);
+    }
 
+    public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags) {
+        this.maxTime = maxTime;
+        this.ingredients = ingredients;
+        this.maxIngredients = maxIngredients;
+        this.tags = tags;
     }
 }

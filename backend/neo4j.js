@@ -452,7 +452,7 @@ async function getRecipesForFeedByUsers(username, filters, sortBy, skip) {
     if (sortBy != "likes") {
         sortBy = "r.creationTime"
     }
-    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(a:User)-[:AUTHOR_OF]->(r:Recipe), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
+    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(a:User)-[:AUTHOR_OF]->(r:Recipe), (r)-[:HAS]->(t:Tag) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) OPTIONAL MATCH (:User)-[n:RATED]->(r) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         username,
         maxTime: parseInt(filters.maxTime),
@@ -484,7 +484,7 @@ async function getRecipesForFeedByTags(username, filters, sortBy, skip) {
     if (sortBy != "likes") {
         sortBy = "r.creationTime"
     }
-    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(t:Tag)<-[:HAS]-(r:Recipe), (r)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
+    let records = await cypher(`MATCH (u:User {username: $username})-[:FOLLOWS]->(t:Tag)<-[:HAS]-(r:Recipe), (r)<-[:AUTHOR_OF]-(a:User) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) OPTIONAL MATCH (:User)-[n:RATED]->(r) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         username,
         maxTime: parseInt(filters.maxTime),
@@ -538,7 +538,7 @@ async function getRecipesForRecipeBook(username, filters, sortBy, skip) {
     if (sortBy != "likes") {
         sortBy = "r.creationTime"
     }
-    let records = await cypher(`MATCH (u:User {username: $username})-[:LIKED]->(r:Recipe)<-[:AUTHOR_OF]-(a:User), (r)-[:HAS]->(t:Tag) OPTIONAL MATCH (:User)-[n:RATED]->(r) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
+    let records = await cypher(`MATCH (u:User {username: $username})-[:LIKED]->(r:Recipe)<-[:AUTHOR_OF]-(a:User), (r)-[:HAS]->(t:Tag) WHERE r.prepTime+r.cookTime<=$maxTime AND ALL(ingredient IN $ingredients WHERE ingredient IN r.ingredients) AND size(r.ingredients)<=$maxNumberOfIngredients AND ALL(tag IN $tags WHERE exists((r)-[:HAS]->(:Tag {name: tag}))) OPTIONAL MATCH (:User)-[n:RATED]->(r) WITH EXISTS((u)-[:LIKED]->(r)) as liked, r, properties(r) as properties, collect(DISTINCT t.name) as tags, avg(n.rating) as rating, a.username as author, size((r)<-[:LIKED]-(:User)) as likes ORDER BY $sortBy desc SKIP $skip RETURN properties{.*, recipeId: ID(r), tags: tags, rating: rating, author: author, likes: likes, liked: liked} LIMIT 10`,
     {
         username,
         maxTime: parseInt(filters.maxTime),

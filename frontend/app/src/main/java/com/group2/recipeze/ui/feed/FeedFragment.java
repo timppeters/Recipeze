@@ -1,6 +1,8 @@
 package com.group2.recipeze.ui.feed;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -36,7 +39,7 @@ import java.util.ArrayList;
 /**
  * FeedFragment.
  */
-public class FeedFragment extends Fragment {
+public class FeedFragment extends Fragment{
     RecyclerView feedRecyclerView;
     RecyclerViewAdapter feedRecyclerViewAdapter;
     endlessScroll endlessScrollManager;
@@ -45,7 +48,13 @@ public class FeedFragment extends Fragment {
 
     Button tagsBtn;
     Button usersBtn;
+    Button filtersBtn;
     Drawable selectedTab;
+
+    int maxTime = 1000;
+    ArrayList<String> ingredients = new ArrayList<String>();
+    int maxIngredients = 1000;
+    ArrayList<String> tags = new ArrayList<String>();
 
     private FeedViewModel feedViewModel;
 
@@ -63,6 +72,7 @@ public class FeedFragment extends Fragment {
         FeedFragment thisFragment = this;
 
         recipeRepository = RecipeRepository.getInstance();
+
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
             @Override
@@ -70,10 +80,10 @@ public class FeedFragment extends Fragment {
                 // Populate endlessScroll with recipes
                 feedRecyclerView = root.findViewById(R.id.recipes);
                 endlessScrollManager = new endlessScroll(feedRecyclerView);
-                endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
-                
+                endlessScrollManager.populateData(recipes);
+                endlessScrollManager.updateFilters(maxTime, ingredients, maxIngredients, tags);
             }
         });
 
@@ -98,6 +108,16 @@ public class FeedFragment extends Fragment {
             }
         });
 
+        filtersBtn = root.findViewById(R.id.filter);
+
+        filtersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment filterDialog = new filters(FeedFragment.this);
+                filterDialog.show(getParentFragmentManager(), "FilterDialog");
+            }
+        });
+
         return root;
     }
 
@@ -108,4 +128,11 @@ public class FeedFragment extends Fragment {
         recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
 
+    public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags){
+        this.maxTime = maxTime;
+        this.ingredients = ingredients;
+        this.maxIngredients = maxIngredients;
+        this.tags = tags;
+        recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", 0, recipes);
+    }
 }
