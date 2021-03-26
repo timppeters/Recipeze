@@ -13,6 +13,8 @@ import android.util.Base64;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.gson.JsonObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +40,7 @@ public class Recipe extends Binder implements Parcelable {
     private int prepTime;
     private int cookTime;
     private Boolean liked;
-    private static Random r = new Random();
+    private JsonObject nutrition;
 
 
     /**

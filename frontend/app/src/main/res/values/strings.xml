@@ -103,6 +103,8 @@
     <string name="images">Images</string>
     <string name="delete">Delete</string>
     <string name="report">Report</string>
+    <string name="nutrients">Nutrients</string>
+    <string name="nutrition">Nutrition</string>
 
 
 </resources>
