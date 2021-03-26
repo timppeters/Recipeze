@@ -246,7 +246,6 @@ async function getForumPostsByTag(tagName) {
     if (records) {
         records.forEach(record => {
             result['posts'] = JSON.parse(JSON.stringify(record.get('posts')))
-            console.log(result)
             result['posts'].forEach( post => {
                 post['likes'] = post['likes']['low']
                 post['postId'] = post['postId']['low']
@@ -271,7 +270,7 @@ async function updateForumPost(postId, updates, username) {
 
 async function deleteForumPost(postId, username) {
     let result = {}
-    let records = await cypher(`MATCH (:User {username: $username})-[:AUTHOR_OF]->(f:Forum_Post)<-[:IN]-[c:Comment] WHERE ID(f)=$postId DETACH DELETE c,f`,
+    let records = await cypher(`MATCH (:User {username: $username})-[:AUTHOR_OF]->(f:Forum_Post) WHERE ID(f)=$postId OPTIONAL MATCH (f)<-[:IN]-(c:Comment) DETACH DELETE c,f`,
     {
         postId: parseInt(postId),
         username
