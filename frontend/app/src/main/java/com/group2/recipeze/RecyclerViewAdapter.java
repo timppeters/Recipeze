@@ -126,7 +126,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("recipe", recipe);
-                    NavHostFragment.findNavController(thisFragment).navigate(R.id.action_navigation_feed_to_recipeFragment, bundle);
+                    NavHostFragment.findNavController(thisFragment).navigate(R.id.action_open_recipeFragment, bundle);
                 }
             });
         }
