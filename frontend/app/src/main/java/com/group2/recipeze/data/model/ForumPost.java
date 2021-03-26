@@ -3,7 +3,7 @@ package com.group2.recipeze.data.model;
 public class ForumPost {
 
     private int postId;
-    private String username;
+    private String author;
     private String title;
     private String body;
     private Comment[] comments;
@@ -12,14 +12,14 @@ public class ForumPost {
     /**
      * Forum post
      * @param postId
-     * @param username
+     * @param author
      * @param title
      * @param body
      * @param comments
      */
-    public ForumPost(int postId, String username, String title, String body, Comment[] comments) {
+    public ForumPost(int postId, String author, String title, String body, Comment[] comments) {
         this.postId = postId;
-        this.username = username;
+        this.author = author;
         this.title = title;
         this.body = body;
         this.comments = comments;
@@ -36,12 +36,12 @@ public class ForumPost {
         this.postId = postId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getTitle() {

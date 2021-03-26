@@ -34,13 +34,13 @@ public interface ForumService {
     Call<JsonElement> getForumPosts(@Query("tag") String tagName,
                                     @Header("x-access-token") String token);
 
-    @PUT("user")
+    @PUT("forum")
     @FormUrlEncoded
     Call<JsonElement> updateForumPost(@Field("postId") int postId,
                                       @Field("updates") JSONObject updates,
                                       @Header("x-access-token") String token);
 
-    @HTTP(method = "DELETE", path = "user", hasBody = true)
+    @HTTP(method = "DELETE", path = "forum", hasBody = true)
     @FormUrlEncoded
     Call<JsonElement> deleteForumPost(@Field("postId") int postId,
                                       @Header("x-access-token") String token);

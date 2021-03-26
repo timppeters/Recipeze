@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,14 +15,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.ForumRepository;
 import com.group2.recipeze.data.LoginRepository;
-import com.group2.recipeze.data.model.Comment;
 import com.group2.recipeze.data.model.ForumPost;
 import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
 
@@ -177,12 +173,12 @@ public class ForumPostAdapter extends RecyclerView.Adapter<ForumPostAdapter.View
         // contents of the view with that element
         if (viewHolder != null && this.forumPosts.get(position) != null) {
             viewHolder.setPosition(position);
-            viewHolder.getUsername().setText(this.forumPosts.get(position).getUsername());
+            viewHolder.getUsername().setText(this.forumPosts.get(position).getAuthor());
             viewHolder.getTitle().setText(this.forumPosts.get(position).getTitle());
             viewHolder.getBody().setText(this.forumPosts.get(position).getBody());
         }
         LoginRepository loginRepository = LoginRepository.getInstance();
-        if (loginRepository.getUser().getUsername().equals(this.forumPosts.get(position).getUsername())) {
+        if (loginRepository.getUser().getUsername().equals(this.forumPosts.get(position).getAuthor())) {
             viewHolder.setShowDelete(true);
         }
 
