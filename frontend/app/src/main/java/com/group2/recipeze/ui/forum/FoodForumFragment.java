@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.group2.recipeze.R;
@@ -59,6 +60,7 @@ public class FoodForumFragment extends Fragment {
 
             }
         });
+        ImageButton backButton = root.findViewById(R.id.back_forum);
         Button addPostButton = root.findViewById(R.id.add_post);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +71,12 @@ public class FoodForumFragment extends Fragment {
                 NavHostFragment.findNavController(thisFragment).navigate(R.id.action_foodForumFragment_to_add_forumpost, bundle);
             }
         });
-
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(thisFragment).popBackStack();
+            }
+        });
         return root;
     }
 
