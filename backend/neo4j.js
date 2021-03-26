@@ -1,7 +1,7 @@
 const neo4j = require('neo4j-driver')
 
 const driver = neo4j.driver(
-    'neo4j://18.217.24.212',
+    `neo4j://${process.env.DB_IP}`,
     neo4j.auth.basic('neo4j', process.env.NEO4J_PASSWORD)
   )
 
