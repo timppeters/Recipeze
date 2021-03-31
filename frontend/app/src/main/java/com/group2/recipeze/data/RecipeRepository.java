@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.data.model.Rating;
 import com.group2.recipeze.data.model.Tag;
@@ -165,7 +166,9 @@ public class RecipeRepository extends Repository {
                     JsonArray recipesJsonArray = response.body().getAsJsonObject().get("recipes").getAsJsonArray();
                     ArrayList recipesArrayList = new ArrayList<Recipe>();
                     for (Iterator<JsonElement> recipeIterator = recipesJsonArray.iterator(); recipeIterator.hasNext();) {
-                        Recipe recipe = gson.fromJson(recipeIterator.next(), Recipe.class);
+                        JsonElement next = recipeIterator.next();
+                        Recipe recipe = gson.fromJson(next, Recipe.class);
+                        recipe.parseNutrients();
                         recipesArrayList.add(recipe);
                     }
                     result.postValue(recipesArrayList);

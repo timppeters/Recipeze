@@ -553,7 +553,7 @@
                             app:layout_constraintTop_toBottomOf="@id/divider4_2"
                             app:layout_constraintStart_toEndOf="@id/transFatLabel" />
 
-                        <TextView
+                        <!--<TextView
                             android:id="@+id/transFatDailyPercentage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -564,14 +564,14 @@
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintTop_toBottomOf="@id/divider4_2"
-                            app:layout_constraintEnd_toEndOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent" />-->
 
                         <View
                             android:id="@+id/divider5"
                             android:layout_width="wrap_content"
                             android:layout_height="2dp"
                             android:background="?android:attr/listDivider"
-                            app:layout_constraintTop_toBottomOf="@id/transFatDailyPercentage"
+                            app:layout_constraintTop_toBottomOf="@id/transFatValue"
                             app:layout_constraintStart_toStartOf="parent"/>
 
                         <TextView
@@ -633,7 +633,7 @@
                             app:layout_constraintTop_toBottomOf="@id/divider5_1"
                             app:layout_constraintStart_toStartOf="parent" />
                         <TextView
-                            android:id="@+id/totalFiberValue"
+                            android:id="@+id/fiberValue"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -646,7 +646,7 @@
                             app:layout_constraintStart_toEndOf="@id/fiberLabel" />
 
                         <TextView
-                            android:id="@+id/totalFiberDailyPercentage"
+                            android:id="@+id/fiberDailyPercentage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -663,7 +663,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="2dp"
                             android:background="?android:attr/listDivider"
-                            app:layout_constraintTop_toBottomOf="@id/totalFiberDailyPercentage"
+                            app:layout_constraintTop_toBottomOf="@id/fiberDailyPercentage"
                             app:layout_constraintStart_toStartOf="parent"/>
 
                         <TextView
@@ -679,7 +679,7 @@
                             app:layout_constraintTop_toBottomOf="@id/divider5_2"
                             app:layout_constraintStart_toStartOf="parent" />
                         <TextView
-                            android:id="@+id/totalSugarValue"
+                            android:id="@+id/sugarValue"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -691,8 +691,8 @@
                             app:layout_constraintTop_toBottomOf="@id/divider5_2"
                             app:layout_constraintStart_toEndOf="@id/sugarLabel" />
 
-                        <TextView
-                            android:id="@+id/totalSugarDailyPercentage"
+                        <!--<TextView
+                            android:id="@+id/sugarDailyPercentage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -702,14 +702,14 @@
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintTop_toBottomOf="@id/divider5_2"
-                            app:layout_constraintEnd_toEndOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent" />-->
 
                         <View
                             android:id="@+id/divider7"
                             android:layout_width="wrap_content"
                             android:layout_height="2dp"
                             android:background="?android:attr/listDivider"
-                            app:layout_constraintTop_toBottomOf="@id/totalSugarDailyPercentage"
+                            app:layout_constraintTop_toBottomOf="@id/sugarValue"
                             app:layout_constraintStart_toStartOf="parent"/>
 
                         <TextView
@@ -725,7 +725,7 @@
                             app:layout_constraintTop_toBottomOf="@id/divider7"
                             app:layout_constraintStart_toStartOf="parent" />
                         <TextView
-                            android:id="@+id/totalProteinValue"
+                            android:id="@+id/proteinValue"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -738,7 +738,7 @@
                             app:layout_constraintStart_toEndOf="@id/proteinLabel" />
 
                         <TextView
-                            android:id="@+id/totalProteinDailyPercentage"
+                            android:id="@+id/proteinDailyPercentage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -755,7 +755,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="2dp"
                             android:background="?android:attr/listDivider"
-                            app:layout_constraintTop_toBottomOf="@id/totalProteinDailyPercentage"
+                            app:layout_constraintTop_toBottomOf="@id/proteinDailyPercentage"
                             app:layout_constraintStart_toStartOf="parent"/>
 
                         <TextView
@@ -771,7 +771,7 @@
                             app:layout_constraintTop_toBottomOf="@id/divider8"
                             app:layout_constraintStart_toStartOf="parent" />
                         <TextView
-                            android:id="@+id/totalCholesterolValue"
+                            android:id="@+id/cholesterolValue"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -784,7 +784,7 @@
                             app:layout_constraintStart_toEndOf="@id/cholesterolLabel" />
 
                         <TextView
-                            android:id="@+id/totalCholesterolDailyPercentage"
+                            android:id="@+id/cholesterolDailyPercentage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -801,7 +801,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="2dp"
                             android:background="?android:attr/listDivider"
-                            app:layout_constraintTop_toBottomOf="@id/totalCholesterolDailyPercentage"
+                            app:layout_constraintTop_toBottomOf="@id/cholesterolDailyPercentage"
                             app:layout_constraintStart_toStartOf="parent"/>
 
                         <TextView
@@ -817,7 +817,7 @@
                             app:layout_constraintTop_toBottomOf="@id/divider9"
                             app:layout_constraintStart_toStartOf="parent" />
                         <TextView
-                            android:id="@+id/totalSodiumValue"
+                            android:id="@+id/sodiumValue"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -830,7 +830,7 @@
                             app:layout_constraintStart_toEndOf="@id/sodiumLabel" />
 
                         <TextView
-                            android:id="@+id/totalSodiumDailyPercentage"
+                            android:id="@+id/sodiumDailyPercentage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -847,7 +847,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="6dp"
                             android:background="?android:attr/listDivider"
-                            app:layout_constraintTop_toBottomOf="@id/totalSodiumDailyPercentage"
+                            app:layout_constraintTop_toBottomOf="@id/sodiumDailyPercentage"
                             app:layout_constraintStart_toStartOf="parent"/>
 
                         <TextView

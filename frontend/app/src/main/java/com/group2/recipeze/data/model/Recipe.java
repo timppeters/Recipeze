@@ -2,27 +2,23 @@ package com.group2.recipeze.data.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Path;
-import android.media.Image;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import java.util.function.Consumer;
 
 public class Recipe extends Binder implements Parcelable {
 
@@ -40,6 +36,7 @@ public class Recipe extends Binder implements Parcelable {
     private int prepTime;
     private int cookTime;
     private Boolean liked;
+    private String nutrients;
     private JsonObject nutrition;
 
 
@@ -58,10 +55,11 @@ public class Recipe extends Binder implements Parcelable {
      * @param tags
      * @param prepTime
      * @param cookTime
+     * @param nutrients
      */
     public Recipe(int recipeId, float rating, int likes, String author, String title,
                   String description, ArrayList<String> ingredients, ArrayList<String> ingredientsAmounts,
-                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime, boolean liked) {
+                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime, boolean liked, String nutrients) {
         this.recipeId = recipeId;
         this.rating = rating;
         this.likes = likes;
@@ -76,6 +74,11 @@ public class Recipe extends Binder implements Parcelable {
         this.instructions = instructions;
         this.images = images;
         this.liked = liked;
+        this.nutrients = nutrients;
+    }
+
+    public void parseNutrients() {
+        this.nutrition = new Gson().fromJson(this.nutrients, JsonObject.class);
     }
 
     /**
@@ -240,6 +243,14 @@ public class Recipe extends Binder implements Parcelable {
 
     public void setCookTime(int cookTime) {
         this.cookTime = cookTime;
+    }
+
+    public JsonObject getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(JsonObject nutrition) {
+        this.nutrition = nutrition;
     }
 
     public boolean getLiked() {return liked; }

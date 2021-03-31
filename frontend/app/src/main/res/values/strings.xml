@@ -105,6 +105,8 @@
     <string name="report">Report</string>
     <string name="nutrients">Nutrients</string>
     <string name="nutrition">Nutrition</string>
+    <string name="servings">%d servings</string>
+    <string name="percentage">%d%</string>
 
 
 </resources>
