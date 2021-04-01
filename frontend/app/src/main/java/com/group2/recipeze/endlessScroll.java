@@ -32,9 +32,8 @@ public class endlessScroll {
     }
 
     public void populateData(ArrayList<Recipe> initialRecipes) {
-        recipeList = initialRecipes;
         recipes.setValue(recipeList);
-        //recipes.postValue(recipeList);
+        recipes.postValue(initialRecipes);
         for(int x = 0; x < recipeList.size(); x++){
             Log.d("recipe1", recipeList.get(x).getTitle());
         }
