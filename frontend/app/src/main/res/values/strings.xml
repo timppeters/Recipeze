@@ -107,6 +107,9 @@
     <string name="nutrition">Nutrition</string>
     <string name="servings">%d servings</string>
     <string name="percentage">%d%</string>
+    <string name="post_anyway">Post Anyway</string>
+    <string name="i_ll_fix_it">I\'ll fix it</string>
+    <string name="incorrect_tags_error_msg">We\'ve detected that the following tags do not apply to your recipe. If you believe we\'ve made a mistake, you can post the recipe anyway and it will be reviewed by a moderator.</string>
 
 
 </resources>
