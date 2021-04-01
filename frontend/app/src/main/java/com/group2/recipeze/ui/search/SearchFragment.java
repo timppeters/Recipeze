@@ -25,6 +25,7 @@ import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.SearchRepository;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
+import com.group2.recipeze.ui.explore.ExploreFragment;
 import com.group2.recipeze.ui.feed.FeedViewModel;
 
 import java.sql.SQLOutput;
@@ -38,9 +39,7 @@ public class SearchFragment extends Fragment {
     endlessScroll endlessScrollManager;
     RecipeRepository repo;
     SearchRepository searchRepo;
-    private MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
-    private static MutableLiveData<Map<String, ArrayList<?>>> searchedRecipes = new MutableLiveData<>();
-    private static MutableLiveData< ArrayList<Recipe>> searchedRecipes2 = new MutableLiveData<>();
+    private static MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
 
 
     private static int maxTime = 100;
@@ -48,7 +47,7 @@ public class SearchFragment extends Fragment {
     private static int ingNum = 100;
     private static ArrayList<String> tags;
 
-    private SearchViewModel searchViewModel;
+    private static SearchViewModel searchViewModel;
 
     /**
      * Called when view is created.
@@ -63,7 +62,6 @@ public class SearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.search_fragment, container, false);
         SearchFragment thisFragment = this;
         repo = RecipeRepository.getInstance();
-
 
 
         Button forButton = root.findViewById(R.id.forumButton);
@@ -92,7 +90,7 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 searchRepo = SearchRepository.getInstance();
                 MutableLiveData<Map<String, ArrayList<?>>> searchRecipes = new MutableLiveData<>();
-                searchRepo.search(query, searchRecipes, searchedRecipes2);
+                searchRepo.search(query, searchRecipes, recipes);
                 Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -103,9 +101,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-      //  repo.getRecipesForFeedByUsers(maxTime, ingredientList, ingNum, tags, "likes", 0, searchedRecipes2);
-
-        searchedRecipes2.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
+        recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
@@ -120,34 +116,12 @@ public class SearchFragment extends Fragment {
         return root;
     }
 
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Just an example request
-
-        /* TODO I wasn't sure what was meant to be here so just did this for now
-           It doesn't seem to search by tag or filter so just left like this
-         */
-        repo.getRecipesForFeedByUsers(maxTime, ingredientList, ingNum, tags, "likes", 0, recipes);
+    public static MutableLiveData<ArrayList<Recipe>> getRecipes() {
+        return recipes;
     }
 
-    public static void setSearchedRecipes2(MutableLiveData<ArrayList<Recipe>> searchedRecipes2) {
-        SearchFragment.searchedRecipes2 = searchedRecipes2;
+    public static void setRecipes(MutableLiveData<ArrayList<Recipe>> searchedRecipes2) {
+        SearchFragment.recipes = searchedRecipes2;
     }
 
-    public static void setSearchedRecipes(MutableLiveData<Map<String, ArrayList<?>>> searchedRecipes) {
-        SearchFragment.searchedRecipes = searchedRecipes;
-    }
-
-    public static void setIngNum(int ingNum) {
-        SearchFragment.ingNum = ingNum;
-    }
-
-    public static void setMaxTime(int maxTime) {
-        SearchFragment.maxTime = maxTime;
-    }
-
-    public static void setTags(ArrayList<String> tags) {
-        SearchFragment.tags = tags;
-    }
-
-    public static void setIngredientList(ArrayList<String> ingredientList) { SearchFragment.ingredientList = ingredientList; }
 }

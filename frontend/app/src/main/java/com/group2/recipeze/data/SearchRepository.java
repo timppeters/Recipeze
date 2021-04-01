@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.group2.recipeze.data.model.Recipe;
@@ -56,6 +57,7 @@ public class SearchRepository extends Repository {
                         Recipe recipe = gson.fromJson(recipesIterator.next(), Recipe.class);
                         recipeArrayList.add(recipe);
                     }
+                    justRecipes.postValue(recipeArrayList);
 
                     ArrayList<User> usersArrayList = new ArrayList<>();
                     for (Iterator<JsonElement> usersIterator = searchResults.get("users").getAsJsonArray().iterator(); usersIterator.hasNext();) {
@@ -80,7 +82,6 @@ public class SearchRepository extends Repository {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    justRecipes.postValue(recipeArrayList);
                     results.postValue(types);
                     System.out.println("RESULTS: " +results);
                 }

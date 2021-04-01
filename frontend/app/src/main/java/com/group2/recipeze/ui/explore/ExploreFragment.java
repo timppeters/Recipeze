@@ -38,6 +38,7 @@ public class ExploreFragment extends Fragment {
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     SearchRepository searchRepo;
+    private static MutableLiveData< ArrayList<Recipe>> searchedRecipes2 = new MutableLiveData<>();
     
     
     private ExploreViewModel exploreViewModel;
@@ -79,9 +80,8 @@ public class ExploreFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 searchRepo = SearchRepository.getInstance();
                 MutableLiveData<Map<String, ArrayList<?>>> searchRecipes = new MutableLiveData<>();
-                MutableLiveData< ArrayList<Recipe>> searchedRecipes2 = new MutableLiveData<>();
                 searchRepo.search(query, searchRecipes, searchedRecipes2);
-                SearchFragment.setSearchedRecipes2(searchedRecipes2);
+                SearchFragment.setRecipes(searchedRecipes2);
                 NavHostFragment.findNavController(thisFrag).navigate(R.id.action_navigation_explore_to_searchFragment);
                 Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
                 return true;
@@ -99,4 +99,5 @@ public class ExploreFragment extends Fragment {
         // Just an example request
         recipeRepository.getRecipesForExplore(0, recipes);
     }
+
 }
