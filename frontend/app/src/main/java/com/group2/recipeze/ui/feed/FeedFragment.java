@@ -39,7 +39,7 @@ import java.util.ArrayList;
 /**
  * FeedFragment.
  */
-public class FeedFragment extends Fragment{
+public class FeedFragment extends Fragment implements filters.hasFilters{
     RecyclerView feedRecyclerView;
     RecyclerViewAdapter feedRecyclerViewAdapter;
     endlessScroll endlessScrollManager;
@@ -79,7 +79,7 @@ public class FeedFragment extends Fragment{
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 feedRecyclerView = root.findViewById(R.id.recipes);
-                endlessScrollManager = new endlessScroll(feedRecyclerView);
+                endlessScrollManager = new endlessScroll(feedRecyclerView, "feed");
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
                 endlessScrollManager.populateData(recipes);
@@ -128,6 +128,7 @@ public class FeedFragment extends Fragment{
         recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
     }
 
+    @Override
     public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags){
         this.maxTime = maxTime;
         this.ingredients = ingredients;

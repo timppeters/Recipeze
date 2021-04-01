@@ -22,7 +22,7 @@ public class endlessScroll {
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Comment>> comment = new MutableLiveData<>();
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
-
+    String feedType = new String();
     int maxTime = 1000;
     ArrayList<String> ingredients = new ArrayList<String>();
     int maxIngredients = 1000;
@@ -34,7 +34,11 @@ public class endlessScroll {
     ArrayList<ForumPost> forumPostsList = new ArrayList<ForumPost>();
 
     boolean isLoading = false;
-    public endlessScroll(RecyclerView recycler) {
+    /*
+    @param feedType Can be "users", "tags", "recipeBook"
+     */
+    public endlessScroll(RecyclerView recycler, String feedType) {
+        this.feedType = feedType;
         recyclerView = recycler;
     }
     public void populateData(ArrayList<Recipe> initialRecipes) {
@@ -108,7 +112,18 @@ public class endlessScroll {
                 recipeList.remove(recipeList.size() - 1);
                 int scrollPosition = recipeList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
-                recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
+                if(feedType.equals("users")) {
+                    recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
+                }else if(feedType.equals("recipeBook")){
+                    recipeRepository.getRecipesForRecipeBook(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
+                }else if(feedType.equals("explore")){
+                    recipeRepository.getRecipesForExplore(recipeList.size(), recipes);
+                } else if(feedType.equals("tags")){
+                    recipeRepository.getRecipesForFeedByTags(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
+                }
+                else if(feedType.equals("profile")){
+                    //getRecipesForProfile
+                }
             }
         }, 10000);
     }
