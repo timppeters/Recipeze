@@ -80,7 +80,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="1000dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/recipeview_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -292,11 +292,576 @@
                         android:padding="0dp"
                         app:backgroundTint="@null"
                         android:background="@drawable/video_button"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:drawableEnd="@drawable/ic_play_button_arrowhead"
                         app:layout_constraintBottom_toBottomOf="@+id/steps"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/steps" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/stepList"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="80dp"
+                        android:padding="10dp"
+                        android:background="@drawable/nutrition_box">
+
+                        <TextView
+                            android:id="@+id/nutrition"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/nutrition"
+                            android:textColor="@color/dark_text"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <View
+                            android:id="@+id/divider1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="3dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/nutrition"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/serving"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Serving Size"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider1"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/servingValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="1 Serving"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/serving"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <View
+                            android:id="@+id/divider2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="6dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/servingValue"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/servingReminderLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/poppins"
+                            android:text="Amount per serving"
+                            android:textColor="@color/dark_text"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider2"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/calories"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:includeFontPadding="false"
+                            android:text="Calories"
+                            android:textColor="@color/dark_text"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/servingReminderLabel"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/caloriesValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0 kcal"
+                            android:textColor="@color/dark_text"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/divider3"/>
+
+                        <View
+                            android:id="@+id/divider3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="5dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/calories"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/percentDaily"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="% Daily Value *"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider3"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <View
+                            android:id="@+id/divider4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/percentDaily"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/totalFatLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Total Fat"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider4"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/totalFatValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0g"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider4"
+                            app:layout_constraintStart_toEndOf="@id/totalFatLabel" />
+
+                        <TextView
+                            android:id="@+id/totalFatDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider4"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                        <View
+                            android:id="@+id/divider4_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/totalFatDailyPercentage"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/satFatLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Saturated Fat"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider4_1"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/satFatValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0g"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider4_1"
+                            app:layout_constraintStart_toEndOf="@id/satFatLabel" />
+
+                        <TextView
+                            android:id="@+id/satFatDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider4_1"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <View
+                            android:id="@+id/divider4_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/satFatDailyPercentage"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/transFatLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Trans Fat"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider4_2"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/transFatValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0g"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider4_2"
+                            app:layout_constraintStart_toEndOf="@id/transFatLabel" />
+
+                        <!--<TextView
+                            android:id="@+id/transFatDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider4_2"
+                            app:layout_constraintEnd_toEndOf="parent" />-->
+
+                        <View
+                            android:id="@+id/divider5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/transFatValue"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/totalCarbsLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Total Carbohydrate"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider5"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/totalCarbsValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0g"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider5"
+                            app:layout_constraintStart_toEndOf="@id/totalCarbsLabel" />
+
+                        <TextView
+                            android:id="@+id/totalCarbsDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider5"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <View
+                            android:id="@+id/divider5_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/totalCarbsDailyPercentage"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/fiberLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Fiber"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider5_1"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/fiberValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0g"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider5_1"
+                            app:layout_constraintStart_toEndOf="@id/fiberLabel" />
+
+                        <TextView
+                            android:id="@+id/fiberDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider5_1"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <View
+                            android:id="@+id/divider5_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/fiberDailyPercentage"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/sugarLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Sugar"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider5_2"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/sugarValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0g"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider5_2"
+                            app:layout_constraintStart_toEndOf="@id/sugarLabel" />
+
+                        <!--<TextView
+                            android:id="@+id/sugarDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider5_2"
+                            app:layout_constraintEnd_toEndOf="parent" />-->
+
+                        <View
+                            android:id="@+id/divider7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/sugarValue"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/proteinLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Protein"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider7"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/proteinValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0g"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider7"
+                            app:layout_constraintStart_toEndOf="@id/proteinLabel" />
+
+                        <TextView
+                            android:id="@+id/proteinDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider7"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <View
+                            android:id="@+id/divider8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/proteinDailyPercentage"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/cholesterolLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Cholesterol"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider8"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/cholesterolValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0mg"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider8"
+                            app:layout_constraintStart_toEndOf="@id/cholesterolLabel" />
+
+                        <TextView
+                            android:id="@+id/cholesterolDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider8"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <View
+                            android:id="@+id/divider9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/cholesterolDailyPercentage"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/sodiumLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Sodium"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider9"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/sodiumValue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0mg"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider9"
+                            app:layout_constraintStart_toEndOf="@id/sodiumLabel" />
+
+                        <TextView
+                            android:id="@+id/sodiumDailyPercentage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0%"
+                            android:textColor="@color/dark_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/divider9"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <View
+                            android:id="@+id/divider10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="6dp"
+                            android:background="?android:attr/listDivider"
+                            app:layout_constraintTop_toBottomOf="@id/sodiumDailyPercentage"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="* The % Daily Value (DV) tells you how much of a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice."
+                            android:textColor="@color/dark_text"
+                            android:textSize="12sp"
+                            app:layout_constraintTop_toBottomOf="@id/divider10"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

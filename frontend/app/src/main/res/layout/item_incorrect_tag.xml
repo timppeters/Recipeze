@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/label"
+    android:drawablePadding="5dp"
+    android:paddingStart="16dp"
+    android:fontFamily="@font/poppins"
+    android:textColor="@color/dark_text"
+    android:textSize="14sp"
+    app:drawableLeftCompat="@drawable/bullet" />
