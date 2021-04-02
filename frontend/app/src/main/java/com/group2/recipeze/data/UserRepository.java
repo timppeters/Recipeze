@@ -114,7 +114,7 @@ public class UserRepository extends Repository {
      * @param bio new bio
      * @param settings new settings
      */
-    public void updateProfile(String username, String email, String bio, HashMap<String, ?> settings) {
+    public void updateProfile(String username, String email, String bio, HashMap<String, JsonElement> settings) {
         JSONObject updates = new JSONObject();
         try {
             updates.put("username", username)

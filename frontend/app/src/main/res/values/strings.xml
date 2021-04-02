@@ -3,7 +3,7 @@
     <string name="title_feed">Feed</string>
     <string name="title_explore">Explore</string>
     <string name="title_addRecipe">Add Recipe</string>
-    <string name="title_recipeBook">Recipe Book</string>
+    <string name="title_recipeBook">My Recipe Book</string>
     <string name="title_profile">Profile</string>
 
     <string name="title_activity_login">LoginActivity</string>
@@ -41,7 +41,7 @@
 
     <!--searching recipe page-->
     <string name="forum_button">Forum</string>
-    <string name= "filter_button">Filter</string>
+    <string name="filter_button">Filter</string>
 
     <!--filter page-->
     <string name="filterSpin">Filters</string>
@@ -70,7 +70,7 @@
     <string name="my_recipes">My Recipes</string>
     <string name="edit_food_preferences">Edit Food Preferences</string>
     <string name="invalid_email">Invalid email</string>
-  
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="google_server_client_id">542066750478-ed9ha3ahegt1ggqh88oube3kc71c8it5.apps.googleusercontent.com</string>
@@ -101,6 +101,15 @@
     <string name="step">Step</string>
     <string name="close">╳</string>
     <string name="images">Images</string>
+    <string name="delete">Delete</string>
+    <string name="report">Report</string>
+    <string name="nutrients">Nutrients</string>
+    <string name="nutrition">Nutrition</string>
+    <string name="servings">%d servings</string>
+    <string name="percentage">%d%</string>
+    <string name="post_anyway">Post Anyway</string>
+    <string name="i_ll_fix_it">I\'ll fix it</string>
+    <string name="incorrect_tags_error_msg">We\'ve detected that the following tags do not apply to your recipe. If you believe we\'ve made a mistake, you can post the recipe anyway and it will be reviewed by a moderator.</string>
 
 
 </resources>

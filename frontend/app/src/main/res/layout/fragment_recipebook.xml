@@ -4,28 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.recipeBook.RecipeBookFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipes"
-        android:layout_width="411dp"
-        android:layout_height="623dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14"
-        app:layout_constraintVertical_bias="0.0" />
+    tools:context=".ui.recipeBook.RecipeBookFragment"
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="360dp"
-        android:layout_height="107dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/poppinsregular"
+        android:gravity="center"
+        android:paddingVertical="10dp"
         android:text="@string/title_recipeBook"
-        android:textSize="36sp"
+        android:textColor="@color/dark_text"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:elevation="7dp"
+        android:outlineProvider="background"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        app:layout_constraintEnd_toEndOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/filter2"
+        style="@style/buttons"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_search_rounded"
+        android:backgroundTint="@color/darker_background"
+        android:elevation="0dp"
+        android:paddingVertical="3dp"
+        android:text="Filters"
+        android:textAlignment="viewStart"
+        android:textColor="@color/dark_text"
+        app:layout_constraintBottom_toTopOf="@+id/recipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/shimmer_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recipes"
+        app:layout_constraintEnd_toEndOf="@+id/recipes"
+        app:layout_constraintStart_toStartOf="@+id/recipes"
+        app:layout_constraintTop_toTopOf="@+id/recipes"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="10"
+        app:shimmer_demo_grid_child_count="2"
+        app:shimmer_demo_layout="@layout/item_recipe_loading"
+        app:shimmer_demo_layout_manager_type="linear_vertical" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter2">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

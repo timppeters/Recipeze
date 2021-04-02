@@ -5,12 +5,14 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.data.model.Tag;
 import com.group2.recipeze.data.model.User;
 import com.group2.recipeze.data.services.SearchService;
+import com.group2.recipeze.ui.search.SearchFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +42,7 @@ public class SearchRepository extends Repository {
         return instance;
     }
 
-    public void search(String query, MutableLiveData<Map<String, ArrayList<?>>> results) {
+    public void search(String query, MutableLiveData<Map<String, ArrayList>> results) {
         Call<JsonElement> response = service.search(query, loggedInUser.getToken());
         response.enqueue(new Callback<JsonElement>() {
             @RequiresApi(api = Build.VERSION_CODES.R)
@@ -69,17 +71,18 @@ public class SearchRepository extends Repository {
                     }
 
                     // Map of results
-                    Map<String, ArrayList<?>> types = new HashMap<String, ArrayList<?>>();
+                    Map<String, ArrayList> types = new HashMap<String, ArrayList>();
                     try {
                         types = Map.of(
                                 "recipes", recipeArrayList,
                                 "users", usersArrayList,
                                 "tags", tagsArrayList);
+                        System.out.println("TYPES: "+ types);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     results.postValue(types);
+                    System.out.println("RESULTS: " +results);
                 }
 
             }

@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
-                    android:text="Min"
+                    android:text="Min - (Minuets)"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -65,8 +65,8 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="32dp"
-                    android:max="24"
-                    android:progress="3"
+                    android:max="120"
+                    android:progress="2"
                     android:scrollbarSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Max"
+                    android:text="Max - (Minuets)"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/TimeMinSeek" />
@@ -101,8 +101,8 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="32dp"
-                    android:max="24"
-                    android:progress="3"
+                    android:max="120"
+                    android:progress="2"
                     android:scrollbarSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -178,6 +178,7 @@
                     android:progress="3"
                     android:scrollbarSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView12" />
 

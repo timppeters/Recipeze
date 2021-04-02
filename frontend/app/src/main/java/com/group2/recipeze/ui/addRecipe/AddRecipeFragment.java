@@ -1,15 +1,21 @@
 package com.group2.recipeze.ui.addRecipe;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -39,6 +45,7 @@ import com.group2.recipeze.ui.recipe.RecipeFragment;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +57,8 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
     private MutableLiveData<ArrayList<Tag>> tags = new MutableLiveData<>();
     private Chip addImageBtn;
     private ImagesListAdapter imagesAdapter;
+    private AddRecipeFragment thisFragment = this;
+    private View bottomSheetView;
 
     @NotNull
     @Override
@@ -58,6 +67,7 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
 
         //inflating layout
         View view = View.inflate(getContext(), R.layout.fragment_addrecipe, null);
+        bottomSheetView = view;
 
         //setting layout with bottom sheet
         bottomSheet.setContentView(view);
@@ -71,8 +81,6 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
 
         //setting max height of bottom sheet
         //view.findViewById(R.id.extraSpace).setMinimumHeight((Resources.getSystem().getDisplayMetrics().heightPixels));
-
-        AddRecipeFragment thisFragment = this;
         EditText title = view.findViewById(R.id.recipeTitle);
         EditText description = view.findViewById(R.id.description);
         Chip addIngredientBtn = view.findViewById(R.id.addIngredient);
@@ -85,6 +93,7 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
         addImageBtn = view.findViewById(R.id.addImage);
         RecyclerView imagesList = view.findViewById(R.id.imagesList);
         Button saveRecipeBtn = view.findViewById(R.id.saveRecipeButton);
+        ProgressBar saveLoadingBar = view.findViewById(R.id.saveLoadingBar);
 
 
         ingredientsList.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
@@ -138,27 +147,34 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 RecipeRepository recipeRepository = RecipeRepository.getInstance();
                 MutableLiveData<Integer> resultingRecipeId = new MutableLiveData<>();
+                ArrayList<String> incorrectTags = new ArrayList<>();
                 ArrayList<String> tagNames = new ArrayList<>();
                 List<Integer> ids = tagsGroup.getCheckedChipIds();
                 for (Integer id:ids){
                     Chip chip = tagsGroup.findViewById(id);
                     tagNames.add(chip.getText().toString());
                 }
+                saveLoadingBar.setVisibility(View.VISIBLE);
+                saveRecipeBtn.setText("");
 
                 resultingRecipeId.observe(thisFragment, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer recipeId) {
                         //System.out.println("NEW RECIPE: " + recipeId);
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("recipeId", recipeId);
+                        if (recipeId != -1) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("recipeId", recipeId);
 
-                        FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.setReorderingAllowed(true);
-                        transaction.addToBackStack("recipe " + String.valueOf(recipeId) + " created");
-                        transaction.replace(R.id.nav_host_fragment, RecipeFragment.class, bundle);
-                        transaction.commit();
-                        dismiss();
+                            NavHostFragment.findNavController(thisFragment).navigate(R.id.action_open_recipeFragment, bundle);
+                            dismiss();
+                        }
+                        else { // Recipe has some incorrect tags
+                            saveLoadingBar.setVisibility(View.INVISIBLE);
+                            saveRecipeBtn.setText("save");
+
+                            showTagsPopup(incorrectTags);
+                        }
+
                     }
                 });
 
@@ -172,7 +188,8 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
                         tagNames,
                         Integer.parseInt(prepTime.getText().toString()),
                         Integer.parseInt(cookTime.getText().toString()),
-                        resultingRecipeId);
+                        resultingRecipeId,
+                        incorrectTags);
             }
         });
 
@@ -258,6 +275,51 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         params.height = size;
         view.setLayoutParams(params);
+    }
+
+    private void showTagsPopup(ArrayList<String> incorrectTags) {
+        IncorrectTagsDialog dialog = new IncorrectTagsDialog(bottomSheetView, incorrectTags);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
+    public static class IncorrectTagsDialog extends AlertDialog {
+        AlertDialog dialogBuilder;
+
+        public IncorrectTagsDialog(View view, ArrayList<String> incorrectTags) {
+            super(view.getContext());
+            dialogBuilder = new AlertDialog.Builder(view.getContext()).create();
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_incorrecttags, null);
+
+            Button illFixItButton = dialogView.findViewById(R.id.illFixItButton);
+            Button postAnywaysButton = dialogView.findViewById(R.id.postAnywaysButton);
+            ListView incorrectTagsList = dialogView.findViewById(R.id.incorrectTagsList);
+            ArrayAdapter adapter = new ArrayAdapter<String>(view.getContext(),
+                    R.layout.item_incorrect_tag, incorrectTags);
+            incorrectTagsList.setAdapter(adapter);
+
+
+            illFixItButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogBuilder.dismiss();
+                }
+            });
+            postAnywaysButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //post to review
+                    dialogBuilder.dismiss();
+                }
+            });
+
+            dialogBuilder.setView(dialogView);
+        }
+
+        public void show() {
+            dialogBuilder.show();
+        }
     }
 
 }
