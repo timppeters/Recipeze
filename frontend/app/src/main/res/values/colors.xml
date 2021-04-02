@@ -8,4 +8,5 @@
     <color name="green">#3EB981</color>
     <color name="logo_green">#009953</color>
     <color name="black">#000000</color>
+    <color name="very_light_background"> #E8E8E8</color>
 </resources>

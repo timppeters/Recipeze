@@ -94,6 +94,7 @@ public class SearchFragment extends Fragment {
 
         recipesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 recipesBtn.setBackground(selectedTab);
                 profilesBtn.setBackgroundColor(Color.TRANSPARENT);
@@ -111,6 +112,15 @@ public class SearchFragment extends Fragment {
                 // Display profiles
                 searchRecipeRecyclerView.setVisibility(View.INVISIBLE);
                 searchProfileRecyclerView.setVisibility(View.VISIBLE);
+
+            public void onChanged(ArrayList<Recipe> recipes) {
+                // Populate endlessScroll with recipes
+                searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
+                endlessScrollManager = new endlessScroll(searchRecyclerView, "tags");
+                endlessScrollManager.populateData(recipes);
+                endlessScrollManager.initAdapter(thisFragment);
+                endlessScrollManager.initScrollListener();
+
             }
         });
 

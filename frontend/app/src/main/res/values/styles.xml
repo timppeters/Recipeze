@@ -18,4 +18,7 @@
         <item name="android:fontFamily">@font/poppinsregular</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_bg</item>
+    </style>
 </resources>

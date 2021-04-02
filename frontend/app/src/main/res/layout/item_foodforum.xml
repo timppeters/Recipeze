@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/transparent">
+
+    <Button
+        android:id="@+id/recipe_card3"
+        android:layout_width="360dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/floating_card_background"
+        android:fontFamily="@font/comfortaaregular"
+        android:translationZ="4dp"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.221" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="100dp"
+        android:fontFamily="@font/poppinsregular"
+        android:maxLength="30"
+        android:text="Username"
+        android:textColor="@color/green"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/recipe_card3"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.166" />
+
+    <TextView
+        android:id="@+id/post_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="48dp"
+        android:elevation="100dp"
+        android:fontFamily="@font/poppinsregular"
+        android:maxLength="30"
+        android:text="Recently vegan"
+        android:textColor="@color/green"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+        app:layout_constraintTop_toTopOf="@+id/recipe_card3" />
+
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:elevation="100dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="I have been vegan for 2 weeks now. I have been strugglung a lot. What do you guys advice me to do?"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+        app:layout_constraintTop_toBottomOf="@id/post_title" />
+
+    <ImageView
+        android:id="@+id/comment"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="5dp"
+        android:elevation="100dp"
+        android:src="@drawable/ic_chat_comment_oval_speech_bubble_with_text_lines"
+        app:layout_constraintBottom_toBottomOf="@id/comments3"
+        app:layout_constraintStart_toEndOf="@id/comments3"
+        app:layout_constraintTop_toTopOf="@id/comments3"
+        app:tint="@color/dark_text" />
+
+    <TextView
+        android:id="@+id/comments3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="100dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="52"
+        android:textColor="@color/dark_text"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="@id/recipe_card3"
+        app:layout_constraintStart_toStartOf="@id/recipe_card3" />
+
+    <TextView
+        android:id="@+id/invisibleLayer"
+        android:layout_width="360dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.215" />
+
+    <ImageButton
+        android:id="@+id/menu"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/ic_threedots"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_card3"
+        app:layout_constraintEnd_toEndOf="@+id/recipe_card3"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="@+id/recipe_card3"
+        app:layout_constraintTop_toTopOf="@+id/recipe_card3"
+        app:layout_constraintVertical_bias="0.08"
+        app:tint="@color/dark_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

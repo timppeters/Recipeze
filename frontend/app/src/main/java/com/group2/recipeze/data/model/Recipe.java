@@ -2,21 +2,25 @@ package com.group2.recipeze.data.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Path;
-import android.media.Image;
-import android.os.Environment;
+import android.os.Binder;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Base64;
 
+import androidx.annotation.RequiresApi;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import java.util.function.Consumer;
 
-public class Recipe {
+public class Recipe extends Binder implements Parcelable {
 
     private int recipeId;
     private float rating;
@@ -31,8 +35,9 @@ public class Recipe {
     private ArrayList<String> tags;
     private int prepTime;
     private int cookTime;
-    private boolean liked;
-    private static Random r = new Random();
+    private Boolean liked;
+    private String nutrients;
+    private JsonObject nutrition;
 
 
     /**
@@ -50,10 +55,11 @@ public class Recipe {
      * @param tags
      * @param prepTime
      * @param cookTime
+     * @param nutrients
      */
     public Recipe(int recipeId, float rating, int likes, String author, String title,
                   String description, ArrayList<String> ingredients, ArrayList<String> ingredientsAmounts,
-                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime, boolean liked) {
+                  HashMap<Integer, String> instructions, HashMap<Integer, String> images, ArrayList<String> tags, int prepTime, int cookTime, boolean liked, String nutrients) {
         this.recipeId = recipeId;
         this.rating = rating;
         this.likes = likes;
@@ -68,6 +74,11 @@ public class Recipe {
         this.instructions = instructions;
         this.images = images;
         this.liked = liked;
+        this.nutrients = nutrients;
+    }
+
+    public void parseNutrients() {
+        this.nutrition = new Gson().fromJson(this.nutrients, JsonObject.class);
     }
 
     /**
@@ -234,6 +245,39 @@ public class Recipe {
         this.cookTime = cookTime;
     }
 
+    public JsonObject getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(JsonObject nutrition) {
+        this.nutrition = nutrition;
+    }
+
     public boolean getLiked() {return liked; }
+
+    public void setLiked(boolean liked) { this.liked = liked;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStrongBinder(this);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
+        public Recipe createFromParcel(Parcel in) {
+            return (Recipe) in.readStrongBinder().queryLocalInterface("com.group2.recipeze.data.model.recipe");
+        }
+
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
 }

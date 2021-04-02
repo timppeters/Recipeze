@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.data.model.Rating;
 import com.group2.recipeze.data.model.Tag;
@@ -13,7 +14,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -59,6 +62,8 @@ public class RecipeRepository extends Repository {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("Filters " + filters.toString());
 
         getRecipes("feedUser", loggedInUser.getUsername(), "", filters, sortBy, skip, result);
     }
@@ -163,7 +168,9 @@ public class RecipeRepository extends Repository {
                     JsonArray recipesJsonArray = response.body().getAsJsonObject().get("recipes").getAsJsonArray();
                     ArrayList recipesArrayList = new ArrayList<Recipe>();
                     for (Iterator<JsonElement> recipeIterator = recipesJsonArray.iterator(); recipeIterator.hasNext();) {
-                        Recipe recipe = gson.fromJson(recipeIterator.next(), Recipe.class);
+                        JsonElement next = recipeIterator.next();
+                        Recipe recipe = gson.fromJson(next, Recipe.class);
+                        recipe.parseNutrients();
                         recipesArrayList.add(recipe);
                     }
                     result.postValue(recipesArrayList);
@@ -193,12 +200,13 @@ public class RecipeRepository extends Repository {
      * @param cookTime How long it takes to cook the recipe
      * @param resultingRecipeId The recipeId of the created recipe will be stored here
      */
-    public void createRecipe(String title, String description, ArrayList<String> ingredients_, ArrayList<String> ingredientsAmounts_, HashMap<String, String> instructions_, HashMap<String, String> images_, ArrayList<String> tags_, int prepTime, int cookTime , MutableLiveData<Integer> resultingRecipeId) {
+    public void createRecipe(String title, String description, ArrayList<String> ingredients_, ArrayList<String> ingredientsAmounts_, HashMap<String, String> instructions_, HashMap<String, String> images_, ArrayList<String> tags_, int prepTime, int cookTime , MutableLiveData<Integer> resultingRecipeId, ArrayList<String> incorrectTags) {
         JSONArray ingredients = new JSONArray(ingredients_);
         JSONArray ingredientsAmounts = new JSONArray(ingredientsAmounts_);
         JSONObject instructions = new JSONObject(instructions_);
         JSONObject images = new JSONObject(images_);
         JSONArray tags = new JSONArray(tags_);
+
 
         Call<JsonElement> recipeId = service.createRecipe(title, description, ingredients, ingredientsAmounts, instructions, images, tags, prepTime, cookTime, loggedInUser.getToken());
         recipeId.enqueue(new Callback<JsonElement>() {
@@ -206,8 +214,16 @@ public class RecipeRepository extends Repository {
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
 
                 if (response.code() == 200 && response.body() != null) {
-                    Integer recipeId = Integer.parseInt(response.body().getAsJsonObject().get("recipeId").toString());
-                    resultingRecipeId.postValue(recipeId);
+                    JsonObject jsonResponse = response.body().getAsJsonObject();
+                    if (jsonResponse.has("tagError")) {
+                        ArrayList<String> tags = gson.fromJson(jsonResponse.get("tagError").getAsJsonArray(), ArrayList.class);
+                        incorrectTags.addAll(tags);
+                        resultingRecipeId.postValue(-1);
+                    } else {
+                        Integer recipeId = Integer.parseInt(jsonResponse.get("recipeId").toString());
+                        resultingRecipeId.postValue(recipeId);
+                    }
+
                 }
 
             }
