@@ -45,7 +45,7 @@ public class ExploreFragment extends Fragment {
 
     SearchRepository searchRepo;
     
-    private ExploreViewModel exploreViewModel;
+//    private ExploreViewModel exploreViewModel;
 
     TagRepository tagRepository;
     com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;

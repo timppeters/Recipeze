@@ -65,7 +65,17 @@ public class endlessScroll {
         this.tagName = tagName;
         recyclerView = recycler;
 
-
+        if (feedType == "users") {
+            // Set default filters from user's foodPreferences
+            loginRepository = LoginRepository.getInstance();
+            LoggedInUser loggedInUser = loginRepository.getUser();
+            if (loggedInUser.getSettings().containsKey("foodPreferences")) {
+                this.maxTime = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxTime").getAsInt();
+                this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
+                this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
+                this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);
+            }
+        }
     }
 
     public void populateData(ArrayList<Recipe> initialRecipes) {
@@ -84,20 +94,6 @@ public class endlessScroll {
         }
     }
 
-
-
-        if (feedType == "users") {
-            // Set default filters from user's foodPreferences
-            loginRepository = LoginRepository.getInstance();
-            LoggedInUser loggedInUser = loginRepository.getUser();
-            if (loggedInUser.getSettings().containsKey("foodPreferences")) {
-                this.maxTime = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxTime").getAsInt();
-                this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
-                this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
-                this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);
-            }
-        }
-    }
 
     public endlessScroll(RecyclerView recycler, String feedType){
         this(recycler, feedType, "", "");

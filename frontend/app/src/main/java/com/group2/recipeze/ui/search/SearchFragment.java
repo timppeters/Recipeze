@@ -77,13 +77,13 @@ public class SearchFragment extends Fragment {
         searchProfileRecyclerView.setVisibility(View.INVISIBLE);
 
         searchRecipeRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-        endlessScrollManager = new endlessScroll(searchRecipeRecyclerView);
+        endlessScrollManager = new endlessScroll(searchRecipeRecyclerView, "tags");
         endlessScrollManager.populateData(recipes);
         endlessScrollManager.initAdapter(thisFragment);
         endlessScrollManager.initScrollListener();
 
         //second endless scroll for the profiles
-        endlessScrollProfilesManager = new endlessScroll(searchProfileRecyclerView);
+        endlessScrollProfilesManager = new endlessScroll(searchProfileRecyclerView, "tags");
         endlessScrollProfilesManager.populateDataProfile(profiles);
         endlessScrollProfilesManager.initProfileAdapter(thisFragment);
         endlessScrollProfilesManager.initScrollListener();
@@ -105,24 +105,26 @@ public class SearchFragment extends Fragment {
         });
 
         profilesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                profilesBtn.setBackground(selectedTab);
-                recipesBtn.setBackgroundColor(Color.TRANSPARENT);
-                // Display profiles
-                searchRecipeRecyclerView.setVisibility(View.INVISIBLE);
-                searchProfileRecyclerView.setVisibility(View.VISIBLE);
+                                           @Override
+                                           public void onClick(View view) {
+                                               profilesBtn.setBackground(selectedTab);
+                                               recipesBtn.setBackgroundColor(Color.TRANSPARENT);
+                                               // Display profiles
+                                               searchRecipeRecyclerView.setVisibility(View.INVISIBLE);
+                                               searchProfileRecyclerView.setVisibility(View.VISIBLE);
+                                           }
+                                       });
 
-            public void onChanged(ArrayList<Recipe> recipes) {
-                // Populate endlessScroll with recipes
-                searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-                endlessScrollManager = new endlessScroll(searchRecyclerView, "tags");
-                endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter(thisFragment);
-                endlessScrollManager.initScrollListener();
-
-            }
-        });
+//            public void onChanged(ArrayList<Recipe> recipes) {
+//                // Populate endlessScroll with recipes
+//                searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
+//                endlessScrollManager = new endlessScroll(searchRecyclerView, "tags");
+//                endlessScrollManager.populateData(recipes);
+//                endlessScrollManager.initAdapter(thisFragment);
+//                endlessScrollManager.initScrollListener();
+//
+//            }
+//        });
 
         Button forButton = root.findViewById(R.id.forumButton);
         Fragment here = this;
