@@ -139,9 +139,6 @@
         android:label="RecipeFragment"
         tools:layout="@layout/fragment_recipe" >
         <action
-            android:id="@+id/action_recipeFragment_to_foodForumFragment"
-            app:destination="@id/foodForumFragment" />
-        <action
             android:id="@+id/action_recipeFragment_to_fragment_tag"
             app:destination="@id/fragment_tag" />
     </fragment>
