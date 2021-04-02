@@ -55,6 +55,7 @@ public class SearchFragment extends Fragment {
     private Button recipesBtn;
     private Button profilesBtn;
     private Drawable selectedTab;
+    private String searchFor;
 
     /**
      * Called when view is created.
@@ -79,6 +80,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 recipesBtn.setBackground(selectedTab);
                 profilesBtn.setBackgroundColor(Color.TRANSPARENT);
+                searchFor = "recipe";
             }
         });
 
@@ -87,6 +89,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 profilesBtn.setBackground(selectedTab);
                 recipesBtn.setBackgroundColor(Color.TRANSPARENT);
+                searchFor = "profile";
             }
         });
 
@@ -108,16 +111,23 @@ public class SearchFragment extends Fragment {
                 NavHostFragment.findNavController(here).navigate(R.id.action_searchFragment_to_filterFragment);
             }
         });
+
         SearchView search = root.findViewById(R.id.searchSearchPage);
-        Fragment thisFrag = this;
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchRepo = SearchRepository.getInstance();
-                MutableLiveData<Map<String, ArrayList<?>>> searchRecipes = new MutableLiveData<>();
-                searchRepo.search(query, searchRecipes, recipes);
-                Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
+                if (searchFor == "recipe") {
+                    searchRepo = SearchRepository.getInstance();
+                    MutableLiveData<Map<String, ArrayList<?>>> searchRecipes = new MutableLiveData<>();
+                    searchRepo.search(query, searchRecipes, recipes);
+                    Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (searchFor == "profile") {
+                    //Add code for searching for profile
+                }
+
                 return true;
             }
 
