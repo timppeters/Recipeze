@@ -51,20 +51,15 @@ public class FoodPreferencesFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomAlertDialog);
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.fragment_filter_feed, null);
+        View dialogView = inflater.inflate(R.layout.fragment_filter_profile, null);
         builder.setView(dialogView);
         foodPreferencesDialog = builder.create();
 
 
         TextView ingredientsLabel = dialogView.findViewById(R.id.ingredientsFilterTxt);
-        ingredientsLabel.setText("Allergies");
         TextView dialogTitle = dialogView.findViewById(R.id.textView4);
-        dialogTitle.setText("Food Preferences");
         Button saveBtn = dialogView.findViewById(R.id.FiltersChosenBut);
-        saveBtn.setText("save");
-
-
-
+        Button tagApplication = dialogView.findViewById(R.id.requestTagBtn);
 
         RecyclerView ingredientsList = dialogView.findViewById(R.id.filterIngredientsList);
         Chip addIngredientBtn = dialogView.findViewById(R.id.addIngredient2);
@@ -140,6 +135,13 @@ public class FoodPreferencesFragment extends DialogFragment {
                     }
                     tagsGroup.addView(tagChip);
                 }
+
+            }
+        });
+
+        tagApplication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
         });
