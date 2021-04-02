@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -28,6 +29,8 @@ import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
+import com.group2.recipeze.ui.feed.FeedFragment;
+import com.group2.recipeze.ui.feed.filters;
 import com.group2.recipeze.ui.recipe.RecipeFragment;
 
 import java.util.ArrayList;
@@ -35,11 +38,17 @@ import java.util.ArrayList;
 /**
  * RecipeBookFragment.
  */
-public class RecipeBookFragment extends Fragment {
+public class RecipeBookFragment extends Fragment implements filters.hasFilters{
     RecyclerView recipeBookRecyclerView;
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
+    Button filtersBtn;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+
+    int maxTime = 1000;
+    ArrayList<String> ingredients = new ArrayList<String>();
+    int maxIngredients = 1000;
+    ArrayList<String> tags = new ArrayList<String>();
 
     private RecipeBookViewModel recipeBookViewModel;
 
@@ -61,10 +70,20 @@ public class RecipeBookFragment extends Fragment {
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 recipeBookRecyclerView = root.findViewById(R.id.recipes);
-                endlessScrollManager = new endlessScroll(recipeBookRecyclerView);
+                endlessScrollManager = new endlessScroll(recipeBookRecyclerView, "recipeBook");
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
+            }
+        });
+
+        filtersBtn = root.findViewById(R.id.filter2);
+
+        filtersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment filterDialog = new filters(RecipeBookFragment.this);
+                filterDialog.show(getParentFragmentManager(), "FilterDialog");
             }
         });
 
@@ -72,9 +91,15 @@ public class RecipeBookFragment extends Fragment {
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Just an example request
-        ArrayList<String> ingredients = new ArrayList<String>();
-        ArrayList<String> tags = new ArrayList<String>();
-        recipeRepository.getRecipesForRecipeBook(100, ingredients, 100, tags, "likes" , 0, recipes);
+        recipeRepository.getRecipesForRecipeBook(maxTime, ingredients, maxIngredients, tags, "likes", 0, recipes);
+    }
+
+    @Override
+    public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags){
+        this.maxTime = maxTime;
+        this.ingredients = ingredients;
+        this.maxIngredients = maxIngredients;
+        this.tags = tags;
+        recipeRepository.getRecipesForRecipeBook(maxTime, ingredients, maxIngredients, tags, "likes", 0, recipes);
     }
 }

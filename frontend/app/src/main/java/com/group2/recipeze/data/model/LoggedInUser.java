@@ -1,5 +1,7 @@
 package com.group2.recipeze.data.model;
 
+import com.google.gson.JsonElement;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -12,13 +14,13 @@ public class LoggedInUser {
     private String username;
     private String email;
     private String bio;
-    private HashMap<String, ?> settings;
+    private HashMap<String, JsonElement> settings;
     private String token;
 
 
     public LoggedInUser() {}
 
-    public LoggedInUser(String username, String email, String bio, HashMap<String, ?> settings) {
+    public LoggedInUser(String username, String email, String bio, HashMap<String, JsonElement> settings) {
         this.username = username;
         this.email = email;
         this.bio = bio;
@@ -49,11 +51,11 @@ public class LoggedInUser {
         this.bio = bio;
     }
 
-    public HashMap<String, ?> getSettings() {
+    public HashMap<String, JsonElement> getSettings() {
         return settings;
     }
 
-    public void setSettings(HashMap<String, ?> settings) {
+    public void setSettings(HashMap<String, JsonElement> settings) {
         this.settings = settings;
     }
 

@@ -14,6 +14,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -34,12 +35,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class filters extends DialogFragment {
+
+    public interface hasFilters {
+        public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags);
+    }
+
     private MutableLiveData<ArrayList<Tag>> tags = new MutableLiveData<>();
     private TagRepository tagRepository;
     private AlertDialog filterDialog;
-    private FeedFragment feedFragment;
+    //private FeedFragment feedFragment;
+    private hasFilters feedFragment;
 
-    public filters(FeedFragment feedFragment){
+    public filters(hasFilters feedFragment){
         this.feedFragment = feedFragment;
     }
 
@@ -63,7 +70,7 @@ public class filters extends DialogFragment {
         com.google.android.material.slider.Slider maxIngredients = dialogView.findViewById(R.id.NumOfIndSeek);
 
         ingredientsList.addItemDecoration(new DividerItemDecoration(dialogView.getContext(), DividerItemDecoration.VERTICAL));
-        filterIngredientsListAdapter ingredientsAdapter = new filterIngredientsListAdapter(new ArrayList<String>(), new ArrayList<String>());
+        filterIngredientsListAdapter ingredientsAdapter = new filterIngredientsListAdapter(new ArrayList<String>());
         ingredientsList.setAdapter(ingredientsAdapter);
         ingredientsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
