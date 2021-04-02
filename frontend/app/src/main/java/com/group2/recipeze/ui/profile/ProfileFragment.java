@@ -39,6 +39,7 @@ import java.util.HashMap;
 public class ProfileFragment extends Fragment {
     public HashMap<String, ?> settings = new HashMap<>();
     private ProfileViewModel profileViewModel;
+    com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;
 
     RecyclerView recyclerView;
     endlessScroll endlessScrollManager;
@@ -61,11 +62,14 @@ public class ProfileFragment extends Fragment {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         ProfileFragment thisFragment = this;
+        shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
+        shimmerRecyclerView.showShimmerAdapter();
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                shimmerRecyclerView.hideShimmerAdapter();
                 recyclerView = root.findViewById(R.id.profileRecipes);
                 endlessScrollManager = new endlessScroll(recyclerView);
                 endlessScrollManager.populateData(recipes);

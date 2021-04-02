@@ -41,7 +41,7 @@ import java.util.ArrayList;
  */
 public class FeedFragment extends Fragment{
     RecyclerView feedRecyclerView;
-    RecyclerViewAdapter feedRecyclerViewAdapter;
+    com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
@@ -72,12 +72,16 @@ public class FeedFragment extends Fragment{
         FeedFragment thisFragment = this;
 
         recipeRepository = RecipeRepository.getInstance();
+        shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
+        shimmerRecyclerView.showShimmerAdapter();
+
 
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
 
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                shimmerRecyclerView.hideShimmerAdapter();
                 feedRecyclerView = root.findViewById(R.id.recipes);
                 endlessScrollManager = new endlessScroll(feedRecyclerView);
                 endlessScrollManager.initAdapter(thisFragment);
