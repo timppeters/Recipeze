@@ -70,19 +70,18 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         ProfileFragment thisFragment = this;
         recipeRepository = RecipeRepository.getInstance();
+        loginRepository = LoginRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 recyclerView = root.findViewById(R.id.profileRecipes);
-                endlessScrollManager = new endlessScroll(recyclerView, "feed");
+                endlessScrollManager = new endlessScroll(recyclerView, "profile", loginRepository.getUser().getUsername());
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
             }
         });
-
-        loginRepository = LoginRepository.getInstance();
 
         TextView username = root.findViewById(R.id.username);
         TextView bio = root.findViewById(R.id.bio);

@@ -44,8 +44,9 @@ public class endlessScroll {
     /*
     @param feedType Can be "users", "tags", "recipeBook"
      */
-    public endlessScroll(RecyclerView recycler, String feedType) {
+    public endlessScroll(RecyclerView recycler, String feedType, String username) {
         this.feedType = feedType;
+        this.profileUsername = username;
         recyclerView = recycler;
 
         // Set default filters from user's foodPreferences
@@ -55,6 +56,10 @@ public class endlessScroll {
         this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
         this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
         this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);*/
+    }
+
+    public endlessScroll(RecyclerView recycler, String feedType){
+        this(recycler, feedType, "");
     }
 
     public void populateData(ArrayList<Recipe> initialRecipes) {
@@ -140,9 +145,5 @@ public class endlessScroll {
         this.ingredients = ingredients;
         this.maxIngredients = maxIngredients;
         this.tags = tags;
-    }
-
-    public void setProfileUsername(String profileUsername) {
-        this.profileUsername = profileUsername;
     }
 }
