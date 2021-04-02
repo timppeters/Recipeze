@@ -44,17 +44,13 @@ public class SearchFragment extends Fragment {
     private RecyclerView searchRecipeRecyclerView;
     private RecyclerView searchProfileRecyclerView;
     private endlessScroll endlessScrollManager;
-    private RecipeRepository repo;
-    private UserRepository userRepo;
     private SearchRepository searchRepo;
     private static ArrayList<Recipe> recipes = new ArrayList<>();
     private static ArrayList<User> profiles = new ArrayList<>();
     private static ArrayList<Tag> searchedTags = new ArrayList<>();
 
     private static int maxTime = 100;
-    private static ArrayList<String> ingredientList;
     private static int ingNum = 100;
-    private static ArrayList<String> tags;
 
     private static SearchViewModel searchViewModel;
 
@@ -74,7 +70,6 @@ public class SearchFragment extends Fragment {
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         View root = inflater.inflate(R.layout.search_fragment, container, false);
         SearchFragment thisFragment = this;
-        repo = RecipeRepository.getInstance();
 
         searchProfileRecyclerView = root.findViewById(R.id.searchProfilesScroll);
         searchProfileRecyclerView.setVisibility(View.INVISIBLE);
@@ -95,6 +90,8 @@ public class SearchFragment extends Fragment {
                 recipesBtn.setBackground(selectedTab);
                 profilesBtn.setBackgroundColor(Color.TRANSPARENT);
                 // Display recipes
+                searchRecipeRecyclerView.setVisibility(View.VISIBLE);
+                searchProfileRecyclerView.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -104,6 +101,8 @@ public class SearchFragment extends Fragment {
                 profilesBtn.setBackground(selectedTab);
                 recipesBtn.setBackgroundColor(Color.TRANSPARENT);
                 // Display profiles
+                searchRecipeRecyclerView.setVisibility(View.INVISIBLE);
+                searchProfileRecyclerView.setVisibility(View.VISIBLE);
             }
         });
 

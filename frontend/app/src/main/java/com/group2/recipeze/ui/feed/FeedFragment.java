@@ -74,7 +74,6 @@ public class FeedFragment extends Fragment {
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
-                
             }
         });
 
