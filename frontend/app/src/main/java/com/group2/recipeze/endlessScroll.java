@@ -7,15 +7,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.group2.recipeze.data.ForumRepository;
-import com.group2.recipeze.data.LoginRepository;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Comment;
 import com.group2.recipeze.data.model.ForumPost;
-import com.group2.recipeze.data.model.LoggedInUser;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.ui.forum.ForumPostAdapter;
 import java.util.ArrayList;
@@ -27,48 +22,35 @@ public class endlessScroll {
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Comment>> comment = new MutableLiveData<>();
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
-    String feedType = new String();
-    LoginRepository loginRepository;
 
-    // Filters
     int maxTime = 1000;
     ArrayList<String> ingredients = new ArrayList<String>();
     int maxIngredients = 1000;
     ArrayList<String> tags = new ArrayList<String>();
 
-    // For profile
-    String profileUsername = "";
-
+    ArrayList<Comment> commentlist = new ArrayList<>();
+    ForumRepository forumRepository;
+    public MutableLiveData<ArrayList<ForumPost>> resultingPosts = new MutableLiveData<>();
+    ArrayList<ForumPost> forumPostsList = new ArrayList<ForumPost>();
 
     boolean isLoading = false;
-    /*
-    @param feedType Can be "users", "tags", "recipeBook"
-     */
-    public endlessScroll(RecyclerView recycler, String feedType, String username) {
-        this.feedType = feedType;
-        this.profileUsername = username;
+    public endlessScroll(RecyclerView recycler) {
         recyclerView = recycler;
-
-        // Set default filters from user's foodPreferences
-        loginRepository = LoginRepository.getInstance();
-        LoggedInUser loggedInUser = loginRepository.getUser();
-        if (loggedInUser.getSettings().containsKey("foodPreferences")) {
-            this.maxTime = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxTime").getAsInt();
-            this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
-            this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
-            this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);
-        }
     }
-
-    public endlessScroll(RecyclerView recycler, String feedType){
-        this(recycler, feedType, "");
-    }
-
     public void populateData(ArrayList<Recipe> initialRecipes) {
         //recipeList = initialRecipes;
         recipes.setValue(initialRecipes);
     }
-
+  
+    public void populateData2(ArrayList<Comment> commentList) {
+        commentlist = commentList;
+        comment.setValue(commentlist);
+        //recipes.postValue(recipeList);
+        for(int x = 0; x < commentlist.size(); x++){
+            Log.d("recipe1", commentlist.get(x).getBody());
+        }
+    }
+  
     public void initAdapter(Fragment fragmment) {
         recyclerViewAdapter = new RecyclerViewAdapter(recipeList);
         recyclerView.setAdapter(recyclerViewAdapter);
@@ -126,18 +108,7 @@ public class endlessScroll {
                 recipeList.remove(recipeList.size() - 1);
                 int scrollPosition = recipeList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
-                if(feedType.equals("users")) {
-                    recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
-                }else if(feedType.equals("recipeBook")){
-                    recipeRepository.getRecipesForRecipeBook(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
-                }else if(feedType.equals("explore")){
-                    recipeRepository.getRecipesForExplore(recipeList.size(), recipes);
-                } else if(feedType.equals("tags")){
-                    recipeRepository.getRecipesForFeedByTags(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
-                }
-                else if(feedType.equals("profile")){
-                    recipeRepository.getRecipesForProfile(profileUsername, recipeList.size(), recipes);
-                }
+                recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
             }
         }, 10000);
     }

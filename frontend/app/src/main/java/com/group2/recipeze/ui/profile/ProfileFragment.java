@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -19,10 +18,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.group2.recipeze.R;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,10 +28,7 @@ import com.group2.recipeze.data.LoginRepository;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.UserRepository;
 import com.group2.recipeze.data.model.Recipe;
-import com.group2.recipeze.data.model.User;
 import com.group2.recipeze.endlessScroll;
-import com.group2.recipeze.ui.feed.FeedFragment;
-import com.group2.recipeze.ui.feed.filters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,19 +65,20 @@ public class ProfileFragment extends Fragment {
         shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
         shimmerRecyclerView.showShimmerAdapter();
         recipeRepository = RecipeRepository.getInstance();
-        loginRepository = LoginRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 shimmerRecyclerView.hideShimmerAdapter();
                 recyclerView = root.findViewById(R.id.profileRecipes);
-                endlessScrollManager = new endlessScroll(recyclerView, "profile", loginRepository.getUser().getUsername());
+                endlessScrollManager = new endlessScroll(recyclerView);
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
             }
         });
+
+        loginRepository = LoginRepository.getInstance();
 
         TextView username = root.findViewById(R.id.username);
         TextView bio = root.findViewById(R.id.bio);
@@ -119,22 +112,19 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Button foodPreferencesBtn = root.findViewById(R.id.editFoodPreferences);
+        Button button = root.findViewById(R.id.editFoodPreferences);
 
-        foodPreferencesBtn.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment preferencesDialog;
-                if (loginRepository.getUser().getSettings().containsKey("foodPreferences")) {
-                    preferencesDialog = new FoodPreferencesFragment(thisFragment, loginRepository.getUser().getSettings().get("foodPreferences").getAsJsonObject());
-                } else {
-                    preferencesDialog = new FoodPreferencesFragment(thisFragment, null);
-                }
-                preferencesDialog.show(getParentFragmentManager(), "PreferencesDialog");
+                NavHostFragment.findNavController(thisFragment).navigate(R.id.action_navigation_profile_to_foodPreferences2);
             }
         });
 
+        //userRepository.updateProfile(loginRepository.getUser().getUsername(), loginRepository.getUser().getEmail(), "I am vegan", settings);
         userRepository.getPrivateProfile(profile_updated);
+        //userRepository.followUser("leokou");
+        //userRepository.unfollowUser("leokou");
 
         return root;
     }
@@ -142,17 +132,5 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Just an example request
         recipeRepository.getRecipesForProfile(loginRepository.getUser().getUsername(), 0, recipes);
-    }
-
-    public void updatePreferences(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags) {
-        // save preferences to LoggedInUser & database
-        JsonObject foodPreferences = new JsonObject();
-        foodPreferences.addProperty("maxTime", maxTime);
-        foodPreferences.add("ingredients", new Gson().toJsonTree(ingredients).getAsJsonArray());
-        foodPreferences.addProperty("maxIngredients", maxIngredients);
-        foodPreferences.add("tags", new Gson().toJsonTree(tags).getAsJsonArray());
-        loginRepository.getUser().getSettings().put("foodPreferences", foodPreferences);
-        UserRepository userRepository = UserRepository.getInstance();
-        userRepository.updateProfile(loginRepository.getUser().getUsername(), loginRepository.getUser().getEmail(), loginRepository.getUser().getBio(), loginRepository.getUser().getSettings());
     }
 }

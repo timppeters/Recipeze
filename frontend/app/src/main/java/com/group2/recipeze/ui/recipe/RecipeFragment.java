@@ -143,7 +143,7 @@ public class RecipeFragment extends Fragment {
 
                         Bundle bundle = new Bundle();
                         bundle.putString("tagName", tagName);
-                        NavHostFragment.findNavController(thisFragment).navigate(R.id.action_recipeFragment_to_fragment_tag, bundle);
+                        NavHostFragment.findNavController(thisFragment).navigate(R.id.action_recipeFragment_to_foodForumFragment, bundle);
                     }
                 });
             }
