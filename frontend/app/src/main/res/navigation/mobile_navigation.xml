@@ -141,6 +141,9 @@
         <action
             android:id="@+id/action_recipeFragment_to_foodForumFragment"
             app:destination="@id/foodForumFragment" />
+        <action
+            android:id="@+id/action_recipeFragment_to_fragment_tag"
+            app:destination="@id/fragment_tag" />
     </fragment>
 
 
@@ -152,6 +155,15 @@
         <action
             android:id="@+id/action_filterFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_tag"
+        android:name="com.group2.recipeze.TagFragment"
+        android:label="fragment_tag"
+        tools:layout="@layout/fragment_tag" >
+        <action
+            android:id="@+id/action_fragment_tag_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
     </fragment>
 
 </navigation>
