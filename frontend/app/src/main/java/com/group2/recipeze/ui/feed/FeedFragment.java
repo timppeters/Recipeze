@@ -51,10 +51,7 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
     LoginRepository loginRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
 
-    Button tagsBtn;
-    Button usersBtn;
     Button filtersBtn;
-    Drawable selectedTab;
 
     int maxTime = 1000;
     ArrayList<String> ingredients = new ArrayList<String>();
@@ -94,27 +91,6 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
                 endlessScrollManager.initScrollListener();
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.updateFilters(maxTime, ingredients, maxIngredients, tags);
-            }
-        });
-
-        tagsBtn = root.findViewById(R.id.tagsTab);
-        usersBtn = root.findViewById(R.id.usersTab);
-
-        selectedTab = ContextCompat.getDrawable(getContext(), R.drawable.tab_background);
-
-        tagsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tagsBtn.setBackground(selectedTab);
-                usersBtn.setBackgroundColor(Color.TRANSPARENT);
-            }
-        });
-
-        usersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                usersBtn.setBackground(selectedTab);
-                tagsBtn.setBackgroundColor(Color.TRANSPARENT);
             }
         });
 

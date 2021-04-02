@@ -7,45 +7,10 @@
     tools:context=".ui.feed.FeedFragment"
     android:background="@color/background">
 
-    <Button
-        android:id="@+id/tagsTab"
-        android:layout_width="198dp"
-        android:layout_height="59dp"
-        android:background="@drawable/tab_background"
-        android:fontFamily="@font/poppinsbold"
-        android:outlineProvider="background"
-        android:stateListAnimator="@null"
-        android:text="Tags"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_text"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:translationZ="7dp"
-        app:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
-
-    <Button
-        android:id="@+id/usersTab"
-        android:layout_width="198dp"
-        android:layout_height="59dp"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/poppinsregular"
-        android:text="Users"
-        android:outlineProvider="background"
-        android:stateListAnimator="@null"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_text"
-        android:textSize="21sp"
-        android:translationZ="7dp"
-        app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="61dp"
+        android:layout_height="70dp"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:outlineProvider="background"
@@ -91,7 +56,7 @@
         app:layout_constraintBottom_toTopOf="@+id/recipes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagsTab" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <com.cooltechworks.views.shimmer.ShimmerRecyclerView
         android:id="@+id/shimmer_recycler_view"
