@@ -25,6 +25,7 @@ import com.group2.recipeze.R;
 import com.group2.recipeze.data.TagRepository;
 import com.group2.recipeze.data.model.Tag;
 import com.group2.recipeze.ui.feed.filterIngredientsListAdapter;
+import com.group2.recipeze.ui.feed.filters;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -59,7 +60,7 @@ public class FoodPreferencesFragment extends DialogFragment {
         TextView ingredientsLabel = dialogView.findViewById(R.id.ingredientsFilterTxt);
         TextView dialogTitle = dialogView.findViewById(R.id.textView4);
         Button saveBtn = dialogView.findViewById(R.id.FiltersChosenBut);
-        Button tagApplication = dialogView.findViewById(R.id.requestTagBtn);
+        TextView tagApplication = dialogView.findViewById(R.id.requestTagBtn);
 
         RecyclerView ingredientsList = dialogView.findViewById(R.id.filterIngredientsList);
         Chip addIngredientBtn = dialogView.findViewById(R.id.addIngredient2);
@@ -142,8 +143,8 @@ public class FoodPreferencesFragment extends DialogFragment {
         tagApplication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-            }
+                DialogFragment dialog = new tagApplicationDialog(dialogView);
+                dialog.show(getParentFragmentManager(), "Tag Application");}
         });
 
         tagRepository = TagRepository.getInstance();
