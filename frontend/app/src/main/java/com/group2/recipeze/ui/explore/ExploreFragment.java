@@ -63,7 +63,7 @@ public class ExploreFragment extends Fragment {
                 shimmerRecyclerView.hideShimmerAdapter();
                 recyclerView = root.findViewById(R.id.exploreRecipes);
 
-                endlessScrollManager = new endlessScroll(recipesRecyclerView, "explore");
+                endlessScrollManager = new endlessScroll(recyclerView);
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();

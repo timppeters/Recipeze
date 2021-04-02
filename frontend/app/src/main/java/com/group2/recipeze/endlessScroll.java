@@ -28,42 +28,14 @@ public class endlessScroll {
     int maxIngredients = 1000;
     ArrayList<String> tags = new ArrayList<String>();
 
-    // For profile
-    String profileUsername = "";
-
-    // For tag
-    String tagName = "";
-
+    ArrayList<Comment> commentlist = new ArrayList<>();
+    ForumRepository forumRepository;
+    public MutableLiveData<ArrayList<ForumPost>> resultingPosts = new MutableLiveData<>();
+    ArrayList<ForumPost> forumPostsList = new ArrayList<ForumPost>();
 
     boolean isLoading = false;
-    /*
-    @param feedType Can be "users", "tags", "recipeBook"
-     */
-    public endlessScroll(RecyclerView recycler, String feedType, String username, String tagName) {
-        this.feedType = feedType;
-        this.profileUsername = username;
-        this.tagName = tagName;
+    public endlessScroll(RecyclerView recycler) {
         recyclerView = recycler;
-
-        if (feedType == "users") {
-            // Set default filters from user's foodPreferences
-            loginRepository = LoginRepository.getInstance();
-            LoggedInUser loggedInUser = loginRepository.getUser();
-            if (loggedInUser.getSettings().containsKey("foodPreferences")) {
-                this.maxTime = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxTime").getAsInt();
-                this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
-                this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
-                this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);
-            }
-        }
-    }
-
-    public endlessScroll(RecyclerView recycler, String feedType){
-        this(recycler, feedType, "", "");
-    }
-
-    public endlessScroll(RecyclerView recycler, String feedType, String username){
-        this(recycler, feedType, username, "");
     }
     public void populateData(ArrayList<Recipe> initialRecipes) {
         //recipeList = initialRecipes;
@@ -136,20 +108,7 @@ public class endlessScroll {
                 recipeList.remove(recipeList.size() - 1);
                 int scrollPosition = recipeList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
-                if(feedType.equals("users")) {
-                    recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
-                }else if(feedType.equals("recipeBook")){
-                    recipeRepository.getRecipesForRecipeBook(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
-                }else if(feedType.equals("explore")){
-                    recipeRepository.getRecipesForExplore(recipeList.size(), recipes);
-                } else if(feedType.equals("tags")){
-                    recipeRepository.getRecipesForFeedByTags(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
-                }
-                else if(feedType.equals("profile")){
-                    recipeRepository.getRecipesForProfile(profileUsername, recipeList.size(), recipes);
-                } else if (feedType.equals("tag")) {
-                    recipeRepository.getRecipesForTag(tagName, recipeList.size(), recipes);
-                }
+                recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", recipeList.size(), recipes);
             }
         }, 10000);
     }
