@@ -36,7 +36,7 @@ import java.util.List;
 
 public class filters extends DialogFragment {
 
-    public interface hasFilters{
+    public interface hasFilters {
         public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags);
     }
 
@@ -70,7 +70,7 @@ public class filters extends DialogFragment {
         com.google.android.material.slider.Slider maxIngredients = dialogView.findViewById(R.id.NumOfIndSeek);
 
         ingredientsList.addItemDecoration(new DividerItemDecoration(dialogView.getContext(), DividerItemDecoration.VERTICAL));
-        filterIngredientsListAdapter ingredientsAdapter = new filterIngredientsListAdapter(new ArrayList<String>(), new ArrayList<String>());
+        filterIngredientsListAdapter ingredientsAdapter = new filterIngredientsListAdapter(new ArrayList<String>());
         ingredientsList.setAdapter(ingredientsAdapter);
         ingredientsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
