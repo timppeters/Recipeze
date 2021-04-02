@@ -5,24 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.recipeze.R;
-import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.TagRepository;
 import com.group2.recipeze.data.model.Recipe;
+import com.group2.recipeze.data.model.Tag;
 import com.group2.recipeze.endlessScroll;
+import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
 
 import java.util.ArrayList;
 
@@ -30,13 +29,17 @@ import java.util.ArrayList;
  * ExploreFragment.
  */
 public class ExploreFragment extends Fragment {
-    RecyclerView recyclerView;
+    RecyclerView recipesRecyclerView;
+    RecyclerView tagsRecyclerView;
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
     com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;
-    public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
-
     private ExploreViewModel exploreViewModel;
+
+    TagRepository tagRepository;
+    private MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Tag>> tags = new MutableLiveData<>();
+
 
     /**
      * Called when view is created.
@@ -47,7 +50,6 @@ public class ExploreFragment extends Fragment {
      * @return
      */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        exploreViewModel = new ViewModelProvider(this).get(ExploreViewModel.class);
         View root = inflater.inflate(R.layout.fragment_explore, container, false);
         ExploreFragment thisFragment = this;
         shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
@@ -62,11 +64,22 @@ public class ExploreFragment extends Fragment {
                 // Populate endlessScroll with recipes
                 shimmerRecyclerView.hideShimmerAdapter();
                 recyclerView = root.findViewById(R.id.exploreRecipes);
-
-                endlessScrollManager = new endlessScroll(recyclerView);
+                recipesRecyclerView = root.findViewById(R.id.exploreRecipes);
+                endlessScrollManager = new endlessScroll(recyclerView, "explore");
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
+            }
+        });
+
+        tagRepository = TagRepository.getInstance();
+        tags.observe(getViewLifecycleOwner(), new Observer<ArrayList<Tag>>() {
+            @Override
+            public void onChanged(ArrayList<Tag> tags) {
+                tagsRecyclerView = root.findViewById(R.id.trendingTagsList);
+                TrendingTagsListAdapter tagsListAdapter = new TrendingTagsListAdapter(tags, thisFragment);
+                tagsRecyclerView.setAdapter(tagsListAdapter);
+                tagsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
         });
 
@@ -92,5 +105,6 @@ public class ExploreFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Just an example request
         recipeRepository.getRecipesForExplore(0, recipes);
+        tagRepository.getTop5Tags(tags);
     }
 }
