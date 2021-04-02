@@ -158,7 +158,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_tag"
-        android:name="com.group2.recipeze.TagFragment"
+        android:name="com.group2.recipeze.ui.tag.TagFragment"
         android:label="fragment_tag"
         tools:layout="@layout/fragment_tag" >
         <action
