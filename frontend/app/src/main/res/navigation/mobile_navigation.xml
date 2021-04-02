@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_navigation_explore_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_foodForumFragment"
+            app:destination="@id/foodForumFragment" />
     </fragment>
 
     <dialog
