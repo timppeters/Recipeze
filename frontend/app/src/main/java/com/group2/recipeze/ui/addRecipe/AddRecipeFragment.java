@@ -165,12 +165,7 @@ public class AddRecipeFragment extends BottomSheetDialogFragment {
                             Bundle bundle = new Bundle();
                             bundle.putInt("recipeId", recipeId);
 
-                            FragmentManager fragmentManager = thisFragment.getActivity().getSupportFragmentManager();
-                            FragmentTransaction transaction = fragmentManager.beginTransaction();
-                            transaction.setReorderingAllowed(true);
-                            transaction.addToBackStack("recipe " + String.valueOf(recipeId) + " created");
-                            transaction.replace(R.id.nav_host_fragment, RecipeFragment.class, bundle);
-                            transaction.commit();
+                            NavHostFragment.findNavController(thisFragment).navigate(R.id.action_open_recipeFragment, bundle);
                             dismiss();
                         }
                         else { // Recipe has some incorrect tags

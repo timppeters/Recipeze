@@ -96,7 +96,7 @@ public class ForumPostAdapter extends RecyclerView.Adapter<ForumPostAdapter.View
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(v.getContext(), v);
                     MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(R.menu.comment_actions, popup.getMenu());
+                    inflater.inflate(R.menu.threedotmenu_actions, popup.getMenu());
                     if (!showDelete) {
                         popup.getMenu().removeItem(R.id.menu_delete);
                     }

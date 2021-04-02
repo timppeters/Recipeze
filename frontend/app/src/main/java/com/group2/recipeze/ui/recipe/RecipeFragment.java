@@ -1,9 +1,11 @@
 package com.group2.recipeze.ui.recipe;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -20,6 +22,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +34,7 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.group2.recipeze.R;
+import com.group2.recipeze.data.LoginRepository;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
 
@@ -44,6 +49,7 @@ public class RecipeFragment extends Fragment {
     private MutableLiveData<Recipe> recipe = new MutableLiveData<Recipe>();
     private RecipeRepository recipeRepository;
     private RecipeFragment thisFragment = this;
+    private boolean showDelete = false;
 
     /**
      * Called when view is created.
@@ -59,11 +65,22 @@ public class RecipeFragment extends Fragment {
         recipeViewModel =
                 new ViewModelProvider(this).get(RecipeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipe, container, false);
-
+        recipeRepository = RecipeRepository.getInstance();
 
         Recipe recipe = getArguments().getParcelable("recipe");
-        showRecipe(recipe, root);
-        recipeRepository = RecipeRepository.getInstance();
+        Integer recipeId = getArguments().getInt("recipeId");
+        if (recipe != null) {
+            showRecipe(recipe, root);
+        } else {
+            MutableLiveData<Recipe> r = new MutableLiveData<>();
+            r.observe(getViewLifecycleOwner(), new Observer<Recipe>() {
+                @Override
+                public void onChanged(Recipe recipe) {
+                    showRecipe(recipe, root);
+                }
+            });
+            recipeRepository.getRecipe(recipeId, r);
+        }
 
 
         LinearLayout contentParent = root.findViewById(R.id.contentParent);
@@ -127,6 +144,7 @@ public class RecipeFragment extends Fragment {
         final RecyclerView stepsList = root.findViewById(R.id.stepList);
         final ImageButton likeButton = root.findViewById(R.id.like);
         final ImageButton backButton = root.findViewById(R.id.back);
+        final ImageButton menu = root.findViewById(R.id.menu);
 
         prepTimeValue.setText(String.valueOf(recipe.getPrepTime()) + " mins");
         cookTimeValue.setText(String.valueOf(recipe.getCookTime()) + " mins");
@@ -193,6 +211,39 @@ public class RecipeFragment extends Fragment {
                     fm.popBackStack();
                 }*/
                 NavHostFragment.findNavController(thisFragment).popBackStack();
+            }
+        });
+
+        LoginRepository loginRepository = LoginRepository.getInstance();
+        if (recipe.getAuthor().equals(loginRepository.getUser().getUsername())) {
+            showDelete = true;
+        }
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.threedotmenu_actions, popup.getMenu());
+                if (!showDelete) {
+                    popup.getMenu().removeItem(R.id.menu_delete);
+                }
+                popup.show();
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menu_delete:
+                                recipeRepository.deleteRecipe(recipe.getRecipeId());
+                                NavHostFragment.findNavController(thisFragment).popBackStack();
+                                return true;
+                            case R.id.menu_report:
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
             }
         });
 

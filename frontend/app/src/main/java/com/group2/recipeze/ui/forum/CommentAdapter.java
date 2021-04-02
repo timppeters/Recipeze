@@ -1,6 +1,5 @@
 package com.group2.recipeze.ui.forum;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import com.group2.recipeze.R;
 import com.group2.recipeze.data.ForumRepository;
 import com.group2.recipeze.data.LoginRepository;
 import com.group2.recipeze.data.model.Comment;
-import com.group2.recipeze.data.model.ForumPost;
 
 
 import java.util.ArrayList;
@@ -60,7 +58,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(v.getContext(), v);
                     MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(R.menu.comment_actions, popup.getMenu());
+                    inflater.inflate(R.menu.threedotmenu_actions, popup.getMenu());
                     if (!showDelete) {
                         popup.getMenu().removeItem(R.id.menu_delete);
                     }
