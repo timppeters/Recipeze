@@ -94,7 +94,7 @@ public class filterIngredientsListAdapter extends RecyclerView.Adapter<filterIng
      * @param ingredients String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public filterIngredientsListAdapter(ArrayList<String> ingredients, ArrayList<String> ingredientsAmounts) {
+    public filterIngredientsListAdapter(ArrayList<String> ingredients) {
         this.ingredients = ingredients;
     }
 
