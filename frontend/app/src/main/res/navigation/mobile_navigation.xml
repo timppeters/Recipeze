@@ -5,6 +5,10 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_feed">
 
+    <action
+        android:id="@+id/action_open_recipeFragment"
+        app:destination="@id/recipeFragment" />
+
     <fragment
         android:id="@+id/navigation_feed"
         android:name="com.group2.recipeze.ui.feed.FeedFragment"
@@ -14,9 +18,6 @@
         <action
             android:id="@+id/action_navigation_feed_to_searchFragment"
             app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_navigation_feed_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
     </fragment>
 
     <fragment
@@ -40,9 +41,6 @@
         android:name="com.group2.recipeze.ui.recipeBook.RecipeBookFragment"
         android:label="@string/title_recipeBook"
         tools:layout="@layout/fragment_recipebook" >
-        <action
-            android:id="@+id/action_navigation_recipeBook_to_recipe"
-            app:destination="@id/recipeFragment" />
     </fragment>
 
     <fragment

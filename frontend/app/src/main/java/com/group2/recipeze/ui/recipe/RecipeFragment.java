@@ -3,8 +3,6 @@ package com.group2.recipeze.ui.recipe;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -31,10 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.google.gson.JsonObject;
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.model.Recipe;
-import com.group2.recipeze.ui.forum.FoodForumFragment;
 
 /**
  * Recipe Fragment
@@ -200,5 +197,70 @@ public class RecipeFragment extends Fragment {
         });
 
 
+        // Nutrition
+        final TextView servings = root.findViewById(R.id.servingValue);
+        final TextView calories = root.findViewById(R.id.caloriesValue);
+        final TextView totalFat = root.findViewById(R.id.totalFatValue);
+        final TextView totalFatDaily = root.findViewById(R.id.totalFatDailyPercentage);
+        final TextView satFat = root.findViewById(R.id.satFatValue);
+        final TextView satFatDaily = root.findViewById(R.id.satFatDailyPercentage);
+        final TextView transFat = root.findViewById(R.id.transFatValue);
+        //final TextView transFatDaily = root.findViewById(R.id.transFatDailyPercentage);
+        final TextView totalCarbs = root.findViewById(R.id.totalCarbsValue);
+        final TextView totalCarbsDaily = root.findViewById(R.id.totalCarbsDailyPercentage);
+        final TextView fiber = root.findViewById(R.id.fiberValue);
+        final TextView fiberDaily = root.findViewById(R.id.fiberDailyPercentage);
+        final TextView sugar = root.findViewById(R.id.sugarValue);
+        //final TextView sugarDaily = root.findViewById(R.id.sugarDailyPercentage);
+        final TextView protein = root.findViewById(R.id.proteinValue);
+        final TextView proteinDaily = root.findViewById(R.id.proteinDailyPercentage);
+        final TextView cholesterol = root.findViewById(R.id.cholesterolValue);
+        final TextView cholesterolDaily = root.findViewById(R.id.cholesterolDailyPercentage);
+        final TextView sodium = root.findViewById(R.id.sodiumValue);
+        final TextView sodiumDaily = root.findViewById(R.id.sodiumDailyPercentage);
+
+        JsonObject nutrition = recipe.getNutrition();
+        if (nutrition != null) {
+
+
+            servings.setText(root.getResources().getString(R.string.servings, (int) Float.parseFloat(String.valueOf(nutrition.get("yield")))));
+            calories.setText(String.valueOf(nutrition.get("calories")));
+            totalFat.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            totalFatDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            satFat.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("FASAT").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            satFatDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("FASAT").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            transFat.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("FATRN").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            /*transFatDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("FATRN").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit"));*/
+            totalCarbs.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("CHOCDF").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            totalCarbsDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("CHOCDF").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            fiber.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("FIBTG").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            fiberDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("FIBTG").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            sugar.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("SUGAR").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            /*sugarDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("SUGAR").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit"));*/
+            protein.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("PROCNT").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            proteinDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("PROCNT").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            cholesterol.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("CHOLE").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            cholesterolDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("CHOLE").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            sodium.setText(String.valueOf(nutrition.get("totalNutrients").getAsJsonObject().get("NA").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalNutrients").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+            sodiumDaily.setText(String.valueOf(nutrition.get("totalDaily").getAsJsonObject().get("NA").getAsJsonObject().get("quantity"))
+                    + nutrition.get("totalDaily").getAsJsonObject().get("FAT").getAsJsonObject().get("unit").getAsString().replace("\"", ""));
+        }
     }
 }

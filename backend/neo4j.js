@@ -613,8 +613,8 @@ async function getRecipesForTag(tagName, skip, username) {
 async function search(query, username) {
     let result = {}
     query = query.toLowerCase()
-    let records = await cypher(`OPTIONAL MATCH (u:User) WHERE toLower(u.username) STARTS WITH $query OPTIONAL MATCH (r:Recipe) WHERE toLower(r.title) CONTAINS $query OR toLower(r.description) CONTAINS $query OR $query IN r.ingredients OPTIONAL MATCH (t:Tag) WHERE toLower(t.name) CONTAINS $query WITH collect(DISTINCT t.name) as tags, collect(DISTINCT u.username) as users, properties(r) as p 
-    MATCH (r)-[:HAS]->(t2:Tag), (r)<-[:AUTHOR_OF]-(a:User) OPTIONAL MATCH (:User)-[n:RATED]->(r)
+    let records = await cypher(`OPTIONAL MATCH (u:User) WHERE toLower(u.username) STARTS WITH $query OPTIONAL MATCH (r:Recipe), (r)-[:HAS]->(t2:Tag), (r)<-[:AUTHOR_OF]-(a:User) WHERE toLower(r.title) CONTAINS $query OR toLower(r.description) CONTAINS $query OR $query IN r.ingredients OPTIONAL MATCH (t:Tag) WHERE toLower(t.name) CONTAINS $query WITH collect(DISTINCT t.name) as tags, collect(DISTINCT u.username) as users, properties(r) as p, t2, r, a
+    OPTIONAL MATCH (:User)-[n:RATED]->(r)
     WITH tags, users, p{.*, recipeId: ID(r), tags: collect(DISTINCT t2.name), rating: avg(n.rating), author: a.username, likes: size((r)<-[:LIKED]-(:User)), liked: EXISTS((:User {username: $username})-[:LIKED]->(r)) } as recipe
     RETURN {users: users, tags: tags, recipes: collect(recipe)} as results
     `,
