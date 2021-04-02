@@ -5,6 +5,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="411dp"
+        android:layout_height="680dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchSearchPage">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchRecipesScroll"
+            android:layout_width="412dp"
+            android:layout_height="546dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/filterButton"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/filter_button"
+            app:layout_constraintBottom_toTopOf="@+id/searchRecipesScroll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profilesTab"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <Button
+            android:id="@+id/forumButton"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="@string/forum_button"
+            app:layout_constraintBottom_toTopOf="@+id/searchRecipesScroll"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipesTab"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <Button
+            android:id="@+id/profilesTab"
+            android:layout_width="208dp"
+            android:layout_height="59dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/poppinsregular"
+            android:outlineProvider="background"
+            android:stateListAnimator="@null"
+            android:text="Profiles"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_text"
+            android:textSize="21sp"
+            android:translationZ="7dp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+        <Button
+            android:id="@+id/recipesTab"
+            android:layout_width="206dp"
+            android:layout_height="59dp"
+            android:background="@drawable/tab_background"
+            android:fontFamily="@font/poppinsbold"
+            android:outlineProvider="background"
+            android:stateListAnimator="@null"
+            android:text="Recipes"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_text"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:translationZ="7dp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <SearchView
         android:id="@+id/searchSearchPage"
         android:layout_width="387dp"
@@ -27,47 +102,5 @@
         tools:visibility="visible">
 
     </SearchView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/searchSearchPage"
-        tools:layout_editor_absoluteX="0dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/forumButton"
-                android:layout_width="146dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_weight="1"
-                android:text="@string/forum_button" />
-
-            <Button
-                android:id="@+id/filterButton"
-                android:layout_width="146dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:text="@string/filter_button" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/searchRecipesScroll"
-            android:layout_width="416dp"
-            android:layout_height="606dp" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

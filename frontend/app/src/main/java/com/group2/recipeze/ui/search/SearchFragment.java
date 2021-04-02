@@ -1,5 +1,7 @@
 package com.group2.recipeze.ui.search;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -49,6 +52,10 @@ public class SearchFragment extends Fragment {
 
     private static SearchViewModel searchViewModel;
 
+    private Button recipesBtn;
+    private Button profilesBtn;
+    private Drawable selectedTab;
+
     /**
      * Called when view is created.
      *
@@ -63,6 +70,25 @@ public class SearchFragment extends Fragment {
         SearchFragment thisFragment = this;
         repo = RecipeRepository.getInstance();
 
+        recipesBtn = root.findViewById(R.id.recipesTab);
+        profilesBtn = root.findViewById(R.id.profilesTab);
+        selectedTab = ContextCompat.getDrawable(getContext(), R.drawable.tab_background);
+
+        recipesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recipesBtn.setBackground(selectedTab);
+                profilesBtn.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
+        profilesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profilesBtn.setBackground(selectedTab);
+                recipesBtn.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
 
         Button forButton = root.findViewById(R.id.forumButton);
         Fragment here = this;
