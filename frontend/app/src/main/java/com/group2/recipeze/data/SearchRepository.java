@@ -42,7 +42,7 @@ public class SearchRepository extends Repository {
         return instance;
     }
 
-    public void search(String query, MutableLiveData<Map<String, ArrayList<?>>> results, MutableLiveData<ArrayList<Recipe>> justRecipes) {
+    public void search(String query, MutableLiveData<Map<String, ArrayList>> results) {
         Call<JsonElement> response = service.search(query, loggedInUser.getToken());
         response.enqueue(new Callback<JsonElement>() {
             @RequiresApi(api = Build.VERSION_CODES.R)
@@ -57,7 +57,6 @@ public class SearchRepository extends Repository {
                         Recipe recipe = gson.fromJson(recipesIterator.next(), Recipe.class);
                         recipeArrayList.add(recipe);
                     }
-                    justRecipes.postValue(recipeArrayList);
 
                     ArrayList<User> usersArrayList = new ArrayList<>();
                     for (Iterator<JsonElement> usersIterator = searchResults.get("users").getAsJsonArray().iterator(); usersIterator.hasNext();) {
@@ -72,7 +71,7 @@ public class SearchRepository extends Repository {
                     }
 
                     // Map of results
-                    Map<String, ArrayList<?>> types = new HashMap<String, ArrayList<?>>();
+                    Map<String, ArrayList> types = new HashMap<String, ArrayList>();
                     try {
                         types = Map.of(
                                 "recipes", recipeArrayList,

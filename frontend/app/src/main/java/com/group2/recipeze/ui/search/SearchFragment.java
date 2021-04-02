@@ -26,7 +26,10 @@ import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
 import com.group2.recipeze.data.RecipeRepository;
 import com.group2.recipeze.data.SearchRepository;
+import com.group2.recipeze.data.UserRepository;
 import com.group2.recipeze.data.model.Recipe;
+import com.group2.recipeze.data.model.Tag;
+import com.group2.recipeze.data.model.User;
 import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.explore.ExploreFragment;
 import com.group2.recipeze.ui.feed.FeedViewModel;
@@ -38,12 +41,15 @@ import java.util.Map;
  * SearchFragment.
  */
 public class SearchFragment extends Fragment {
-    RecyclerView searchRecyclerView;
-    endlessScroll endlessScrollManager;
-    RecipeRepository repo;
-    SearchRepository searchRepo;
-    private static MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
-
+    private RecyclerView searchRecipeRecyclerView;
+    private RecyclerView searchProfileRecyclerView;
+    private endlessScroll endlessScrollManager;
+    private RecipeRepository repo;
+    private UserRepository userRepo;
+    private SearchRepository searchRepo;
+    private static ArrayList<Recipe> recipes = new ArrayList<>();
+    private static ArrayList<User> profiles = new ArrayList<>();
+    private static ArrayList<Tag> searchedTags = new ArrayList<>();
 
     private static int maxTime = 100;
     private static ArrayList<String> ingredientList;
@@ -55,7 +61,6 @@ public class SearchFragment extends Fragment {
     private Button recipesBtn;
     private Button profilesBtn;
     private Drawable selectedTab;
-    private String searchFor;
 
     /**
      * Called when view is created.
@@ -71,6 +76,15 @@ public class SearchFragment extends Fragment {
         SearchFragment thisFragment = this;
         repo = RecipeRepository.getInstance();
 
+        searchProfileRecyclerView = root.findViewById(R.id.searchProfilesScroll);
+        searchProfileRecyclerView.setVisibility(View.INVISIBLE);
+
+        searchRecipeRecyclerView = root.findViewById(R.id.searchRecipesScroll);
+        endlessScrollManager = new endlessScroll(searchRecipeRecyclerView);
+        endlessScrollManager.populateData(recipes);
+        endlessScrollManager.initAdapter(thisFragment);
+        endlessScrollManager.initScrollListener();
+
         recipesBtn = root.findViewById(R.id.recipesTab);
         profilesBtn = root.findViewById(R.id.profilesTab);
         selectedTab = ContextCompat.getDrawable(getContext(), R.drawable.tab_background);
@@ -80,7 +94,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 recipesBtn.setBackground(selectedTab);
                 profilesBtn.setBackgroundColor(Color.TRANSPARENT);
-                searchFor = "recipe";
+                // Display recipes
             }
         });
 
@@ -89,7 +103,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 profilesBtn.setBackground(selectedTab);
                 recipesBtn.setBackgroundColor(Color.TRANSPARENT);
-                searchFor = "profile";
+                // Display profiles
             }
         });
 
@@ -117,16 +131,21 @@ public class SearchFragment extends Fragment {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (searchFor == "recipe") {
-                    searchRepo = SearchRepository.getInstance();
-                    MutableLiveData<Map<String, ArrayList<?>>> searchRecipes = new MutableLiveData<>();
-                    searchRepo.search(query, searchRecipes, recipes);
-                    Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
-                }
+                searchRepo = SearchRepository.getInstance();
+                MutableLiveData<Map<String, ArrayList>> results = new MutableLiveData<>();
+                searchRepo.search(query, results);
 
-                else if (searchFor == "profile") {
-                    //Add code for searching for profile
-                }
+                results.observe(getViewLifecycleOwner(), new Observer<Map<String, ArrayList>>() {
+                    @Override
+                    public void onChanged(Map<String, ArrayList> stringArrayListMap) {
+                        recipes = stringArrayListMap.get("recipes");
+                        profiles = stringArrayListMap.get("users");
+
+                        endlessScrollManager.populateData(recipes);
+
+                        // Add profiles recycler view
+                    }
+                });
 
                 return true;
             }
@@ -137,27 +156,23 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
-
-            @Override
-            public void onChanged(ArrayList<Recipe> recipes) {
-                // Populate endlessScroll with recipes
-                searchRecyclerView = root.findViewById(R.id.searchRecipesScroll);
-                endlessScrollManager = new endlessScroll(searchRecyclerView);
-                endlessScrollManager.populateData(recipes);
-                endlessScrollManager.initAdapter(thisFragment);
-                endlessScrollManager.initScrollListener();
-            }
-        });
         return root;
     }
 
-    public static MutableLiveData<ArrayList<Recipe>> getRecipes() {
+    public static ArrayList<Recipe> getRecipes() {
         return recipes;
     }
 
-    public static void setRecipes(MutableLiveData<ArrayList<Recipe>> searchedRecipes2) {
+    public static void setRecipes(ArrayList<Recipe> searchedRecipes2) {
         SearchFragment.recipes = searchedRecipes2;
+    }
+
+    public static void setProfiles(ArrayList<User> searchedProfiles2) {
+        SearchFragment.profiles = searchedProfiles2;
+    }
+
+    public static void setTags(ArrayList<Tag> searchedTags2) {
+        SearchFragment.searchedTags = searchedTags2;
     }
 
 }

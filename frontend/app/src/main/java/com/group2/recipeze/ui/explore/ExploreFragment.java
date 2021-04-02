@@ -38,8 +38,6 @@ public class ExploreFragment extends Fragment {
     RecipeRepository recipeRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     SearchRepository searchRepo;
-    private static MutableLiveData< ArrayList<Recipe>> searchedRecipes2 = new MutableLiveData<>();
-    
     
     private ExploreViewModel exploreViewModel;
 
@@ -73,17 +71,26 @@ public class ExploreFragment extends Fragment {
         });
 
         SearchView search = root.findViewById(R.id.searchExplorePage);
-        Fragment thisFrag = this;
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchRepo = SearchRepository.getInstance();
-                MutableLiveData<Map<String, ArrayList<?>>> searchRecipes = new MutableLiveData<>();
-                searchRepo.search(query, searchRecipes, searchedRecipes2);
-                SearchFragment.setRecipes(searchedRecipes2);
-                NavHostFragment.findNavController(thisFrag).navigate(R.id.action_navigation_explore_to_searchFragment);
-                Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
+                MutableLiveData<Map<String, ArrayList>> results = new MutableLiveData<>();
+                searchRepo.search(query, results);
+
+                results.observe(getViewLifecycleOwner(), new Observer<Map<String, ArrayList>>() {
+                    @Override
+                    public void onChanged(Map<String, ArrayList> stringArrayListMap) {
+                        SearchFragment.setRecipes(stringArrayListMap.get("recipes"));
+                        SearchFragment.setProfiles(stringArrayListMap.get("users"));
+
+                        // Add profiles recycler view
+
+                        NavHostFragment.findNavController(thisFragment).navigate(R.id.action_navigation_explore_to_searchFragment);
+                    }
+                });
+
                 return true;
             }
 

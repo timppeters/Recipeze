@@ -14,11 +14,23 @@
         app:layout_constraintTop_toBottomOf="@+id/searchSearchPage">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchProfilesScroll"
+            android:layout_width="409dp"
+            android:layout_height="547dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/searchRecipesScroll"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchRecipesScroll"
             android:layout_width="412dp"
             android:layout_height="546dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
