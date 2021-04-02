@@ -1,4 +1,7 @@
 const neo4j = require('neo4j-driver')
+const got = require('got');
+
+const edamamUrl = "https://api.edamam.com/api/nutrition-details?app_id=a7fc3528&app_key=c25d0a282c2dc6d43c260727dea592bf"
 
 const driver = neo4j.driver(
     `neo4j://${process.env.DB_IP}`,
@@ -113,7 +116,48 @@ async function deleteUser(username) {
 
 async function createRecipe(username, title, description, ingredients, ingredientsAmounts, instructions, images, tags, prepTime, cookTime) {
     let result = {}
-    let records = await cypher(`MATCH (u:User {username: $username}) CREATE (n:Recipe {title: $title, description: $description, ingredients: $ingredients, ingredientsAmounts: $ingredientsAmounts, instructions: $instructions, images: $images, prepTime: $prepTime, cookTime: $cookTime, creationTime: datetime()})<-[:AUTHOR_OF]-(u) RETURN ID(n)`,
+    tags = JSON.parse(tags)
+    let nutrients = {};
+
+    try {
+        let response = await got.post(edamamUrl, {
+            json: {
+                title: title,
+                ingr: JSON.parse(ingredientsAmounts).map((el, index) => el + " " + JSON.parse(ingredients)[index])
+            },
+            responseType: 'json'
+        });
+
+        tagsFormatted = tags.map((el, index) => el.toUpperCase().replace(" ","_"));
+
+        if (!tagsFormatted.every(val => response.body["healthLabels"].includes(val))) { // If some of their tags aren't in the analysis
+            problemTags = tagsFormatted.filter( ( el ) => !response.body["healthLabels"].includes(el));
+            problemTags = problemTags.map((el, index) => toTitleCase(el.replace("_"," ")));
+            result["tagError"] = problemTags;
+            return result 
+        }
+
+        nutrients = JSON.parse(JSON.stringify(response.body));
+        delete nutrients["uri"]
+        delete nutrients["totalWeight"]
+        delete nutrients["dietLabels"]
+        delete nutrients["cautions"]
+        delete nutrients["totalNutrientsKCal"]
+        nutrients["calories"] = (nutrients["calories"]/nutrients["yield"]).toFixed(2);
+
+        Object.keys(nutrients["totalNutrients"]).forEach(label => {
+            nutrients["totalNutrients"][label]["quantity"] = (nutrients["totalNutrients"][label]["quantity"]/nutrients["yield"]).toFixed(1)
+        })
+
+        Object.keys(nutrients["totalDaily"]).forEach(label => {
+            nutrients["totalDaily"][label]["quantity"] = (nutrients["totalDaily"][label]["quantity"]/nutrients["yield"]).toFixed(1)
+        })
+            
+    } catch (error) {
+        console.log(error)
+    }
+
+    let records = await cypher(`MATCH (u:User {username: $username}) CREATE (n:Recipe {title: $title, description: $description, ingredients: $ingredients, ingredientsAmounts: $ingredientsAmounts, instructions: $instructions, images: $images, prepTime: $prepTime, cookTime: $cookTime, creationTime: datetime(), nutrients: $nutrients})<-[:AUTHOR_OF]-(u) RETURN ID(n)`,
     {
         username,
         title,
@@ -123,7 +167,8 @@ async function createRecipe(username, title, description, ingredients, ingredien
         instructions,
         images,
         prepTime: neo4j.int(prepTime),
-        cookTime: neo4j.int(cookTime)
+        cookTime: neo4j.int(cookTime),
+        nutrients: JSON.stringify(nutrients)
     });
     if (records) {
         records.forEach(record => {
@@ -132,7 +177,6 @@ async function createRecipe(username, title, description, ingredients, ingredien
     }
 
     // Add tags to recipe
-    tags = JSON.parse(tags)
     for (index in tags) {
         await cypher(`MATCH (r:Recipe), (t:Tag {name: $tag}) WHERE ID(r)=$recipeId CREATE (r)-[:HAS]->(t)`,
         {
@@ -638,6 +682,15 @@ async function search(query, username) {
     return result
     
 }
+
+function toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
 
 
 // Ensure that the database session and connection are closed
