@@ -27,9 +27,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.group2.recipeze.R;
 import com.group2.recipeze.RecyclerViewAdapter;
+import com.group2.recipeze.data.LoginRepository;
 import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.model.LoggedInUser;
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.endlessScroll;
 import com.group2.recipeze.ui.recipe.RecipeFragment;
@@ -44,6 +48,7 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
     RecyclerViewAdapter feedRecyclerViewAdapter;
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
+    LoginRepository loginRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
 
     Button tagsBtn;
@@ -118,14 +123,22 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
             }
         });
 
+        // Set default filters from user's foodPreferences
+        loginRepository = LoginRepository.getInstance();
+        LoggedInUser loggedInUser = loginRepository.getUser();
+        if (loggedInUser.getSettings().containsKey("foodPreferences")) {
+            this.maxTime = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxTime").getAsInt();
+            this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
+            this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
+            this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);
+        }
+
         return root;
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Just an example request
-        ArrayList<String> ingredients = new ArrayList<String>();
-        ArrayList<String> tags = new ArrayList<String>();
-        recipeRepository.getRecipesForFeedByUsers(1000, ingredients, 1000, tags, "likes", 0, recipes);
+        recipeRepository.getRecipesForFeedByUsers(maxTime, ingredients, maxIngredients, tags, "likes", 0, recipes);
     }
 
     @Override

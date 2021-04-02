@@ -120,7 +120,12 @@ public class ProfileFragment extends Fragment {
         foodPreferencesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment preferencesDialog = new FoodPreferencesFragment(thisFragment, loginRepository.getUser().getSettings().get("foodPreferences").getAsJsonObject());
+                DialogFragment preferencesDialog;
+                if (loginRepository.getUser().getSettings().containsKey("foodPreferences")) {
+                    preferencesDialog = new FoodPreferencesFragment(thisFragment, loginRepository.getUser().getSettings().get("foodPreferences").getAsJsonObject());
+                } else {
+                    preferencesDialog = new FoodPreferencesFragment(thisFragment, null);
+                }
                 preferencesDialog.show(getParentFragmentManager(), "PreferencesDialog");
             }
         });

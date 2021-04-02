@@ -50,12 +50,14 @@ public class endlessScroll {
         recyclerView = recycler;
 
         // Set default filters from user's foodPreferences
-        /*loginRepository = LoginRepository.getInstance();
+        loginRepository = LoginRepository.getInstance();
         LoggedInUser loggedInUser = loginRepository.getUser();
-        this.maxTime = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxTime").getAsInt();
-        this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
-        this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
-        this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);*/
+        if (loggedInUser.getSettings().containsKey("foodPreferences")) {
+            this.maxTime = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxTime").getAsInt();
+            this.ingredients = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("ingredients").getAsJsonArray(), ArrayList.class);
+            this.maxIngredients = ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("maxIngredients").getAsInt();
+            this.tags = new Gson().fromJson( ((JsonObject) loggedInUser.getSettings().get("foodPreferences")).get("tags").getAsJsonArray(), ArrayList.class);
+        }
     }
 
     public endlessScroll(RecyclerView recycler, String feedType){

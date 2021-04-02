@@ -72,20 +72,29 @@ public class FoodPreferencesFragment extends DialogFragment {
         Button filterBtn = dialogView.findViewById(R.id.FiltersChosenBut);
         com.google.android.material.slider.Slider maxTime = dialogView.findViewById(R.id.TimeSeek);
         com.google.android.material.slider.Slider maxIngredients = dialogView.findViewById(R.id.NumOfIndSeek);
-        if (currentPreferences.get("maxTime").getAsFloat() == 1000.0) {
-            maxTime.setValue(0);
-        } else {
-            maxTime.setValue(currentPreferences.get("maxTime").getAsFloat());
-        }
 
-        if (currentPreferences.get("maxIngredients").getAsFloat() == 1000.0) {
-            maxIngredients.setValue(0);
-        } else {
-            maxIngredients.setValue(currentPreferences.get("maxIngredients").getAsFloat());
+        if (currentPreferences != null) {
+            if (currentPreferences.get("maxTime").getAsFloat() == 1000.0) {
+                maxTime.setValue(0);
+            } else {
+                maxTime.setValue(currentPreferences.get("maxTime").getAsFloat());
+            }
+
+            if (currentPreferences.get("maxIngredients").getAsFloat() == 1000.0) {
+                maxIngredients.setValue(0);
+            } else {
+                maxIngredients.setValue(currentPreferences.get("maxIngredients").getAsFloat());
+            }
         }
 
         ingredientsList.addItemDecoration(new DividerItemDecoration(dialogView.getContext(), DividerItemDecoration.VERTICAL));
-        filterIngredientsListAdapter ingredientsAdapter = new filterIngredientsListAdapter(new Gson().fromJson(currentPreferences.get("ingredients").getAsJsonArray(), ArrayList.class));
+        filterIngredientsListAdapter ingredientsAdapter;
+        if (currentPreferences != null) {
+            ingredientsAdapter = new filterIngredientsListAdapter(new Gson().fromJson(currentPreferences.get("ingredients").getAsJsonArray(), ArrayList.class));
+        } else {
+            ingredientsAdapter = new filterIngredientsListAdapter(new ArrayList<String>());
+        }
+
         ingredientsList.setAdapter(ingredientsAdapter);
         ingredientsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -126,7 +135,7 @@ public class FoodPreferencesFragment extends DialogFragment {
                 for (Tag tag : tags) {
                     Chip tagChip = (Chip) getLayoutInflater().inflate(R.layout.layout_chip_filter, tagsGroup, false);
                     tagChip.setText(tag.getName());
-                    if (currentPreferences.get("tags").getAsJsonArray().contains(new JsonPrimitive(tag.getName()))) {
+                    if (currentPreferences != null && currentPreferences.get("tags").getAsJsonArray().contains(new JsonPrimitive(tag.getName()))) {
                         tagChip.setChecked(true);
                     }
                     tagsGroup.addView(tagChip);
