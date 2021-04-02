@@ -34,6 +34,7 @@ public class ExploreFragment extends Fragment {
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
     TagRepository tagRepository;
+    com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;
     private MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Tag>> tags = new MutableLiveData<>();
 
@@ -49,6 +50,9 @@ public class ExploreFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_explore, container, false);
         ExploreFragment thisFragment = this;
 
+        shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
+        shimmerRecyclerView.showShimmerAdapter();
+
     
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
@@ -56,6 +60,7 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                shimmerRecyclerView.hideShimmerAdapter();
                 recipesRecyclerView = root.findViewById(R.id.exploreRecipes);
 
 

@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
     UserRepository userRepository;
     RecipeRepository recipeRepository;
     LoginRepository loginRepository;
+    com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;
 
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     private MutableLiveData<Boolean> profile_updated = new MutableLiveData<>();
@@ -69,12 +70,15 @@ public class ProfileFragment extends Fragment {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         ProfileFragment thisFragment = this;
+        shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
+        shimmerRecyclerView.showShimmerAdapter();
         recipeRepository = RecipeRepository.getInstance();
         loginRepository = LoginRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                shimmerRecyclerView.hideShimmerAdapter();
                 recyclerView = root.findViewById(R.id.profileRecipes);
                 endlessScrollManager = new endlessScroll(recyclerView, "profile", loginRepository.getUser().getUsername());
                 endlessScrollManager.populateData(recipes);

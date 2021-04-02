@@ -55,6 +55,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/shimmer_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recipes"
+        app:layout_constraintEnd_toEndOf="@+id/recipes"
+        app:layout_constraintStart_toStartOf="@+id/recipes"
+        app:layout_constraintTop_toTopOf="@+id/recipes"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="10"
+        app:shimmer_demo_grid_child_count="2"
+        app:shimmer_demo_layout="@layout/item_recipe_loading"
+        app:shimmer_demo_layout_manager_type="linear_vertical" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipes"
         android:layout_width="0dp"

@@ -44,6 +44,7 @@ public class RecipeBookFragment extends Fragment implements filters.hasFilters{
     RecipeRepository recipeRepository;
     Button filtersBtn;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+    com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;
 
     int maxTime = 1000;
     ArrayList<String> ingredients = new ArrayList<String>();
@@ -64,11 +65,14 @@ public class RecipeBookFragment extends Fragment implements filters.hasFilters{
         recipeBookViewModel = new ViewModelProvider(this).get(RecipeBookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipebook, container, false);
         RecipeBookFragment thisFragment = this;
+        shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
+        shimmerRecyclerView.showShimmerAdapter();
         recipeRepository = RecipeRepository.getInstance();
         recipes.observe(getViewLifecycleOwner(), new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
+                shimmerRecyclerView.hideShimmerAdapter();
                 recipeBookRecyclerView = root.findViewById(R.id.recipes);
                 endlessScrollManager = new endlessScroll(recipeBookRecyclerView, "recipeBook");
                 endlessScrollManager.populateData(recipes);
