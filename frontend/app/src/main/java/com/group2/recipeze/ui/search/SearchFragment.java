@@ -44,6 +44,8 @@ public class SearchFragment extends Fragment {
     private RecyclerView searchRecipeRecyclerView;
     private RecyclerView searchProfileRecyclerView;
     private endlessScroll endlessScrollManager;
+    //second endless scroll for the profiles
+    private endlessScroll endlessScrollProfilesManager;
     private SearchRepository searchRepo;
     private static ArrayList<Recipe> recipes = new ArrayList<>();
     private static ArrayList<User> profiles = new ArrayList<>();
@@ -79,6 +81,12 @@ public class SearchFragment extends Fragment {
         endlessScrollManager.populateData(recipes);
         endlessScrollManager.initAdapter(thisFragment);
         endlessScrollManager.initScrollListener();
+
+        //second endless scroll for the profiles
+        endlessScrollProfilesManager = new endlessScroll(searchProfileRecyclerView);
+        endlessScrollProfilesManager.populateDataProfile(profiles);
+        endlessScrollProfilesManager.initProfileAdapter(thisFragment);
+        endlessScrollProfilesManager.initScrollListener();
 
         recipesBtn = root.findViewById(R.id.recipesTab);
         profilesBtn = root.findViewById(R.id.profilesTab);
@@ -143,6 +151,7 @@ public class SearchFragment extends Fragment {
                         endlessScrollManager.populateData(recipes);
 
                         // Add profiles recycler view
+                        endlessScrollProfilesManager.populateDataProfile(profiles);
                     }
                 });
 

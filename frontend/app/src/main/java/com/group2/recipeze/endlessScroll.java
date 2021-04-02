@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.UserRepository;
 import com.group2.recipeze.data.model.Recipe;
+import com.group2.recipeze.data.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,16 +21,21 @@ import java.util.HashMap;
 public class endlessScroll {
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
+    UserViewAdapter UserViewAdapter;
 
     RecipeRepository recipeRepository;
+    UserRepository UserRepository;
     public MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<User>> users = new MutableLiveData<>();
     ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+    ArrayList<User> userList = new ArrayList<>();
 
 
     boolean isLoading = false;
 
     public endlessScroll(RecyclerView recycler) {
         recyclerView = recycler;
+
     }
 
     public void populateData(ArrayList<Recipe> initialRecipes) {
@@ -36,6 +43,14 @@ public class endlessScroll {
         recipes.postValue(initialRecipes);
         for(int x = 0; x < recipeList.size(); x++){
             Log.d("recipe1", recipeList.get(x).getTitle());
+        }
+    }
+
+    public void populateDataProfile(ArrayList<User> initialUsers){
+        users.setValue(userList);
+        users.postValue(initialUsers);
+        for(int x = 0; x < userList.size(); x++){
+            Log.d("users", userList.get(x).getUsername());
         }
     }
 
@@ -83,6 +98,25 @@ public class endlessScroll {
             public void onChanged(ArrayList<Recipe> recipes) {
                 recipeList.addAll(recipes);
                 recyclerViewAdapter.notifyDataSetChanged();
+                isLoading = false;
+            }
+        });
+    }
+
+    public void initProfileAdapter(Fragment fragmment) {
+
+        UserViewAdapter = new UserViewAdapter(userList);
+        recyclerView.setAdapter(UserViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(fragmment.getContext()));
+        UserViewAdapter.setThisFragment(fragmment);
+
+        UserRepository = UserRepository.getInstance();
+        users.observeForever(new Observer<ArrayList<User>>() {
+
+            @Override
+            public void onChanged(ArrayList<User> users) {
+                userList.addAll(users);
+                UserViewAdapter.notifyDataSetChanged();
                 isLoading = false;
             }
         });
