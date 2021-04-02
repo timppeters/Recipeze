@@ -76,6 +76,7 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
         View root = inflater.inflate(R.layout.fragment_feed, container, false);
         FeedFragment thisFragment = this;
 
+        feedRecyclerView = root.findViewById(R.id.recipes);
         shimmerRecyclerView = root.findViewById(R.id.shimmer_recycler_view);
         shimmerRecyclerView.showShimmerAdapter();
 
@@ -87,7 +88,7 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 shimmerRecyclerView.hideShimmerAdapter();
-                feedRecyclerView = root.findViewById(R.id.recipes);
+                feedRecyclerView.setVisibility(View.VISIBLE);
                 endlessScrollManager = new endlessScroll(feedRecyclerView, "feed");
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
@@ -147,6 +148,8 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
 
     @Override
     public void updateFilters(int maxTime, ArrayList<String> ingredients, int maxIngredients, ArrayList<String> tags){
+        shimmerRecyclerView.showShimmerAdapter();
+        feedRecyclerView.setVisibility(View.INVISIBLE);
         this.maxTime = maxTime;
         this.ingredients = ingredients;
         this.maxIngredients = maxIngredients;
