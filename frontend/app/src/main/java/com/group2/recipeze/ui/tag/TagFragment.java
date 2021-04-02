@@ -45,7 +45,7 @@ public class TagFragment extends Fragment {
             public void onChanged(ArrayList<Recipe> recipes) {
                 // Populate endlessScroll with recipes
                 tagRecyclerView = root.findViewById(R.id.recipes);
-                endlessScrollManager = new endlessScroll(tagRecyclerView);
+                endlessScrollManager = new endlessScroll(tagRecyclerView, "tag", "", tagName);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
                 endlessScrollManager.populateData(recipes);

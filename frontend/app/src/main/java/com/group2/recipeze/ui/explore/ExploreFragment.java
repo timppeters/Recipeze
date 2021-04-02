@@ -59,7 +59,7 @@ public class ExploreFragment extends Fragment {
                 recipesRecyclerView = root.findViewById(R.id.exploreRecipes);
 
 
-                endlessScrollManager = new endlessScroll(recyclerView, "explore");
+                endlessScrollManager = new endlessScroll(recipesRecyclerView, "explore");
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.initAdapter(thisFragment);
                 endlessScrollManager.initScrollListener();
