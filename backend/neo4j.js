@@ -122,8 +122,8 @@ async function createRecipe(username, title, description, ingredients, ingredien
         ingredientsAmounts: JSON.parse(ingredientsAmounts),
         instructions,
         images,
-        prepTime,
-        cookTime
+        prepTime: neo4j.int(prepTime),
+        cookTime: neo4j.int(cookTime)
     });
     if (records) {
         records.forEach(record => {
