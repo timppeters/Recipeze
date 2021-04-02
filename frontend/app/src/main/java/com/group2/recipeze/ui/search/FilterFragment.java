@@ -1,5 +1,6 @@
 package com.group2.recipeze.ui.search;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.group2.recipeze.R;
+import com.group2.recipeze.data.RecipeRepository;
+import com.group2.recipeze.data.model.Recipe;
+import com.group2.recipeze.ui.explore.ExploreFragment;
 
 import java.util.ArrayList;
 
@@ -171,14 +175,16 @@ public class FilterFragment extends Fragment {
                     }
                 }
                 tags.add(String.valueOf(diet.getSelectedItem()));
-                SearchFragment.setIngNum(ingNum.getProgress());
-                SearchFragment.setMaxTime(maxTime.getProgress());
-                SearchFragment.setTags(tags);
-                SearchFragment.setIngredientList(ingList);
+
+//                RecipeRepository repo = RecipeRepository.getInstance();
+//                MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
+//                repo.getRecipesForFeedByUsers(maxTime.getProgress(), ingList, ingNum.getProgress(), tags, "likes", 0, recipes);
+//                SearchFragment.setRecipes(recipes);
+
                 System.out.println("MIN TIME: " + minTimeText.getText());
                 System.out.println("MAX TIME: " + maxTimeText.getText());
                 System.out.println("Difficulty: " + difficultyText.getText());
-                System.out.println("Ingerdient number : " + ingNumText.getText());
+                System.out.println("Ingredient number : " + ingNumText.getText());
                 System.out.println("DIET CHOICE: " + diet.getSelectedItem());
                 Toast.makeText(getActivity(), "CLICKED", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(here).navigate(R.id.action_filterFragment_to_searchFragment);

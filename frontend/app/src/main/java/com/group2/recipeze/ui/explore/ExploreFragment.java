@@ -17,13 +17,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.recipeze.R;
 import com.group2.recipeze.data.RecipeRepository;
+
+import com.group2.recipeze.data.SearchRepository;
+
 import com.group2.recipeze.data.TagRepository;
+
 import com.group2.recipeze.data.model.Recipe;
 import com.group2.recipeze.data.model.Tag;
 import com.group2.recipeze.endlessScroll;
+
+import com.group2.recipeze.ui.search.SearchFragment;
+
 import com.group2.recipeze.ui.addRecipe.IngredientsListAdapter;
 
+
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * ExploreFragment.
@@ -33,10 +42,16 @@ public class ExploreFragment extends Fragment {
     RecyclerView tagsRecyclerView;
     endlessScroll endlessScrollManager;
     RecipeRepository recipeRepository;
+
+    SearchRepository searchRepo;
+    
+//    private ExploreViewModel exploreViewModel;
+
     TagRepository tagRepository;
     com.cooltechworks.views.shimmer.ShimmerRecyclerView shimmerRecyclerView;
     private MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Tag>> tags = new MutableLiveData<>();
+
 
     /**
      * Called when view is created.
@@ -83,13 +98,26 @@ public class ExploreFragment extends Fragment {
         });
 
         SearchView search = root.findViewById(R.id.searchExplorePage);
-        Fragment thisFrag = this;
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                NavHostFragment.findNavController(thisFrag).navigate(R.id.action_navigation_explore_to_searchFragment);
-                Toast.makeText(getActivity(), "search completed", Toast.LENGTH_SHORT).show();
+                searchRepo = SearchRepository.getInstance();
+                MutableLiveData<Map<String, ArrayList>> results = new MutableLiveData<>();
+                searchRepo.search(query, results);
+
+                results.observe(getViewLifecycleOwner(), new Observer<Map<String, ArrayList>>() {
+                    @Override
+                    public void onChanged(Map<String, ArrayList> stringArrayListMap) {
+                        SearchFragment.setRecipes(stringArrayListMap.get("recipes"));
+                        SearchFragment.setProfiles(stringArrayListMap.get("users"));
+
+                        // Add profiles recycler view
+
+                        NavHostFragment.findNavController(thisFragment).navigate(R.id.action_navigation_explore_to_searchFragment);
+                    }
+                });
+
                 return true;
             }
 
@@ -106,4 +134,5 @@ public class ExploreFragment extends Fragment {
         recipeRepository.getRecipesForExplore(0, recipes);
         tagRepository.getTop5Tags(tags);
     }
+
 }

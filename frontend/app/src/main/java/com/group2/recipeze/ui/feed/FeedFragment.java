@@ -1,3 +1,4 @@
+
 package com.group2.recipeze.ui.feed;
 
 import android.content.Context;
@@ -91,6 +92,7 @@ public class FeedFragment extends Fragment implements filters.hasFilters{
                 endlessScrollManager.initScrollListener();
                 endlessScrollManager.populateData(recipes);
                 endlessScrollManager.updateFilters(maxTime, ingredients, maxIngredients, tags);
+
             }
         });
 
